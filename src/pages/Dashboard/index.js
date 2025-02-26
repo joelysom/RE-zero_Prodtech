@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Title from "../../components/Title";
-import { FiDelete, FiEdit2, FiMessageSquare, FiPlus, FiSearch } from "react-icons/fi";
+import { FiDelete, FiEdit2, FiMessageSquare, FiPlus, FiSearch, FiFilter } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./dashboard.css";
-import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, startAfter } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 import { format } from "date-fns/esm";
 import Modal from "../../components/Modal";
 import { toast } from "react-toastify";
+import Filter from "../../components/Filter/Filter"; // Importando o filter component
 
 const listRef = collection(db, "chamados");
 
@@ -20,7 +21,24 @@ export default function Dashboard() {
   const [lastDoc, setLastDoc] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [details, setDetails] = useState({});
+  const [filters, setFilters] = useState({ status: "", user: "", cause: "", search: "" });
+  const [showFilterModal, setShowFilterModal] = useState(false); // Estado para controle do filtro
 
+  // Função de alteração na barra de pesquisa
+  const handleSearchChange = (event) => {
+    const { value } = event.target;
+    setFilters((prevFilters) => ({ ...prevFilters, search: value }));
+  };
+
+  // Função chamada quando pressionar "Enter" na barra de pesquisa
+  const handleSearchKeyDown = (event) => {
+    if (event.key === "Enter") {
+      // Chame a função para realizar a pesquisa com o valor de `filters.search`
+      console.log("Pesquisa por: ", filters.search);
+    }
+  };
+
+  // Carrega chamados ao iniciar o componente
   useEffect(() => {
     async function loadChamados() {
       const q = query(listRef, orderBy("created", "desc"), limit(5));
@@ -30,15 +48,13 @@ export default function Dashboard() {
       setLoading(false);
     }
     loadChamados();
-
-    return () => {};
   }, []);
 
+  // Atualiza os chamados no estado
   const updateState = async (querySnapshot) => {
     const isCollectionEmpty = querySnapshot.size === 0;
     if (!isCollectionEmpty) {
       let list = [];
-
       querySnapshot.forEach((doc) => {
         list.push({
           id: doc.id,
@@ -62,6 +78,38 @@ export default function Dashboard() {
     setLoadMore(false);
   };
 
+  // Handle filter changes and apply them
+  const handleFilterChange = async (filters) => {
+    setFilters(filters);
+    const { status, user, cause } = filters;
+
+    let q = query(
+      listRef,
+      orderBy("created", "desc"),
+      limit(5)
+    );
+
+    // Apply filters if present
+    if (status) {
+      q = query(q, where("status", "==", status));
+    }
+
+    if (user === "Sem atribuição") {
+      q = query(q, where("assignedUser", "==", "Não atribuído"));
+    } else if (user === "Com atribuição") {
+      q = query(q, where("assignedUser", "not-in", ["Não atribuído", null]));
+    }
+
+    if (cause) {
+      q = query(q, where("assunto", "array-contains", cause));
+    }
+
+    const querySnapshot = await getDocs(q);
+    setChamados([]);
+    await updateState(querySnapshot);
+  };
+
+  // Handle loading more chamados
   const handleMore = async () => {
     setLoadMore(true);
 
@@ -70,11 +118,13 @@ export default function Dashboard() {
     await updateState(querySnapshot);
   };
 
+  // Toggle modal for details
   const toggleModal = (item) => {
     setShowModal(!showModal);
     setDetails(item);
   };
 
+  // Handle chamado deletion
   const handleDelete = async (id) => {
     const docRef = doc(db, "chamados", id);
     await deleteDoc(docRef)
@@ -83,6 +133,11 @@ export default function Dashboard() {
         setChamados(chamados.filter((chamado) => chamado.id !== id));
       })
       .catch(() => toast.error("Ops, erro ao deletar"));
+  };
+
+  // Toggle the filter modal visibility
+  const toggleFilterModal = () => {
+    setShowFilterModal(!showFilterModal);
   };
 
   if (loading) {
@@ -109,6 +164,29 @@ export default function Dashboard() {
         <Title name="Chamados">
           <FiMessageSquare size={25} />
         </Title>
+
+        <div className="top-bar">
+          <div className="search-filter">
+            {/* Barra de pesquisa */}
+            <input
+              type="text"
+              placeholder="Pesquisar por assunto"
+              value={filters.search}
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchKeyDown} // Adiciona o evento de tecla pressionada
+              className="search-input"
+            />
+
+            {/* Ícone de filtro */}
+            <button onClick={toggleFilterModal} className="btn-filter">
+              <FiFilter size={25} />
+            </button>
+          </div>
+        </div>
+
+        {showFilterModal && (
+          <Filter onFilter={handleFilterChange} onClose={toggleFilterModal} /> // Filter modal component
+        )}
 
         {chamados.length === 0 ? (
           <div className="container dashboard">
@@ -177,6 +255,7 @@ export default function Dashboard() {
           </>
         )}
       </div>
+
       {showModal && <Modal conteudo={details} buttomBack={() => setShowModal(!showModal)} />}
     </div>
   );

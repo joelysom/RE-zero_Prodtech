@@ -4,7 +4,8 @@
   background-color: #181c2e;
   position: fixed;
   height: 100vh;
-  overflow: auto;
+  overflow: auto; 
+  scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
   width: 250px;
   min-width: 200px;
   display: flex;
@@ -39,6 +40,11 @@ ul {
   list-style: none;
   padding: 0;
   width: 100%;
+}
+
+.nav-list {
+  width: 100%;
+  flex-grow: 1; /* Faz a lista ocupar todo o espaço disponível */
 }
 
 .nav-item {
@@ -122,7 +128,7 @@ ul {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s ease-in-out;
   border-radius: 8px;
-  margin-top: 520px; /* Alinha o botão no final da sidebar */
+  margin-top: auto; /* Agora ele realmente vai para o final */
 }
 
 .logout-btn:hover {
