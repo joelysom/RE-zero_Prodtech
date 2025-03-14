@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../../contexts/auth';
-import './style_Teste.css';
+import styles from './style_Teste.module.css'; // Importando CSS Modules
 import logo from '../../assets/Logo/ProdTech_Branca.svg';
 import userIcon from '../../assets/Logo/user.jpg';
 
@@ -18,11 +18,11 @@ function Login() {
   };
 
   return (
-    <div className={`container ${isTécnico ? 'active' : ''}`} id="container">
+    <div className={`${styles.container} ${isTécnico ? styles.active : ''}`} id="container">
       {/* Formulário Técnico */}
-      <div className="form-container sign-up">
+      <div className={styles['form-container'] + ' ' + styles['sign-up']}>
         <form onSubmit={handleSignIn}>
-          <img src={userIcon} alt="Ícone de Usuário" className="user-icon" />
+          <img src={userIcon} alt="Ícone de Usuário" className={styles['user-icon']} />
           <h1>Técnico</h1>
           <input
             type="email"
@@ -36,7 +36,7 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <div className="remember-forgot">
+          <div className={styles['remember-forgot']}>
             <label>
               <input type="checkbox" /> Lembrar de mim?
             </label>
@@ -49,13 +49,13 @@ function Login() {
       </div>
 
       {/* Formulário Cliente */}
-      <div className="form-container sign-in">
+      <div className={styles['form-container'] + ' ' + styles['sign-in']}>
         <form>
-          <img src={userIcon} alt="Ícone de Usuário" className="user-icon" />
+          <img src={userIcon} alt="Ícone de Usuário" className={styles['user-icon']} />
           <h1>Cliente</h1>
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Senha" />
-          <div className="remember-forgot">
+          <div className={styles['remember-forgot']}>
             <label>
               <input type="checkbox" /> Lembrar de mim?
             </label>
@@ -66,18 +66,18 @@ function Login() {
       </div>
 
       {/* Alternância Cliente/Técnico */}
-      <div className="toggle-container">
-        <div className="toggle">
-          <div className="toggle-panel toggle-left">
+      <div className={styles['toggle-container']}>
+        <div className={styles.toggle}>
+          <div className={styles['toggle-panel'] + ' ' + styles['toggle-left']}>
             <img src={logo} alt="Logo ProdTech" />
             <button id="login" onClick={() => setIsTécnico(false)}>
               Sou Cliente
             </button>
-            <button className="secondary-btn">Sou Técnico</button>
+            <button className={styles['secondary-btn']}>Sou Técnico</button>
           </div>
-          <div className="toggle-panel toggle-right">
+          <div className={styles['toggle-panel'] + ' ' + styles['toggle-right']}>
             <img src={logo} alt="Logo ProdTech" />
-            <button className="secondary-btn">Sou Cliente</button>
+            <button className={styles['secondary-btn']}>Sou Cliente</button>
             <button id="register" onClick={() => setIsTécnico(true)}>
               Sou Técnico
             </button>
