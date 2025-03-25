@@ -1,0 +1,62 @@
+.modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 99;
+  }
+  
+  .modal .container {
+    position: fixed;
+    max-width: 600px;
+    top: 30%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 4em 2em;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  }
+  
+  .btn-back {
+    background-color: #f65835;
+    border: 0;
+    border-radius: 4px;
+    padding: 4px 15px;
+    color: #fff;
+  }
+  
+  .filter-option {
+    margin-bottom: 1em;
+  }
+  
+  .filter-option label {
+    display: block;
+    margin-bottom: 0.5em;
+  }
+  
+  .filter-option input, .filter-option select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .btn-apply {
+    background-color: #3583f6;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-apply:hover {
+    background-color: #2766c7;
+  }
+  
