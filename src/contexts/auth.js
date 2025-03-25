@@ -1,113 +1,217 @@
-import { useState, createContext, useEffect } from 'react';
-import {createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut} from 'firebase/auth';
-import {auth,db} from '../services/firebaseConnection';
-import {
-  doc,      //acessar documento
-  getDoc,  //pegar documento
-  setDoc, //criar documento
-} from 'firebase/firestore';
-import {  useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useState, createContext, useEffect } from 'react'; 
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signOut 
+} from 'firebase/auth'; 
+import { auth, db } from '../services/firebaseConnection'; 
+import {   
+  doc,      
+  getDoc,  
+  setDoc, 
+} from 'firebase/firestore'; 
+import { useNavigate } from 'react-router-dom'; 
+import { toast } from 'react-toastify';  
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext({});  
 
-function AuthProvider({ children }){
-  const [user, setUser] = useState(null);
-  const [loadingAuth,setLoadingAuth] = useState(false);
-  const [loading,setLoading] = useState(true);
-  const navigate = useNavigate();
+function AuthProvider({ children }){   
+  const [user, setUser] = useState(null);   
+  const [loadingAuth, setLoadingAuth] = useState(false);   
+  const [loading, setLoading] = useState(true);   
+  const [userType, setUserType] = useState(null); // 'cliente' or 'tecnico'
+  const navigate = useNavigate();    
 
-  useEffect(() => {
-    async function loadUser(){
-      const storageUser = localStorage.getItem('@userdata');
-
-      if(storageUser){
-        setUser(JSON.parse(storageUser))
-        setLoading(false);
+  useEffect(() => {     
+    async function loadUser(){       
+      const storageUser = localStorage.getItem('@userdata');        
+      const storageUserType = localStorage.getItem('@usertype');
+      
+      if(storageUser && storageUserType){
+        try {
+          setUser(JSON.parse(storageUser));
+          setUserType(storageUserType);
+        } catch (error) {
+          console.error('Error loading stored user:', error);
+          localStorage.removeItem('@userdata');
+          localStorage.removeItem('@usertype');
+        }
       }
-
-
+      
       setLoading(false);
-
     }
-
+    
     loadUser();
-  }, [])
+  }, [])    
 
-  async function signIn(email, password){
+  async function signIn(email, password, type){
     setLoadingAuth(true);
-    await signInWithEmailAndPassword(auth,email,password)
-    .then(async (value)=>{
-      let uid = value.user.uid;
-      const docRef = doc(db,'users',uid);
+    
+    try {
+      // First, attempt to sign in with Firebase Authentication
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const uid = userCredential.user.uid;
+      
+      // Determine which collection to check based on user type
+      let docRef;
+      if (type === 'tecnico') {
+        docRef = doc(db, 'tecnicos', uid);
+      } else {
+        docRef = doc(db, 'clientes', uid);
+      }
+      
+      // Verify user exists in the specific collection
       const docSnap = await getDoc(docRef);
-
-      let data = {
-        uid:uid,
-        nome:docSnap.data().nome,
-        email:value.user.email,
-        avatarUrl:docSnap.data().avatarUrl,
-    }
+      
+      if (!docSnap.exists()) {
+        // If user doesn't exist in the expected collection, sign out and throw error
+        await signOut(auth);
+        toast.error(`Usuário não encontrado como ${type}`);
+        setLoadingAuth(false);
+        return;
+      }
+      
+      // Prepare user data
+      const data = {
+        uid: uid,
+        nome: docSnap.data().nome,
+        email: userCredential.user.email,
+        ...(docSnap.data().cpf && { cpf: docSnap.data().cpf }),
+        ...(docSnap.data().empresaNome && { empresaNome: docSnap.data().empresaNome }),
+      };
+      
+      // Update state and storage
       setUser(data);
-      storageUser(data);
+      setUserType(type);
+      storageUser(data, type);
       setLoadingAuth(false);
       toast.success('Bem-vindo de volta');
       navigate('/dashboard');
-  })
-    .catch((err)=>{
-      console.log('error: ' + err);
-      toast.error('Ops,algo deu errado');
-      setLoadingAuth(false);
-    })
       
-  }
-
-  async function signUp(name,email, password){ //cadastrar novo usuario
-    setLoadingAuth(true);
-   await createUserWithEmailAndPassword(auth,email,password)
-    .then(async (value)=>{
-      let uid = value.user.uid;
-      await setDoc(doc(db,'users',uid),{
-        nome:name,
-        avatarUrl:null,
-      })
-      .then(()=>{
-        let data = {
-          uid:uid,
-          nome:name,
-          email:email,
-          avatarUrl:null,
-          
-        }
-        setUser(data);
-        storageUser(data);
-        setLoadingAuth(false);
-        toast.success('cadastrado com sucesso');
-        navigate('/dashboard');
-      })
-    })
-    .catch((err)=>{
-      console.log('error: ' + err);
-      toast.error('erro ao cadastrar');
+    } catch (err) {
+      // Detailed error handling
       setLoadingAuth(false);
-    })
+      
+      switch(err.code) {
+        case 'auth/invalid-login-credentials':
+          toast.error('Email ou senha incorretos');
+          break;
+        case 'auth/user-not-found':
+          toast.error('Usuário não encontrado');
+          break;
+        case 'auth/wrong-password':
+          toast.error('Senha incorreta');
+          break;
+        case 'auth/user-disabled':
+          toast.error('Conta desativada');
+          break;
+        case 'auth/invalid-email':
+          toast.error('Email inválido');
+          break;
+        default:
+          console.error('Login error:', err);
+          toast.error('Erro ao fazer login. Tente novamente.');
+      }
+    }
   }
 
-  function storageUser(data){
-    localStorage.setItem('@userdata',JSON.stringify(data));
+  async function signUp(userData, type) {
+    setLoadingAuth(true);
+    
+    try {
+      // Validate input
+      if (!userData.email || !userData.senha) {
+        toast.error('Email e senha são obrigatórios');
+        setLoadingAuth(false);
+        return;
+      }
+
+      // Create user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.senha);
+      const uid = userCredential.user.uid;
+      
+      // Determine collection based on user type
+      let docRef;
+      if (type === 'tecnico') {
+        docRef = doc(db, 'tecnicos', uid);
+      } else {
+        docRef = doc(db, 'clientes', uid);
+      }
+      
+      // Prepare user data for storage
+      const userDataToStore = {
+        nome: userData.nome,
+        email: userData.email,
+        ...(userData.cpf && { cpf: userData.cpf }),
+        ...(userData.empresaNome && { empresaNome: userData.empresaNome }),
+      };
+      
+      // Store user data in Firestore
+      await setDoc(docRef, userDataToStore);
+      
+      // Prepare data for context and local storage
+      const data = {
+        uid,
+        ...userDataToStore
+      };
+      
+      // Update state and storage
+      setUser(data);
+      setUserType(type);
+      storageUser(data, type);
+      setLoadingAuth(false);
+      toast.success('Cadastrado com sucesso');
+      navigate('/dashboard');
+      
+    } catch (err) {
+      // Detailed error handling for sign up
+      setLoadingAuth(false);
+      
+      switch(err.code) {
+        case 'auth/email-already-in-use':
+          toast.error('Email já está em uso');
+          break;
+        case 'auth/invalid-email':
+          toast.error('Email inválido');
+          break;
+        case 'auth/operation-not-allowed':
+          toast.error('Operação não permitida');
+          break;
+        case 'auth/weak-password':
+          toast.error('Senha muito fraca');
+          break;
+        default:
+          console.error('Signup error:', err);
+          toast.error('Erro ao cadastrar. Tente novamente.');
+      }
+    }
+  }
+
+  function storageUser(data, type){
+    localStorage.setItem('@userdata', JSON.stringify(data));
+    localStorage.setItem('@usertype', type);
   }
 
   async function logOut() {
-    await signOut(auth);
-    localStorage.removeItem('@userdata');
-    setUser(null);
+    try {
+      await signOut(auth);
+      localStorage.removeItem('@userdata');
+      localStorage.removeItem('@usertype');
+      setUser(null);
+      setUserType(null);
+      navigate('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast.error('Erro ao fazer logout');
+    }
   }
 
   return(
-    <AuthContext.Provider 
+    <AuthContext.Provider
       value={{
         signed: !!user,
         user,
+        userType,
         signIn,
         signUp,
         loadingAuth,
@@ -115,12 +219,12 @@ function AuthProvider({ children }){
         logOut,
         storageUser,
         setUser,
-
+        setUserType,
       }}
     >
       {children}
     </AuthContext.Provider>
-  )
+  ) 
 }
 
 export default AuthProvider;

@@ -1,0 +1,156 @@
+.container {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f6f8f9 0%, #e5ebee 100%);
+  padding: 2rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 28rem;
+  padding: 2.5rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem;
+  height: 0.25rem;
+  background-color: #3498db;
+  border-radius: 0.125rem;
+}
+
+.userTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.userTypeButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 0.75rem;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.userTypeButton:hover {
+  background-color: #f5f5f5;
+  border-color: #3498db;
+  transform: scale(1.05);
+}
+
+.userTypeButton svg {
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.userTypeButton:hover svg {
+  color: #3498db;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  margin-bottom: 0.5rem;
+  color: #34495e;
+  font-weight: 600;
+}
+
+.input {
+  padding: 0.75rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.radioGroup {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.submitButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.loginLink {
+  text-align: center;
+  margin-top: 1rem;
+  color: #7f8c8d;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.loginLink:hover {
+  color: #3498db;
+}
+
+.errorMessage {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}

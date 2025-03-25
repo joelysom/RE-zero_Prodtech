@@ -16,7 +16,8 @@ function Login() {
   const handleSignIn = async (e) => {
     e.preventDefault();
     if (email !== '' && password !== '') {
-      await signIn(email, password);
+      const userType = isTécnico ? 'tecnico' : 'cliente';
+      await signIn(email, password, userType);
     }
   };
 
@@ -44,32 +45,60 @@ function Login() {
           </div>
           <img src={userIcon} alt="Ícone de Usuário" className={styles['user-icon']} />
           <h1>Técnico</h1>
-          <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input 
+            type="email" 
+            placeholder="Email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+          />
+          <input 
+            type="password" 
+            placeholder="Senha" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          />
           <div className={styles['remember-forgot']}>
             <label>
               <input type="checkbox" /> Lembrar de mim?
             </label>
             <a href="#">Esqueceu sua senha?</a>
           </div>
-          <button type="submit">{loadingAuth ? 'Carregando...' : 'Entrar'}</button>
+          <button type="submit">
+            {loadingAuth ? 'Carregando...' : 'Entrar'}
+          </button>
         </form>
       </div>
 
       {/* Formulário Cliente */}
       <div className={`${styles['form-container']} ${styles['sign-in']}`}>
-        <form>
+        <form onSubmit={handleSignIn}>
           <img src={userIcon} alt="Ícone de Usuário" className={styles['user-icon']} />
           <h1>Cliente</h1>
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Senha" />
+          <input 
+            type="email" 
+            placeholder="Email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            required 
+          />
+          <input 
+            type="password" 
+            placeholder="Senha" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+          />
           <div className={styles['remember-forgot']}>
             <label>
               <input type="checkbox" /> Lembrar de mim?
             </label>
             <a href="#">Esqueceu sua senha?</a>
           </div>
-          <button>Entrar</button>
+          <button type="submit">
+            {loadingAuth ? 'Carregando...' : 'Entrar'}
+          </button>
         </form>
       </div>
 
