@@ -1,242 +1,223 @@
 import { addDoc, collection, doc, getDoc, getDocs, updateDoc } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
-import { FiPlusCircle } from "react-icons/fi"
-import { useNavigate, useParams } from "react-router-dom";
+import { FiPlusCircle, FiArrowLeft } from "react-icons/fi"
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Header from "../../components/Header"
 import Title from "../../components/Title"
 import { AuthContext } from "../../contexts/auth";
 import { db } from "../../services/firebaseConnection";
 import './new.css';
-export default function New(){
 
-  const {user} = useContext(AuthContext);
-  const {id} =useParams();
-  const navigate = useNavigate()
-;  
-  const [customers,setCustomers] = useState([]);
-  const [loadingCustomer,setLoadingCustomer] = useState(true);
+export default function New() {
+  const { user, userType } = useContext(AuthContext);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+  const [customers, setCustomers] = useState([]);
+  const [loadingCustomer, setLoadingCustomer] = useState(true);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
 
-  const [customerSelected,setCustomerSelected] = useState(0);
-  const [assunto,setAssunto]=useState('');
-  const [complemento,setComplemento]=useState('');
-  const [status,setStatus]=useState('');
-  const [editId,setEditId]=useState(false);
+  const [customerSelected, setCustomerSelected] = useState(0);
+  const [assunto, setAssunto] = useState('');
+  const [complemento, setComplemento] = useState('');
+  const [status, setStatus] = useState('');
+  const [editId, setEditId] = useState(false);
 
-
-  useEffect(()=>{
-    console.log(id);
-    async function loadingCustomers(){
-      const listRef = collection(db,'customers');
-      await getDocs(listRef)
-      .then((snapshot)=>{
-        let list = [];
-        snapshot.forEach((doc)=>{
-          list.push({
-            id: doc.id,
-            nomeEmpresa:doc.data().nomeEmpresa,
-          })
-        })
-        if(snapshot.docs.size === 0){
-          toast.error('Nenhuma empresa encontrada');
-          setLoadingCustomer(false);
-          setCustomers({id:1,nomeEmpresa:'error'})
-        }
-        setCustomers(list);
-        setLoadingCustomer(false);
-
-        if(id) {
-          loadId(list);
-        }
-      })
-      .catch(()=>{
-        toast.error('erro ao buscar cliente')
-        setLoadingCustomer(false);
-        setCustomers({id:1,nomeEmpresa:'error'})
-      })
-      
-    }
-    loadingCustomers();
-  },[id])
-
-  const loadId = async(list) =>{
-    const docRef = doc(db,'chamados',id);
-    await getDoc(docRef)
-    .then((snapshot)=>{
-      setAssunto(snapshot.data().assunto);
-      setComplemento(snapshot.data().complemento);
-      setStatus(snapshot.data().status);
-      console.log(snapshot.data());
-
-      let clienteIndex = list.findIndex(item => item.id === snapshot.data().clienteId);
-      setCustomerSelected(clienteIndex);
-      setEditId(true)
-      
-    })
-    .catch((error)=>{
-      console.log(error);
-      toast.error('usuário não encontrado');
-      setEditId(false)
-    })
-  }
-
-  const handleOption = (e) =>{
-    setStatus(e.target.value);
-    console.log(e.target.value);
-  }
-
-  const handleTextArea = (e) =>{
-    setComplemento(e.target.value);
-    console.log(e.target.value);
-  }
-
-  const handleChangeSelect = (e) =>{
-    setAssunto(e.target.value);
-    console.log(e.target.value);
-  }
-
-  const handleCustomerSelected = (e) =>{
-    setCustomerSelected(e.target.value);
-    console.log(e.target.value);
-  }
-
-  const handleRegister = async (e) =>{
-    e.preventDefault();
-
-    if(editId){
-      const docRef = doc(db,'chamados',id);
-      await updateDoc(docRef,{
-        cliente:customers[customerSelected].nomeEmpresa,
-        clienteId:customers[customerSelected].id,
-        assunto:assunto,
-        status:status,
-        complemento:complemento,
-        userId:user.uid,
-      })
-      .then(() =>{
-        toast.info('Chamado atualizado com sucesso!');
-        setComplemento('');
-        setCustomerSelected(0);
-        navigate('/dashboard')
-
-      })
-      .catch((error)=>{
-        console.log(error);
-        toast.error('Ops,Erro ao atualizar esse chamado')
-      })
+  useEffect(() => {
+    // Restrict access to tecnico users only
+    if (userType !== 'tecnico') {
+      toast.error('Acesso não autorizado');
+      navigate('/dashboard');
       return;
     }
+
+    async function loadingCustomers() {
+      try {
+        const listRef = collection(db, 'clientes');
+        const snapshot = await getDocs(listRef);
+        
+        if (snapshot.empty) {
+          toast.warning('Nenhuma empresa encontrada');
+          setCustomers([]);
+          return;
+        }
+
+        const list = snapshot.docs.map(doc => ({
+          id: doc.id,
+          nomeEmpresa: doc.data().empresaNome || 'Empresa sem nome'
+        }));
+
+        setCustomers(list);
+        
+        if (id) {
+          await loadId(list);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar clientes:', error);
+        toast.error('Erro ao carregar empresas. Tente novamente.');
+      } finally {
+        setLoadingCustomer(false);
+      }
+    }
+
+    loadingCustomers();
+  }, [id, userType, navigate]);
+
+  const loadId = async (list) => {
+    try {
+      const docRef = doc(db, 'chamados', id);
+      const snapshot = await getDoc(docRef);
+      
+      if (!snapshot.exists()) {
+        toast.error('Chamado não encontrado');
+        return;
+      }
+
+      const data = snapshot.data();
+      setAssunto(data.assunto);
+      setComplemento(data.complemento);
+      setStatus(data.status);
+
+      const clienteIndex = list.findIndex(item => item.id === data.clienteId);
+      setCustomerSelected(clienteIndex !== -1 ? clienteIndex : 0);
+      setEditId(true);
+    } catch (error) {
+      console.error('Erro ao carregar chamado:', error);
+      toast.error('Erro ao carregar detalhes do chamado');
+      setEditId(false);
+    }
+  }
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
     
-    await addDoc(collection(db,'chamados'),{
-      created:new Date(),
-      cliente:customers[customerSelected].nomeEmpresa,
-      clienteId:customers[customerSelected].id,
-      assunto:assunto,
-      status:status,
-      complemento:complemento,
-      userId:user.uid,
-    })
-    .then(()=>{
-      toast.success('chamado registrado');
-      setCustomerSelected(0);
+    // Validation checks
+    if (!assunto || !status || !complemento) {
+      toast.error('Por favor, preencha todos os campos');
+      return;
+    }
+
+    if (customerSelected === undefined || customers.length === 0) {
+      toast.error('Selecione um cliente válido');
+      return;
+    }
+
+    setLoadingSubmit(true);
+
+    try {
+      const chamadoData = {
+        created: new Date(),
+        cliente: customers[customerSelected].nomeEmpresa,
+        clienteId: customers[customerSelected].id,
+        assunto,
+        status,
+        complemento,
+        userId: user.uid,
+        assignedUser: user.nome || 'Não atribuído'
+      };
+
+      if (editId) {
+        const docRef = doc(db, 'chamados', id);
+        await updateDoc(docRef, chamadoData);
+        toast.info('Chamado atualizado com sucesso!');
+      } else {
+        await addDoc(collection(db, 'chamados'), chamadoData);
+        toast.success('Chamado registrado com sucesso!');
+      }
+
+      // Reset form
       setComplemento('');
-    })
-    .catch((error)=>{
-      toast.error('Ops,erro ao registrar.Tente Novamente.');
-      console.log(error);
-    })
+      setCustomerSelected(0);
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Erro ao processar chamado:', error);
+      toast.error(`Ops, erro ao ${editId ? 'atualizar' : 'registrar'} chamado. Tente novamente.`);
+    } finally {
+      setLoadingSubmit(false);
+    }
   }
 
   return (
     <div>
       <Header />
       <div className="content">
-
-          <Title name={ id ? 'Editando Chamado':'Novo Chamado'}>
+        <div className="top-bar">
+          <Title name={id ? 'Editando Chamado' : 'Novo Chamado'}>
             <FiPlusCircle size={25} />
           </Title>
-       
-        
-      
+          
+          <Link to="/dashboard" className="btn-back">
+            <FiArrowLeft size={24} />
+            Voltar
+          </Link>
+        </div>
 
-      <div className="container"  >
-
-        <form className="form-profile" onSubmit={handleRegister}>
-
-          <label>Cliente:</label>
-          { loadingCustomer ? 
-            (
-              <input type='text' disabled={true} value='Carregando' 
-              />
-            )
-            :
-            (
-              <select value={customerSelected} onChange={handleCustomerSelected}>
-                {customers.map((item,index)=>{
-                  return(
-                  <option key={index} value={index}>
+        <div className="container">
+          <form className="form-profile" onSubmit={handleRegister}>
+            <label>Cliente:</label>
+            {loadingCustomer ? (
+              <input type='text' disabled value='Carregando clientes...' />
+            ) : customers.length === 0 ? (
+              <input type='text' disabled value='Nenhum cliente disponível' />
+            ) : (
+              <select 
+                value={customerSelected} 
+                onChange={(e) => setCustomerSelected(Number(e.target.value))}
+                disabled={loadingCustomer}
+              >
+                {customers.map((item, index) => (
+                  <option key={item.id} value={index}>
                     {item.nomeEmpresa}
                   </option>
-                  )
-                })
-                }
+                ))}
               </select>
-            )
-        }
+            )}
 
-          <label>Assunto:</label>
-          <select 
-            onChange={handleChangeSelect}
-            value={assunto}
+            <label>Assunto:</label>
+            <select 
+              value={assunto}
+              onChange={(e) => setAssunto(e.target.value)}
+              required
             >
-          <option value='suporte'>Suporte</option>
-          <option value='visita tecnica'>Visita Técnica</option>
-          <option value='financeiro'>Financeiro</option>
-          </select>
+              <option value="">Selecione um assunto</option>
+              <option value="suporte">Suporte</option>
+              <option value="visita tecnica">Visita Técnica</option>
+              <option value="financeiro">Financeiro</option>
+            </select>
 
-          <label>Status</label>
+            <label>Status</label>
+            <div className="status">
+              {['Em aberto', 'atendido', 'Em progresso'].map(statusOption => (
+                <div key={statusOption}>
+                  <input 
+                    type='radio' 
+                    name='status' 
+                    value={statusOption}
+                    checked={status === statusOption}
+                    onChange={() => setStatus(statusOption)} 
+                  />
+                  <span>{statusOption}</span>
+                </div>
+              ))}
+            </div>
 
-          <div className="status">
-          <input 
-            type='radio' 
-            name='status' 
-            value='Em aberto'
-            checked={status === 'Em aberto'}
-            onChange={handleOption} 
-          />
-          <span>Em Aberto</span>
+            <label>Complemento</label>
+            <textarea 
+              placeholder="Descreva seu problema"
+              value={complemento}
+              onChange={(e) => setComplemento(e.target.value)}
+              required
+            />
 
-          <input 
-            type='radio' 
-            name='status' 
-            value='atendido' 
-            checked={status === 'atendido'}
-            onChange={handleOption} 
-          />
-          <span>Atendido</span>
-
-          <input 
-            type='radio' 
-            name='status' 
-            value='Em progresso' 
-            checked={status ==='Em progresso'}
-            onChange={handleOption} 
-          />
-          <span>Em progresso</span>
-          </div>
-
-          <label>Complemento</label>
-          <textarea 
-          typeof="text" 
-          placeholder="Descreva seu problema"
-          onChange={handleTextArea}
-          value={complemento}
-          >
-          
-          </textarea>
-          <button type="submit">Registrar</button>
-        </form>
-      </div>
+            <button 
+              type="submit" 
+              disabled={loadingSubmit || loadingCustomer}
+            >
+              {loadingSubmit ? 'Processando...' : 'Registrar'}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   )
