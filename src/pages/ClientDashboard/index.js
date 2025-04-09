@@ -7,7 +7,7 @@ import "./dashboard.css";
 import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 import { format } from "date-fns/esm";
-import Modal from "../../components/Modal";
+import ClientModal from "../../components/ClientModal";
 import { toast } from "react-toastify";
 import Filter from "../../components/Filter/Filter";
 import { AuthContext } from "../../contexts/auth";
