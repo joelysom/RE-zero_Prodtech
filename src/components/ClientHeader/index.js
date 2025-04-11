@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { FiHome, FiSettings, FiLogOut, FiPlus } from "react-icons/fi";
+import { FiHome, FiLogOut, FiPlus } from "react-icons/fi";
+import { MdOutlineSupportAgent } from "react-icons/md";
 import { AuthContext } from "../../contexts/auth";
 import "./header.css";
 import Logo from "../../assets/Logo - ProdTech 1.svg";
@@ -25,8 +26,8 @@ const ClientSidebar = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/profile" className="nav-item">
-            <FiSettings className="icon" size={20} /> Perfil
+          <NavLink to="/support" className="nav-item">
+            <MdOutlineSupportAgent className="icon" size={20} /> Support
           </NavLink>
         </li>
       </ul>

@@ -1,0 +1,157 @@
+.appContainer {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+  }
+  
+  /* Adjust support-container to account for sidebar */
+  .supportContainer {
+    flex: 1;
+    width: calc(100% - 250px); /* Adjust based on your sidebar width */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+    margin-left: 250px; /* Adjust based on your sidebar width */
+  }
+  
+  /* Header Styles */
+  .supportHeader {
+    background-color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userInfo {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #12121e;
+  }
+  
+  /* Content Styles */
+  .supportContent {
+    display: flex;
+    flex-direction: row;
+    padding: 40px;
+    flex: 1;
+    gap: 40px;
+  }
+  
+  .supportInfo {
+    flex: 1;
+    padding-right: 20px;
+  }
+  
+  .supportInfo h2 {
+    font-size: 32px;
+    color: #12121e;
+    margin-bottom: 24px;
+  }
+  
+  .supportDescription {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 24px;
+  }
+  
+  .supportInstructions {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  .supportFormContainer {
+    flex: 1;
+    background-color: #12121e;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 150px;
+    color: white;
+  }
+  
+  .formField {
+    margin-bottom: 20px;
+  }
+  
+  .formField label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .formInput, .formTextarea {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+  }
+  
+  .formTextarea {
+    resize: vertical;
+  }
+  
+  .sendButton {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .sendButton:hover {
+    background-color: #f57c00;
+  }
+  
+  .sendButton:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Footer Styles */
+  .supportFooter {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .homeButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #12121e;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .homeButton:hover {
+    color: #ff9800;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .supportContent {
+      flex-direction: column;
+      padding: 20px;
+    }
+    
+    .supportInfo {
+      padding-right: 0;
+      margin-bottom: 30px;
+    }
+  }

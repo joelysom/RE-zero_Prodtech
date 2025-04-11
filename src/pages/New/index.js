@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { FiPlusCircle, FiArrowLeft } from "react-icons/fi"
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Header from "../../components/Header"
+import Header from "../../components/ClientHeader"
 import Title from "../../components/Title"
 import { AuthContext } from "../../contexts/auth";
 import { db } from "../../services/firebaseConnection";

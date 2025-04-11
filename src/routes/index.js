@@ -9,6 +9,7 @@ import Customers from "../pages/Customers";
 import CustomersList from "../pages/CostumersList";
 import New from "../pages/New";
 import NewClient from "../pages/NewClient";
+import Support from "../pages/Support";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth";
 
@@ -59,6 +60,20 @@ function RoutesApp() {
           </Private>
         }
       />
+
+
+      {/* Rota para edição de chamados (apenas para técnicos) */}
+      <Route
+        path="/support"
+        element={
+          <Private>
+            {/* Componente que exibe algo em /support */}
+            <Support />
+          </Private>
+        }
+      />
+
+
       
       {/* Rota para edição de chamados (apenas para técnicos) */}
       <Route
@@ -70,6 +85,7 @@ function RoutesApp() {
         }
       />
     </Routes>
+
   );
 }
 
