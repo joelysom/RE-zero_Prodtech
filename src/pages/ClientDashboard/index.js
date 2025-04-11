@@ -1,360 +1,309 @@
-import { useEffect, useState, useContext } from "react";
-import ClientSidebar from "../../components/ClientHeader";
-import Title from "../../components/Title";
-import { FiMessageSquare, FiPlus, FiSearch, FiFilter } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import "./dashboard.css";
-import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
-import { db } from "../../services/firebaseConnection";
-import { format } from "date-fns/esm";
-import ClientModal from "../../components/ClientModal";
-import { toast } from "react-toastify";
-import Filter from "../../components/Filter/Filter";
-import { AuthContext } from "../../contexts/auth";
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { 
+  FiPlus, 
+  FiSearch, 
+  FiEye, 
+  FiFilter,
+  FiX
+} from 'react-icons/fi';
+import { collection, getDocs } from 'firebase/firestore';
+import { format } from 'date-fns';
 
-const listRef = collection(db, "chamados");
+import { AuthContext } from '../../contexts/auth';
+import { db } from '../../services/firebaseConnection';
+import ClientSidebar from '../../components/ClientHeader';
+import ClientModal from '../../components/ClientModal';
+
+import './client-dashboard.css';
 
 export default function ClientDashboard() {
   const { user } = useContext(AuthContext);
+  
   const [chamados, setChamados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [loadMore, setLoadMore] = useState(false);
-  const [lastDoc, setLastDoc] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [details, setDetails] = useState({});
-  const [filters, setFilters] = useState({ status: "", search: "" });
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [detail, setDetail] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [filteredChamados, setFilteredChamados] = useState([]);
   const [showFilterModal, setShowFilterModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Função de alteração na barra de pesquisa
-  const handleSearchChange = (event) => {
-    const { value } = event.target;
-    setFilters((prevFilters) => ({ ...prevFilters, search: value }));
-  };
-
-  // Função chamada quando pressionar "Enter" na barra de pesquisa
-  const handleSearchKeyDown = (event) => {
-    if (event.key === "Enter") {
-      loadChamadosWithSearch(filters.search);
-    }
-  };
-
-  // Carrega chamados ao iniciar o componente
   useEffect(() => {
-    async function loadChamados() {
-      // Verifica se o usuário está autenticado
-      if (!user?.uid) {
-        setLoading(false);
-        return;
-      }
-
-      // Query para buscar apenas os chamados do cliente atual
-      const q = query(
-        listRef,
-        where("clienteId", "==", user.uid),
-        orderBy("created", "desc"),
-        limit(5)
-      );
-
-      const querySnapshot = await getDocs(q);
-      setChamados([]);
-      await updateState(querySnapshot);
-      setLoading(false);
+    if(user) {
+      loadChamados();
     }
-
-    loadChamados();
   }, [user]);
 
-  // Função para carregar chamados com filtro de pesquisa
-  async function loadChamadosWithSearch(searchTerm) {
+  useEffect(() => {
+    applyFilters();
+  }, [chamados, statusFilter, searchTerm]);
+
+  async function loadChamados() {
     setLoading(true);
     
-    // Query base filtrando por clienteId
-    let q = query(
-      listRef,
-      where("clienteId", "==", user.uid),
-      orderBy("created", "desc"),
-      limit(5)
-    );
-
-    // Se tiver um termo de pesquisa, poderia implementar uma lógica para filtragem adicional
-    // Esta implementação básica recarrega todos os chamados do cliente
-    // Em uma implementação real, você precisaria usar algum tipo de índice composto ou campo de pesquisa
-
-    const querySnapshot = await getDocs(q);
-    setChamados([]);
-    await updateState(querySnapshot);
-    setLoading(false);
+    try {
+      // Buscar TODOS os chamados e filtrar no cliente
+      // Esta abordagem não é ideal para produção com muitos dados,
+      // mas evita a necessidade de índices compostos
+      const chamadosRef = collection(db, 'chamados');
+      const querySnapshot = await getDocs(chamadosRef);
+      
+      if (querySnapshot.empty) {
+        setIsEmpty(true);
+        setChamados([]);
+        setFilteredChamados([]);
+        return;
+      }
+      
+      const listaChamados = [];
+      
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        
+        // Filtrar apenas os chamados relacionados ao usuário atual
+        if (data.clienteId === user.uid || data.userId === user.uid) {
+          listaChamados.push({
+            id: doc.id,
+            assunto: data.assunto || '',
+            cliente: data.cliente || '',
+            clienteId: data.clienteId || '',
+            created: data.created,
+            createdFormat: format(data.created.toDate(), 'dd/MM/yyyy'),
+            status: data.status || '',
+            complemento: data.complemento || '',
+            tipo: data.tipo || '',
+            categoria: data.categoria || '',
+            assignedUser: data.assignedUser || 'Não atribuído',
+          });
+        }
+      });
+      
+      // Ordenar por data de criação (mais recente primeiro)
+      listaChamados.sort((a, b) => b.created - a.created);
+      
+      // Update states
+      setChamados(listaChamados);
+      setFilteredChamados(listaChamados);
+      setIsEmpty(listaChamados.length === 0);
+      
+      console.log('Chamados carregados:', listaChamados.length);
+    } catch (error) {
+      console.error("Erro ao carregar chamados:", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
+  function togglePostModal(item) {
+    setShowPostModal(!showPostModal);
+    setDetail(item);
   }
 
-  // Atualiza os chamados no estado
-  const updateState = async (querySnapshot) => {
-    const isCollectionEmpty = querySnapshot.size === 0;
-    if (!isCollectionEmpty) {
-      let list = [];
-      querySnapshot.forEach((doc) => {
-        list.push({
-          id: doc.id,
-          cliente: doc.data().cliente,
-          clienteId: doc.data().clienteId,
-          assunto: doc.data().assunto,
-          status: doc.data().status,
-          created: doc.data().created,
-          createdFormat: format(doc.data().created.toDate(), "dd/MM/yyyy"),
-          complemento: doc.data().complemento,
-          assignedUser: doc.data().assignedUser || "Não atribuído",
-        });
-      });
-      setChamados((chamado) => [...chamado, ...list]);
-
-      const lastItem = querySnapshot.docs[querySnapshot.docs.length - 1];
-      setLastDoc(lastItem);
-      setIsEmpty(false);
-    } else {
-      setIsEmpty(true);
+  function applyFilters() {
+    if (!chamados.length) {
+      setFilteredChamados([]);
+      return;
     }
-    setLoadMore(false);
-  };
-
-  // Handle filter changes and apply them
-  const handleFilterChange = async (newFilters) => {
-    setFilters(newFilters);
-    const { status, search } = newFilters;
-
-    // Query base filtrando por clienteId
-    let q = query(
-      listRef,
-      where("clienteId", "==", user.uid),
-      orderBy("created", "desc"),
-      limit(5)
-    );
-
-    // Aplica filtro de status se presente
-    if (status) {
-      q = query(listRef, 
-        where("clienteId", "==", user.uid),
-        where("status", "==", status),
-        orderBy("created", "desc"),
-        limit(5)
+    
+    let results = [...chamados];
+    
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      results = results.filter(chamado => chamado.status === statusFilter);
+    }
+    
+    // Apply search
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      results = results.filter(chamado => 
+        (chamado.assunto && chamado.assunto.toLowerCase().includes(searchLower)) ||
+        (chamado.cliente && chamado.cliente.toLowerCase().includes(searchLower)) ||
+        (chamado.categoria && chamado.categoria.toLowerCase().includes(searchLower))
       );
     }
+    
+    setFilteredChamados(results);
+  }
 
-    const querySnapshot = await getDocs(q);
-    setChamados([]);
-    await updateState(querySnapshot);
-  };
-
-  // Handle loading more chamados
-  const handleMore = async () => {
-    setLoadMore(true);
-
-    // Query para carregar mais chamados, iniciando após o último documento
-    const q = query(
-      listRef,
-      where("clienteId", "==", user.uid),
-      orderBy("created", "desc"),
-      startAfter(lastDoc),
-      limit(5)
+  function onUpdateChamado(updatedChamado) {
+    const updatedList = chamados.map(chamado => 
+      chamado.id === updatedChamado.id ? updatedChamado : chamado
     );
-
-    const querySnapshot = await getDocs(q);
-    await updateState(querySnapshot);
-  };
-
-  // Toggle modal for details
-  const toggleModal = (item) => {
-    setShowModal(!showModal);
-    setDetails(item);
-  };
-
-  // Toggle the filter modal visibility
-  const toggleFilterModal = () => {
-    setShowFilterModal(!showFilterModal);
-  };
-
-  // Versão simplificada do Modal para o cliente (sem botões de edição/exclusão)
-  const ClientModal = ({ conteudo, buttomBack }) => {
-    return (
-      <div className="modal">
-        <div className="container">
-          <button className="btn-back" onClick={buttomBack}>
-            <FiSearch size={25} color="#fff" />
-            Voltar
-          </button>
-
-          <main>
-            <h2>Detalhes do Chamado:</h2>
-            <div className="details">
-              <span>
-                Cliente: <i>{conteudo.cliente}</i>
-              </span>
-            </div>
-            <div className="details">
-              <span>
-                Assunto: <i>{conteudo.assunto}</i>
-              </span>
-              <span>
-                Cadastrado em: <i>{conteudo.createdFormat}</i>
-              </span>
-            </div>
-            <div className="details">
-              <span>
-                Status:{" "}
-                <i
-                  className="badge"
-                  style={{
-                    color: "#fff",
-                    backgroundColor: conteudo.status === "Em aberto" ? "#5cb85c" : "#999",
-                  }}
-                >
-                  {conteudo.status}
-                </i>
-              </span>
-            </div>
-
-            {conteudo.complemento && (
-              <div className="details">
-                <span>Complemento</span>
-                <p>{conteudo.complemento}</p>
-              </div>
-            )}
-
-            <div className="details">
-              <span>
-                Atribuído a: <i>{conteudo.assignedUser || "Não atribuído"}</i>
-              </span>
-            </div>
-          </main>
-        </div>
-      </div>
-    );
-  };
-
-  if (loading) {
-    return (
-      <div className="dashboard-container">
-        <ClientSidebar />
-        <div className="content">
-          <Title name="Meus Chamados">
-            <FiMessageSquare size={25} />
-          </Title>
-
-          <div className="container dashboard">
-            <span>Buscando Chamados...</span>
-          </div>
-        </div>
-      </div>
-    );
+    
+    setChamados(updatedList);
   }
 
   return (
     <div className="dashboard-container">
       <ClientSidebar />
+      
       <div className="content">
-        <Title name="Meus Chamados">
-          <FiMessageSquare size={25} />
-        </Title>
-
-        <div className="top-bar">
-          <div className="search-filter">
-            {/* Barra de pesquisa */}
-            <input
-              type="text"
-              placeholder="Pesquisar por assunto"
-              value={filters.search}
-              onChange={handleSearchChange}
-              onKeyDown={handleSearchKeyDown}
-              className="search-input"
+        <div className="header-container">
+          <h1>Meus Chamados</h1>
+          
+          <Link to="/new-client" className="new-link">
+            <FiPlus size={25} />
+            Novo Chamado
+          </Link>
+        </div>
+        
+        <div className="filter-container">
+          <div className="search-container">
+            <input 
+              type="text" 
+              placeholder="Buscar chamado..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-
-            {/* Ícone de filtro */}
-            <button onClick={toggleFilterModal} className="btn-filter">
-              <FiFilter size={25} />
+            <button className="search-button">
+              <FiSearch size={20} color="#FFF" />
             </button>
           </div>
+          
+          <button 
+            className="filter-button"
+            onClick={() => setShowFilterModal(!showFilterModal)}
+          >
+            <FiFilter size={20} color="#FFF" />
+            Filtrar
+          </button>
+          
+          {showFilterModal && (
+            <div className="filter-modal">
+              <div className="filter-header">
+                <h3>Filtros</h3>
+                <button onClick={() => setShowFilterModal(false)}>
+                  <FiX size={18} />
+                </button>
+              </div>
+              
+              <div className="filter-options">
+                <label>Status:</label>
+                <div className="radio-group">
+                  <label>
+                    <input 
+                      type="radio"
+                      name="status"
+                      value="all"
+                      checked={statusFilter === 'all'}
+                      onChange={() => setStatusFilter('all')}
+                    />
+                    Todos
+                  </label>
+                  
+                  <label>
+                    <input 
+                      type="radio"
+                      name="status"
+                      value="Em aberto"
+                      checked={statusFilter === 'Em aberto'}
+                      onChange={() => setStatusFilter('Em aberto')}
+                    />
+                    Em aberto
+                  </label>
+                  
+                  <label>
+                    <input 
+                      type="radio"
+                      name="status"
+                      value="Em andamento"
+                      checked={statusFilter === 'Em andamento'}
+                      onChange={() => setStatusFilter('Em andamento')}
+                    />
+                    Em andamento
+                  </label>
+                  
+                  <label>
+                    <input 
+                      type="radio"
+                      name="status"
+                      value="Finalizado"
+                      checked={statusFilter === 'Finalizado'}
+                      onChange={() => setStatusFilter('Finalizado')}
+                    />
+                    Finalizado
+                  </label>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-
-        {showFilterModal && (
-          <Filter 
-            onFilter={handleFilterChange} 
-            onClose={toggleFilterModal}
-            clientMode={true} // Passa flag para o componente Filter saber que está no modo cliente
-          />
-        )}
-
-        {chamados.length === 0 ? (
-          <div className="container dashboard">
-            <span>Nenhum chamado registrado...</span>
-
-            <Link to="/new" className="new">
-              <FiPlus size={25} color="#fff" />
-              Novo chamado
-            </Link>
-          </div>
-        ) : (
-          <>
-            <Link to="/new" className="new">
-              <FiPlus size={25} color="#fff" />
-              Novo chamado
-            </Link>
-
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Assunto</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Cadastrado em</th>
-                  <th scope="col">Atribuído a</th>
-                  <th scope="col">#</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {chamados.map((item, index) => (
+        
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Cliente</th>
+              <th scope="col">Assunto</th>
+              <th scope="col">Status</th>
+              <th scope="col">Cadastrado em</th>
+              <th scope="col">Técnico</th>
+              <th scope="col">#</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={6}>
+                  <div className="loading-container">
+                    <span>Buscando chamados...</span>
+                  </div>
+                </td>
+              </tr>
+            ) : isEmpty ? (
+              <tr>
+                <td colSpan={6}>
+                  <div className="empty-container">
+                    <span>Nenhum chamado encontrado...</span>
+                    <Link to="/new-client">Criar novo chamado</Link>
+                  </div>
+                </td>
+              </tr>
+            ) : (
+              filteredChamados.map((item, index) => {
+                return (
                   <tr key={index}>
+                    <td data-label="Cliente">{item.cliente}</td>
                     <td data-label="Assunto">{item.assunto}</td>
                     <td data-label="Status">
-                      <span
-                        className="badge"
-                        style={{
-                          backgroundColor: item.status === "Em aberto" ? "#5CB85C" : "#ccc",
+                      <span 
+                        className="badge" 
+                        style={{ 
+                          backgroundColor: 
+                            item.status === 'Em aberto' ? '#5cb85c' : 
+                            item.status === 'Em andamento' ? '#F6a935' : '#999'
                         }}
                       >
                         {item.status}
                       </span>
                     </td>
                     <td data-label="Cadastrado">{item.createdFormat}</td>
-                    <td data-label="Atribuído a">{item.assignedUser}</td>
+                    <td data-label="Técnico">{item.assignedUser}</td>
                     <td data-label="#">
-                      <button
-                        onClick={() => toggleModal(item)}
+                      <button 
                         className="action"
-                        style={{ backgroundColor: "#3583f6" }}
+                        onClick={() => togglePostModal(item)}
+                        style={{ backgroundColor: '#3583f6' }}
                       >
-                        <FiSearch size={17} color="#fff" />
+                        <FiEye color="#fff" size={17} />
                       </button>
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {loadMore && <h3>Buscando mais chamados...</h3>}
-            {!isEmpty && !loadMore && (
-              <button onClick={handleMore} className="btn-more">
-                Buscar mais
-              </button>
+                );
+              })
             )}
-          </>
+          </tbody>
+        </table>
+        
+        {showPostModal && (
+          <ClientModal 
+            conteudo={detail}
+            buttomBack={() => setShowPostModal(false)}
+            onUpdateChamado={onUpdateChamado}
+          />
         )}
       </div>
-
-      {showModal && (
-        <ClientModal
-          conteudo={details}
-          buttomBack={() => setShowModal(!showModal)}
-        />
-      )}
     </div>
   );
 }

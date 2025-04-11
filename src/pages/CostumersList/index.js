@@ -9,9 +9,8 @@ import "./CostumersList.css";
 export default function Customers() {
   const [clientes, setClientes] = useState([]);
 
-  // Função para buscar todos os clientes cadastrados
   const fetchClientes = async () => {
-    const querySnapshot = await getDocs(collection(db, 'customers'));
+    const querySnapshot = await getDocs(collection(db, 'clientes'));
     const clientesList = querySnapshot.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
@@ -35,17 +34,25 @@ export default function Customers() {
           <table>
             <thead>
               <tr>
+                <th>Tipo</th>
                 <th>Nome</th>
-                <th>CNPJ</th>
-                <th>Endereço</th>
+                <th>Email</th>
+                <th>Documento</th>
+                <th>Representante</th>
+                <th>Empresa</th>
+                <th>Criado em</th>
               </tr>
             </thead>
             <tbody>
               {clientes.map(cliente => (
                 <tr key={cliente.id}>
-                  <td>{cliente.nomeEmpresa}</td>
-                  <td>{cliente.cnpj}</td>
-                  <td>{cliente.endereco}</td>
+                  <td>{cliente.tipo === 'autonomous' ? 'Autônomo' : 'Empresa'}</td>
+                  <td>{cliente.nome}</td>
+                  <td>{cliente.email}</td>
+                  <td>{cliente.cpfOrCnpj}</td>
+                  <td>{cliente.representante || '-'}</td>
+                  <td>{cliente.nomeEmpresa || '-'}</td>
+                  <td>{cliente.criadoEm?.toDate?.().toLocaleString?.() || '-'}</td>
                 </tr>
               ))}
             </tbody>

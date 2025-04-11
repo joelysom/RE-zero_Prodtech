@@ -1,0 +1,72 @@
+.content {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.container {
+  background: #f4f7fb;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.formProfile {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formProfile label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.formProfile input[type="text"],
+.formProfile input[type="email"],
+.formProfile input[type="password"] {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border 0.2s;
+}
+
+.formProfile input:focus {
+  border-color: #3273dc;
+  outline: none;
+}
+
+.formProfile input[type="radio"] {
+  margin-right: 5px;
+  accent-color: #3273dc;
+}
+
+.formProfile button {
+  height: 45px;
+  border: none;
+  background-color: #3273dc;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.formProfile button:hover {
+  background-color: #245bb5;
+}
+
+@media screen and (max-width: 768px) {
+  .formProfile {
+    gap: 12px;
+  }
+
+  .formProfile input,
+  .formProfile button {
+    font-size: 14px;
+  }
+}

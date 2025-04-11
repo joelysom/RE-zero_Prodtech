@@ -1,0 +1,378 @@
+/* modal.module.css */
+
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+  width: 95%;
+  max-width: 900px;
+  max-height: 85vh; /* Reduzindo para 85% da altura da janela */
+  overflow-y: auto; /* Mantendo auto para mostrar apenas quando necessário */
+  margin: auto;
+  scrollbar-width: thin; /* Para Firefox */
+  scrollbar-color: #c1c1c1 #f1f1f1; /* Para Firefox - thumb e track */
+}
+
+.btnBack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 20px;
+  background-color: #3b3b3b;
+  color: #fff;
+  border: 0;
+  border-radius: 4px 4px 0 0;
+  width: 100%;
+  justify-content: flex-start;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btnBack:hover {
+  background-color: #4a4a4a;
+}
+
+.modalMain {
+  padding: 30px;
+}
+
+.modalMain h2 {
+  margin-bottom: 25px;
+  font-size: 24px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+/* Cabeçalho do ticket */
+.ticketHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.ticketId span {
+  background-color: #f0f0f0;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-weight: bold;
+  color: #333;
+  font-size: 16px;
+}
+
+.ticketStatus {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.ticketStatus span {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.statusSelector {
+  position: relative;
+}
+
+.currentStatus {
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 140px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.statusDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 5px;
+  z-index: 10;
+  display: none;
+}
+
+.statusSelector:hover .statusDropdown {
+  display: block;
+}
+
+.statusOption {
+  color: white;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.statusOption:hover {
+  opacity: 0.9;
+}
+
+/* Seções do ticket */
+.ticketSection {
+  margin-bottom: 30px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 25px;
+}
+
+.ticketSection h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #555;
+  font-weight: 600;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.detailItem {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  padding: 5px 0;
+}
+
+.detailItemFullWidth {
+  grid-column: span 2;
+}
+
+.detailIcon {
+  color: #666;
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+.detailLabel {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.detailValue {
+  font-weight: 500;
+  color: #333;
+  font-size: 16px;
+}
+
+.detailValueHighlight {
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 18px;
+}
+
+.detailDescription {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px;
+  margin-top: 8px;
+  white-space: pre-wrap;
+  min-height: 120px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.descriptionBox {
+  margin-top: 20px;
+}
+
+/* Categorias e tipos */
+.categoryBadge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  background-color: #3f51b5;
+}
+
+.categoryType {
+  background-color: #673ab7;
+}
+
+/* Seção de atribuição */
+.assignSection {
+  background-color: #f3f8ff;
+}
+
+.assignUser {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.currentAssignment {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.assignmentLabel {
+  font-size: 15px;
+  color: #666;
+}
+
+.assignmentValue {
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 18px;
+}
+
+.assignControls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.userSelect {
+  flex: 1;
+  min-width: 220px;
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-size: 15px;
+}
+
+.btnAssign {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  font-size: 15px;
+}
+
+.btnAssign:hover {
+  background-color: #3d8b40;
+}
+
+.btnSelfAssign {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  font-size: 15px;
+}
+
+.btnSelfAssign:hover {
+  background-color: #1976d2;
+}
+
+/* Melhorar a rolagem */
+.container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0 8px 8px 0;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsividade com mais espaço */
+@media (max-width: 900px) {
+  .modalMain {
+    padding: 20px;
+  }
+  
+  .ticketSection {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .detailItemFullWidth {
+    grid-column: span 1;
+  }
+  
+  .ticketHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .assignControls {
+    flex-direction: column;
+  }
+  
+  .container {
+    width: 100%;
+    max-height: 95vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 10px;
+  }
+  
+  .modalMain {
+    padding: 15px;
+  }
+  
+  .ticketSection {
+    padding: 15px;
+  }
+  
+  .detailsGrid {
+    gap: 15px;
+  }
+}
