@@ -1,0 +1,501 @@
+
+/* Reset completo do modal para garantir centralização Cliente*/
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Container interno do modal */
+.container {
+  background-color: #fff;
+  width: 90%;  /* Ajustado para ser responsivo */
+  max-width: 650px;  /* Limitado para não ficar muito largo */
+  max-height: 85vh;  /* Limita altura para não ultrapassar a tela */
+  border-radius: 4px;
+  overflow: auto;  /* Permite rolagem quando necessário */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  margin: 0 auto;  /* Centraliza horizontalmente */
+  position: relative;  /* Para posicionamento absoluto interno */
+}
+
+/* Botão voltar */
+.btnBack {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #3b3b3b;
+  color: #fff;
+  border: 0;
+  width: 100%;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  gap: 8px;
+}
+
+.btnBack:hover {
+  background-color: #4a4a4a;
+}
+
+/* Área principal de conteúdo */
+.main {
+  padding: 20px;
+}
+
+/* Header com título e botão de chat */
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Título da seção */
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin: 0;
+  flex: 1;
+}
+
+/* Botões de ação */
+.actionButtons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Botão do chat */
+.chatButton, .editButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.chatButton:hover, .editButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.chatButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Ações de edição */
+.editActions {
+  display: flex;
+  gap: 10px;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.saveButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #43a047;
+}
+
+.cancelButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancelButton:hover {
+  background-color: #e53935;
+}
+
+/* Campos de informação */
+.infoField {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.infoFieldIcon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.infoFieldContent {
+  flex: 1;
+}
+
+.infoFieldLabel {
+  display: block;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.infoFieldValue {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Estilo para assunto/descrição */
+.infoSubject {
+  margin-top: 10px;
+}
+
+.infoDescription {
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  padding: 15px;
+  font-size: 15px;
+  line-height: 1.5;
+  margin-top: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+/* Badges para categorias */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  margin-right: 10px;
+}
+
+.type {
+  background-color: #2196f3;
+}
+
+.category {
+  background-color: #673ab7;
+}
+
+.status {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+/* Campos de edição */
+.editInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.editInput:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+.editTextarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.editTextarea:focus {
+  border-color: #2196f3;
+  outline: none;
+}
+
+/* Dropdown de seleção */
+.dropdownContainer {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.dropdown:hover {
+  border-color: #bbb;
+}
+
+.dropdown.open {
+  border-color: #2196f3;
+}
+
+.dropdownIcon {
+  color: #666;
+  transition: transform 0.2s;
+}
+
+.dropdown.open .dropdownIcon {
+  transform: rotate(180deg);
+}
+
+.dropdownOptions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 10;
+  max-height: 150px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownOption {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdownOption:hover {
+  background-color: #f5f5f5;
+}
+
+/* Estilos para o modal de chat */
+.chatModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.chatModal {
+  background-color: #fff;
+  width: 90%;
+  max-width: 500px;
+  height: 80vh;
+  max-height: 600px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.chatHeader {
+  background-color: #181c2e;
+  color: white;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.chatHeader h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.closeChat {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.chatMessages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.messageItem {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.clienteMessage {
+  justify-content: flex-end;
+}
+
+.tecnicoMessage {
+  justify-content: flex-start;
+}
+
+.messageContent {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  position: relative;
+}
+
+.clienteMessage .messageContent {
+  background-color: #dcf8c6;
+  border-bottom-right-radius: 5px;
+}
+
+.tecnicoMessage .messageContent {
+  background-color: #fff;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.messageContent p {
+  margin: 0;
+  padding: 0;
+  word-wrap: break-word;
+}
+
+.messageTime {
+  font-size: 11px;
+  color: #999;
+  display: block;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.messageForm {
+  display: flex;
+  padding: 12px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+}
+
+.messageInput {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: 14px;
+  outline: none;
+}
+
+.messageInput:focus {
+  border-color: #2196f3;
+}
+
+.sendButton {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.sendButton:hover {
+  background-color: #0d8aee;
+}
+
+.loading {
+  text-align: center;
+  color: #999;
+  padding: 20px 0;
+}
+
+.noMessages {
+  text-align: center;
+  color: #999;
+  padding: 20px 0;
+  font-style: italic;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container, .chatModal {
+    width: 95%;
+    max-height: 90vh;
+  }
+ 
+  .main {
+    padding: 15px;
+  }
+  
+  .messageContent {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .container, .chatModal {
+    width: 98%;
+    max-height: 95vh;
+  }
+ 
+  .main {
+    padding: 10px;
+  }
+ 
+  .infoBasic, .infoChamado {
+    padding: 0;
+  }
+  
+  .messageContent {
+    max-width: 90%;
+  }
+}

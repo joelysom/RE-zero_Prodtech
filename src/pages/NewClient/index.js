@@ -1,3 +1,4 @@
+// Restrict access to Cliente users only
 import { addDoc, collection } from "firebase/firestore";
 import { useContext, useState } from "react";
 import { FiArrowLeft, FiChevronDown } from "react-icons/fi";

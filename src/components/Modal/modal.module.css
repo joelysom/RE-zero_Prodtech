@@ -60,6 +60,198 @@
   padding-bottom: 15px;
 }
 
+/* Novo estilo para cabeçalho com botão de chat */
+.headerWithChat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.headerWithChat h2 {
+  margin-bottom: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Botão do chat */
+.chatButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.chatButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para o modal de chat */
+.chatModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.chatModal {
+  background-color: #fff;
+  width: 90%;
+  max-width: 500px;
+  height: 80vh;
+  max-height: 600px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.chatHeader {
+  background-color: #181c2e;
+  color: white;
+  padding: 12px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.chatHeader h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.closeChat {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.chatMessages {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.messageItem {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.clienteMessage {
+  justify-content: flex-start;
+}
+
+.tecnicoMessage {
+  justify-content: flex-end;
+}
+
+.messageContent {
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 15px;
+  position: relative;
+  word-break: break-word;
+}
+
+.clienteMessage .messageContent {
+  background-color: #fff;
+  border-bottom-left-radius: 5px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.tecnicoMessage .messageContent {
+  background-color: #dcf8c6;
+  border-bottom-right-radius: 5px;
+}
+
+.messageContent p {
+  margin: 0;
+  padding: 0;
+}
+
+.messageTime {
+  font-size: 11px;
+  color: #999;
+  display: block;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.messageForm {
+  display: flex;
+  padding: 12px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e0e0e0;
+}
+
+.messageInput {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: 14px;
+  outline: none;
+}
+
+.messageInput:focus {
+  border-color: #2196f3;
+}
+
+.sendButton {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.sendButton:hover {
+  background-color: #0d8aee;
+}
+
+.loading {
+  text-align: center;
+  color: #999;
+  padding: 20px 0;
+}
+
+.noMessages {
+  text-align: center;
+  color: #999;
+  padding: 20px 0;
+  font-style: italic;
+}
+
 /* Cabeçalho do ticket */
 .ticketHeader {
   display: flex;
@@ -358,6 +550,330 @@
     max-height: 95vh;
   }
 }
+
+/* Estilos para o modo de edição */
+.editButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.editButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.editButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Actions e controles de edição */
+.actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.editActions {
+  display: flex;
+  gap: 10px;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.saveButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #43a047;
+}
+
+.cancelButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancelButton:hover {
+  background-color: #e53935;
+}
+
+/* Campos de edição */
+.editInput {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+  background-color: #fff;
+  color: #333;
+  margin-top: 5px;
+}
+
+.editInput:focus {
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+.editTextarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.5;
+  margin-top: 5px;
+  background-color: #fff;
+}
+
+.editTextarea:focus {
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+}
+
+/* Dropdown de seleção */
+.dropdownContainer {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  transition: border-color 0.2s;
+  margin-top: 5px;
+}
+
+.dropdown:hover {
+  border-color: #bbb;
+}
+
+.dropdown.open {
+  border-color: #2196f3;
+}
+
+.dropdownIcon {
+  color: #666;
+  transition: transform 0.2s;
+}
+
+.dropdown.open .dropdownIcon {
+  transform: rotate(180deg);
+}
+
+.dropdownOptions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  z-index: 10;
+  max-height: 180px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdownOption {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.dropdownOption:hover {
+  background-color: #f5f5f5;
+}
+
+/* Campo de seleção de status */
+.statusSelector {
+  position: relative;
+  display: inline-block;
+}
+
+.currentStatus {
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  min-width: 140px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statusDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 5px;
+  z-index: 100;
+  display: none;
+}
+
+.statusSelector:hover .statusDropdown {
+  display: block;
+}
+
+.statusOption {
+  color: white;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  text-align: center;
+}
+
+.statusOption:hover {
+  opacity: 0.9;
+}
+
+/* Estados de loading */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #666;
+  padding: 15px 0;
+}
+
+.loadingSpinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #2196f3;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Ajustes para quando o modal está em modo de edição */
+.modalMain.editing h2 {
+  color: #2196f3;
+}
+
+/* Melhorias de acessibilidade para campos editáveis */
+.editInput:disabled, 
+.editTextarea:disabled,
+.dropdown.disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Indicadores visuais para edição */
+.editingIndicator {
+  display: inline-block;
+  font-size: 12px;
+  color: #2196f3;
+  margin-left: 10px;
+  font-weight: normal;
+}
+
+/* Ajustes responsivos para o modo de edição */
+@media (max-width: 768px) {
+  .editActions, .actionButtons {
+    flex-wrap: wrap;
+  }
+  
+  .actionButton {
+    flex: 1;
+    justify-content: center;
+    min-width: 120px;
+  }
+  
+  .dropdownOptions {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .editInput, .editTextarea, .dropdown {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+  
+  .dropdownOption {
+    padding: 8px 10px;
+  }
+  
+  .actionButton {
+    padding: 8px;
+    font-size: 13px;
+  }
+  
+  .currentStatus {
+    min-width: 120px;
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
+
+/* Responsividade Chat */
+@media (max-width: 768px) {
+  .chatModal {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .messageContent {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .chatModal {
+    width: 98%;
+    max-height: 95vh;
+  }
+  
+  .messageContent {
+    max-width: 90%;
+  }
+}
+
 
 @media (max-width: 480px) {
   .modal {

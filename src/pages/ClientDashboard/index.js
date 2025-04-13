@@ -5,10 +5,12 @@ import {
   FiSearch, 
   FiEye, 
   FiFilter,
-  FiX
+  FiX,
+  FiTrash
 } from 'react-icons/fi';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { format } from 'date-fns';
+import { toast } from 'react-toastify'; // Importando o toast
 
 import { AuthContext } from '../../contexts/auth';
 import { db } from '../../services/firebaseConnection';
@@ -29,6 +31,8 @@ export default function ClientDashboard() {
   const [filteredChamados, setFilteredChamados] = useState([]);
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [chamadoToDelete, setChamadoToDelete] = useState(null);
 
   useEffect(() => {
     if(user) {
@@ -44,9 +48,6 @@ export default function ClientDashboard() {
     setLoading(true);
     
     try {
-      // Buscar TODOS os chamados e filtrar no cliente
-      // Esta abordagem não é ideal para produção com muitos dados,
-      // mas evita a necessidade de índices compostos
       const chamadosRef = collection(db, 'chamados');
       const querySnapshot = await getDocs(chamadosRef);
       
@@ -62,7 +63,6 @@ export default function ClientDashboard() {
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         
-        // Filtrar apenas os chamados relacionados ao usuário atual
         if (data.clienteId === user.uid || data.userId === user.uid) {
           listaChamados.push({
             id: doc.id,
@@ -80,10 +80,8 @@ export default function ClientDashboard() {
         }
       });
       
-      // Ordenar por data de criação (mais recente primeiro)
       listaChamados.sort((a, b) => b.created - a.created);
       
-      // Update states
       setChamados(listaChamados);
       setFilteredChamados(listaChamados);
       setIsEmpty(listaChamados.length === 0);
@@ -91,6 +89,7 @@ export default function ClientDashboard() {
       console.log('Chamados carregados:', listaChamados.length);
     } catch (error) {
       console.error("Erro ao carregar chamados:", error);
+      toast.error("Erro ao carregar chamados!");
     } finally {
       setLoading(false);
     }
@@ -109,12 +108,10 @@ export default function ClientDashboard() {
     
     let results = [...chamados];
     
-    // Apply status filter
     if (statusFilter !== 'all') {
       results = results.filter(chamado => chamado.status === statusFilter);
     }
     
-    // Apply search
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
       results = results.filter(chamado => 
@@ -134,6 +131,64 @@ export default function ClientDashboard() {
     
     setChamados(updatedList);
   }
+
+  function confirmDelete(chamado) {
+    setChamadoToDelete(chamado);
+    setShowDeleteConfirm(true);
+  }
+
+  async function handleDeleteChamado() {
+    if (!chamadoToDelete) return;
+    
+    try {
+      const docRef = doc(db, 'chamados', chamadoToDelete.id);
+      await deleteDoc(docRef);
+      
+      // Atualizar a lista após deletar
+      const updatedChamados = chamados.filter(item => item.id !== chamadoToDelete.id);
+      setChamados(updatedChamados);
+      
+      // Fechar o modal de confirmação
+      setShowDeleteConfirm(false);
+      setChamadoToDelete(null);
+      
+      // Usar toast ao invés de alert
+      toast.success("Chamado deletado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao deletar chamado:", error);
+      toast.error("Erro ao deletar chamado!");
+    }
+  }
+
+  // Modal de confirmação de exclusão
+  const DeleteConfirmModal = () => {
+    if (!showDeleteConfirm) return null;
+    
+    return (
+      <div className="modal-container">
+        <div className="modal-content">
+          <h2>Confirmar exclusão</h2>
+          <p>Tem certeza que deseja excluir o chamado "{chamadoToDelete?.assunto}"?</p>
+          <p>Esta ação não pode ser desfeita.</p>
+          
+          <div className="modal-actions">
+            <button 
+              onClick={() => setShowDeleteConfirm(false)}
+              className="cancel-button"
+            >
+              Cancelar
+            </button>
+            <button 
+              onClick={handleDeleteChamado}
+              className="delete-button"
+            >
+              Deletar
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="dashboard-container">
@@ -288,6 +343,14 @@ export default function ClientDashboard() {
                       >
                         <FiEye color="#fff" size={17} />
                       </button>
+                      
+                      <button 
+                        className="action"
+                        onClick={() => confirmDelete(item)}
+                        style={{ backgroundColor: '#FF4136' }}
+                      >
+                        <FiTrash color="#fff" size={17} />
+                      </button>
                     </td>
                   </tr>
                 );
@@ -303,6 +366,8 @@ export default function ClientDashboard() {
             onUpdateChamado={onUpdateChamado}
           />
         )}
+        
+        <DeleteConfirmModal />
       </div>
     </div>
   );

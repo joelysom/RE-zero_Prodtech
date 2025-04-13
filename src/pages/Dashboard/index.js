@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import Title from "../../components/Title";
-import { FiDelete, FiEdit2, FiMessageSquare, FiPlus, FiSearch, FiFilter } from "react-icons/fi";
+import { FiDelete, FiMessageSquare, FiPlus, FiSearch, FiFilter } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import "./dashboard.css";
-import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, startAfter, where } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, startAfter, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 import { format } from "date-fns/esm";
 import Modal from "../../components/Modal";
 import { toast } from "react-toastify";
-import Filter from "../../components/Filter/Filter"; // Importando o filter component
+import Filter from "../../components/Filter/Filter";
 
 const listRef = collection(db, "chamados");
 
@@ -22,7 +22,8 @@ export default function Dashboard() {
   const [showModal, setShowModal] = useState(false);
   const [details, setDetails] = useState({});
   const [filters, setFilters] = useState({ status: "", user: "", cause: "", search: "" });
-  const [showFilterModal, setShowFilterModal] = useState(false); // Estado para controle do filtro
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [unsubscribe, setUnsubscribe] = useState(null); // Estado para armazenar a função para cancelar o listener
 
   // Função de alteração na barra de pesquisa
   const handleSearchChange = (event) => {
@@ -33,63 +34,119 @@ export default function Dashboard() {
   // Função chamada quando pressionar "Enter" na barra de pesquisa
   const handleSearchKeyDown = (event) => {
     if (event.key === "Enter") {
-      // Chame a função para realizar a pesquisa com o valor de `filters.search`
-      console.log("Pesquisa por: ", filters.search);
+      // Aplica os filtros de pesquisa
+      applyFilters();
     }
   };
 
-  // Carrega chamados ao iniciar o componente
-  useEffect(() => {
-    async function loadChamados() {
-      const q = query(listRef, orderBy("created", "desc"), limit(5));
-      const querySnapshot = await getDocs(q);
-      setChamados([]);
-      await updateState(querySnapshot);
-      setLoading(false);
+  // Aplica os filtros e configura o listener em tempo real
+  const applyFilters = () => {
+    // Cancela o listener anterior se existir
+    if (unsubscribe) {
+      unsubscribe();
     }
-    loadChamados();
-  }, []);
 
-  // Atualiza os chamados no estado
-  const updateState = async (querySnapshot) => {
-    const isCollectionEmpty = querySnapshot.size === 0;
-    if (!isCollectionEmpty) {
-      let list = [];
-      querySnapshot.forEach((doc) => {
-        list.push({
-          id: doc.id,
-          cliente: doc.data().cliente,
-          clienteId: doc.data().clienteId,
-          assunto: doc.data().assunto,
-          status: doc.data().status,
-          created: doc.data().created,
-          createdFormat: format(doc.data().created.toDate(), "dd/MM/yyyy"),
-          complemento: doc.data().complemento,
-          assignedUser: doc.data().assignedUser || "Não atribuído",
-        });
-      });
-      setChamados((chamado) => [...chamado, ...list]);
-
-      const lastItem = querySnapshot.docs[querySnapshot.docs.length - 1];
-      setLastDoc(lastItem);
-    } else {
-      setIsEmpty(true);
-    }
-    setLoadMore(false);
-  };
-
-  // Handle filter changes and apply them
-  const handleFilterChange = async (filters) => {
-    setFilters(filters);
-    const { status, user, cause } = filters;
-
+    // Constrói a consulta base
     let q = query(
       listRef,
       orderBy("created", "desc"),
       limit(5)
     );
 
-    // Apply filters if present
+    // Aplica filtros se presentes
+    const { status, user, cause, search } = filters;
+
+    if (status) {
+      q = query(q, where("status", "==", status));
+    }
+
+    if (user === "Sem atribuição") {
+      q = query(q, where("assignedUser", "==", "Não atribuído"));
+    } else if (user === "Com atribuição") {
+      q = query(q, where("assignedUser", "not-in", ["Não atribuído", null]));
+    }
+
+    if (cause) {
+      q = query(q, where("assunto", "array-contains", cause));
+    }
+
+    // Configura o listener em tempo real
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      const isCollectionEmpty = querySnapshot.size === 0;
+      
+      if (!isCollectionEmpty) {
+        let list = [];
+        querySnapshot.forEach((doc) => {
+          list.push({
+            id: doc.id,
+            cliente: doc.data().cliente,
+            clienteId: doc.data().clienteId,
+            assunto: doc.data().assunto,
+            status: doc.data().status,
+            created: doc.data().created,
+            createdFormat: format(doc.data().created.toDate(), "dd/MM/yyyy"),
+            complemento: doc.data().complemento,
+            assignedUser: doc.data().assignedUser || "Não atribuído",
+          });
+        });
+        
+        setChamados(list);
+        setIsEmpty(false);
+
+        // Armazena o último documento para paginação
+        const lastItem = querySnapshot.docs[querySnapshot.docs.length - 1];
+        setLastDoc(lastItem);
+      } else {
+        setChamados([]);
+        setIsEmpty(true);
+      }
+      
+      setLoading(false);
+    }, (error) => {
+      console.error("Erro ao ouvir alterações:", error);
+      toast.error("Erro ao atualizar dados em tempo real");
+      setLoading(false);
+    });
+
+    // Armazena a função para cancelar o listener
+    setUnsubscribe(() => unsub);
+  };
+
+  // Carrega chamados ao iniciar o componente ou quando os filtros mudam
+  useEffect(() => {
+    setLoading(true);
+    applyFilters();
+
+    // Limpa o listener quando o componente for desmontado
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
+  }, []); // Carrega apenas na inicialização
+
+  // Handle filter changes and apply them
+  const handleFilterChange = async (newFilters) => {
+    setFilters(newFilters);
+    setLoading(true);
+    
+    // Aplica os novos filtros e reconfigura o listener
+    setTimeout(() => {
+      applyFilters();
+    }, 0);
+  };
+
+  // Handle loading more chamados
+  const handleMore = async () => {
+    setLoadMore(true);
+
+    // Para carregar mais, precisamos fazer uma consulta padrão (não em tempo real)
+    // pois o onSnapshot não suporta bem a paginação incremental
+    let q = query(listRef, orderBy("created", "desc"), startAfter(lastDoc), limit(5));
+    
+    // Aplica os mesmos filtros que estão ativos
+    const { status, user, cause } = filters;
+
     if (status) {
       q = query(q, where("status", "==", status));
     }
@@ -105,17 +162,36 @@ export default function Dashboard() {
     }
 
     const querySnapshot = await getDocs(q);
-    setChamados([]);
-    await updateState(querySnapshot);
-  };
+    
+    const isMoreEmpty = querySnapshot.size === 0;
+    
+    if (!isMoreEmpty) {
+      let list = [];
+      querySnapshot.forEach((doc) => {
+        list.push({
+          id: doc.id,
+          cliente: doc.data().cliente,
+          clienteId: doc.data().clienteId,
+          assunto: doc.data().assunto,
+          status: doc.data().status,
+          created: doc.data().created,
+          createdFormat: format(doc.data().created.toDate(), "dd/MM/yyyy"),
+          complemento: doc.data().complemento,
+          assignedUser: doc.data().assignedUser || "Não atribuído",
+        });
+      });
+      
+      setChamados((chamados) => [...chamados, ...list]);
 
-  // Handle loading more chamados
-  const handleMore = async () => {
-    setLoadMore(true);
-
-    const q = query(listRef, orderBy("created", "desc"), startAfter(lastDoc), limit(5));
-    const querySnapshot = await getDocs(q);
-    await updateState(querySnapshot);
+      // Atualiza o último documento para paginação
+      const lastItem = querySnapshot.docs[querySnapshot.docs.length - 1];
+      setLastDoc(lastItem);
+    } else {
+      toast.info("Não há mais chamados para carregar");
+      setIsEmpty(true);
+    }
+    
+    setLoadMore(false);
   };
 
   // Toggle modal for details
@@ -127,12 +203,14 @@ export default function Dashboard() {
   // Handle chamado deletion
   const handleDelete = async (id) => {
     const docRef = doc(db, "chamados", id);
-    await deleteDoc(docRef)
-      .then(() => {
-        toast.success("Item deletado com sucesso");
-        setChamados(chamados.filter((chamado) => chamado.id !== id));
-      })
-      .catch(() => toast.error("Ops, erro ao deletar"));
+    try {
+      await deleteDoc(docRef);
+      toast.success("Item deletado com sucesso");
+      // Não precisamos atualizar manualmente o estado, pois o listener fará isso automaticamente
+    } catch (error) {
+      console.error("Erro ao deletar:", error);
+      toast.error("Ops, erro ao deletar");
+    }
   };
 
   // Toggle the filter modal visibility
@@ -173,7 +251,7 @@ export default function Dashboard() {
               placeholder="Pesquisar por assunto"
               value={filters.search}
               onChange={handleSearchChange}
-              onKeyDown={handleSearchKeyDown} // Adiciona o evento de tecla pressionada
+              onKeyDown={handleSearchKeyDown}
               className="search-input"
             />
 
@@ -185,7 +263,7 @@ export default function Dashboard() {
         </div>
 
         {showFilterModal && (
-          <Filter onFilter={handleFilterChange} onClose={toggleFilterModal} /> // Filter modal component
+          <Filter onFilter={handleFilterChange} onClose={toggleFilterModal} />
         )}
 
         {chamados.length === 0 ? (
@@ -218,7 +296,7 @@ export default function Dashboard() {
 
               <tbody>
                 {chamados.map((item, index) => (
-                  <tr key={index}>
+                  <tr key={item.id}>
                     <td data-label="Cliente">{item.cliente}</td>
                     <td data-label="Assunto">{item.assunto}</td>
                     <td data-label="Status">
@@ -231,11 +309,6 @@ export default function Dashboard() {
                     <td data-label="#">
                       <button onClick={() => toggleModal(item)} className="action" style={{ backgroundColor: "#3583f6" }}>
                         <FiSearch size={17} color="#fff" />
-                      </button>
-                      <button className="action" style={{ backgroundColor: "#f6a935" }}>
-                        <Link to={`/new/${item.id}`}>
-                          <FiEdit2 size={17} color="#fff" />
-                        </Link>
                       </button>
                       <button onClick={() => handleDelete(item.id)} className="action" style={{ backgroundColor: "#FD441B" }}>
                         <FiDelete size={17} color="#fff" />

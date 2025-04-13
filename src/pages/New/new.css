@@ -1,187 +1,201 @@
-.new {
-  background-color: #6fa30f;
-  float: right;
-  text-decoration: none;
+/* New.css - Versão atualizada para o formulário de chamados do técnico */
+.dashboard-container {
   display: flex;
-  align-items: center;
-  border: 0;
-  padding: 0.6em 1em;
-  border-radius: 6px;
-  justify-content: center;
-  margin-bottom: 1.5em;
-  font-weight: 600;
-  color: #fff;
-  transition: all 0.3s ease-in-out;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.new svg {
-  margin-right: 8px;
-}
-
-.new:hover {
-  background-color: #5cbf0d;
-  transform: translateY(-2px);
-}
-
-.table {
-  border: 1px solid #CCC;
   width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-  background: #fff;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
-  overflow: hidden;
+  background-color: #f8f9fa;
+  min-height: 100vh;
 }
 
-.table caption {
-  font-size: 1.5em;
-  margin: 0.5em 0 0.75em;
-  font-weight: bold;
-  color: #333;
-}
-
-.tableRow {
-  background-color: #f9f9f9;
-  border-bottom: 1px solid #ddd;
-  transition: background 0.3s;
-}
-
-.tableRow:hover {
-  background-color: #f1f1f1;
-}
-
-.tableCell {
-  text-align: center;
-  padding: 0.75em;
-}
-
-.tableHeader {
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  background: #181C2E;
-  color: #fff;
-}
-
-.actionButton {
-  border: 0;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 4px;
-  margin-right: 4px;
-  display: inline-block;
-  font-size: 0.9em;
-}
-
-.actionButtonIcon {
-  vertical-align: middle;
-}
-
-.badge {
-  padding: 5px 8px;
-  color: #fff;
-  border-radius: 3px;
-  font-weight: 600;
-}
-
-.btnMore {
-  background-color: #181C2E;
-  color: #fff;
-  padding: 0.6em 1.2em;
-  border-radius: 6px;
-  margin-top: 1.5em;
-  cursor: pointer;
-  border: 0;
-  font-size: 1.1em;
-  transition: background 0.3s;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.btnMore:hover {
-  background-color: #232743;
-}
-
-.filterContainer {
+.content {
+  flex: 1;
+  padding: 20px;
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
 }
 
-.filterContainerInput, 
-.filterContainerSelect {
-  padding: 8px;
-  font-size: 14px;
-}
-
-.filterContainerButton {
-  padding: 8px 12px;
-  font-size: 14px;
-  background-color: #3583f6;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.topBar {
+.header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 20px;
 }
 
-.searchFilter {
+.header-container h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.back-button {
   display: flex;
-  gap: 1em;
   align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s;
 }
 
-.searchInput {
-  padding: 8px 12px;
-  font-size: 1em;
+.back-button:hover {
+  color: #0056b3;
+}
+
+.form-container {
+  background-color: #444;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ticket-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-field label {
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  padding: 10px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  border: 1px solid #ccc;
-  width: 300px;
+  font-size: 14px;
+  width: 100%;
+  background-color: #fff;
 }
 
-.btnFilter {
-  background-color: transparent;
-  border: none;
+.form-field textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.right-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 30px;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+}
+
+.right-form-container h2 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.right-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right-form-field label {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Estilos para o dropdown customizado */
+.right-form-dropdown {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
+  user-select: none;
 }
 
-@media screen and (max-width: 550px) {
-  .table {
-    border: 0;
+.right-form-dropdown.open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.dropdown-option:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown-option:last-child {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.submit-button {
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #3583f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: block;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #2a6fc9;
+}
+
+.submit-button:disabled {
+  background-color: #84adf0;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
   
-  .table caption {
-    font-size: 1.3em;
+  .content > div {
+    flex-direction: column;
   }
   
-  .tableHeader {
-    display: none;
-  }
-  
-  .tableRow {
-    border-bottom: 3px solid #CCC;
-    display: block;
-    margin-bottom: 0.5em;
-  }
-  
-  .tableCell {
-    border-bottom: 1px solid #CCC;
-    display: block;
-    text-align: right;
-    font-size: 0.85em;
-    padding: 0.6em;
-  }
-  
-  .tableCell:before {
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
+  .right-form-container {
+    max-width: 100%;
+    margin-top: 20px;
   }
 }
