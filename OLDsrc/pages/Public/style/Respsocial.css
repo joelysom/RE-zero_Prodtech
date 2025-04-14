@@ -1,0 +1,45 @@
+.respsocial-container {
+  text-align: center;
+  max-width: 800px;
+  margin: auto;
+}
+
+.respsocial-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 40px;
+}
+
+.respsocial-text {
+  font-size: 20px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.respsocial-partners {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.partners-title {
+  display: inline-block;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #6d1b7b;
+  color: white;
+  width: 50vw;
+}
+
+.partners-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.partners-logos img {
+  max-height: 250px;
+}

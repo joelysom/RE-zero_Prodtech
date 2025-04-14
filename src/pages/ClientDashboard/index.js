@@ -10,14 +10,15 @@ import {
 } from 'react-icons/fi';
 import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
 import { format } from 'date-fns';
-import { toast } from 'react-toastify'; // Importando o toast
+import { toast } from 'react-toastify';
 
 import { AuthContext } from '../../contexts/auth';
 import { db } from '../../services/firebaseConnection';
 import ClientSidebar from '../../components/ClientHeader';
 import ClientModal from '../../components/ClientModal';
 
-import './client-dashboard.css';
+// Import CSS module
+import styles from './client-dashboard.module.css';
 
 export default function ClientDashboard() {
   const { user } = useContext(AuthContext);
@@ -152,7 +153,6 @@ export default function ClientDashboard() {
       setShowDeleteConfirm(false);
       setChamadoToDelete(null);
       
-      // Usar toast ao invés de alert
       toast.success("Chamado deletado com sucesso!");
     } catch (error) {
       console.error("Erro ao deletar chamado:", error);
@@ -165,22 +165,22 @@ export default function ClientDashboard() {
     if (!showDeleteConfirm) return null;
     
     return (
-      <div className="modal-container">
-        <div className="modal-content">
+      <div className={styles.modalContainer}>
+        <div className={styles.modalContent}>
           <h2>Confirmar exclusão</h2>
           <p>Tem certeza que deseja excluir o chamado "{chamadoToDelete?.assunto}"?</p>
           <p>Esta ação não pode ser desfeita.</p>
           
-          <div className="modal-actions">
+          <div className={styles.modalActions}>
             <button 
               onClick={() => setShowDeleteConfirm(false)}
-              className="cancel-button"
+              className={styles.cancelButton}
             >
               Cancelar
             </button>
             <button 
               onClick={handleDeleteChamado}
-              className="delete-button"
+              className={styles.deleteButton}
             >
               Deletar
             </button>
@@ -191,34 +191,34 @@ export default function ClientDashboard() {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className={styles.dashboardContainer}>
       <ClientSidebar />
       
-      <div className="content">
-        <div className="header-container">
+      <div className={styles.content}>
+        <div className={styles.headerContainer}>
           <h1>Meus Chamados</h1>
           
-          <Link to="/new-client" className="new-link">
+          <Link to="/new-client" className={styles.newLink}>
             <FiPlus size={25} />
             Novo Chamado
           </Link>
         </div>
         
-        <div className="filter-container">
-          <div className="search-container">
+        <div className={styles.filterContainer}>
+          <div className={styles.searchContainer}>
             <input 
               type="text" 
               placeholder="Buscar chamado..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="search-button">
+            <button className={styles.searchButton}>
               <FiSearch size={20} color="#FFF" />
             </button>
           </div>
           
           <button 
-            className="filter-button"
+            className={styles.filterButton}
             onClick={() => setShowFilterModal(!showFilterModal)}
           >
             <FiFilter size={20} color="#FFF" />
@@ -226,17 +226,17 @@ export default function ClientDashboard() {
           </button>
           
           {showFilterModal && (
-            <div className="filter-modal">
-              <div className="filter-header">
+            <div className={styles.filterModal}>
+              <div className={styles.filterHeader}>
                 <h3>Filtros</h3>
                 <button onClick={() => setShowFilterModal(false)}>
                   <FiX size={18} />
                 </button>
               </div>
               
-              <div className="filter-options">
+              <div className={styles.filterOptions}>
                 <label>Status:</label>
-                <div className="radio-group">
+                <div className={styles.radioGroup}>
                   <label>
                     <input 
                       type="radio"
@@ -286,7 +286,7 @@ export default function ClientDashboard() {
           )}
         </div>
         
-        <table>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th scope="col">Cliente</th>
@@ -301,7 +301,7 @@ export default function ClientDashboard() {
             {loading ? (
               <tr>
                 <td colSpan={6}>
-                  <div className="loading-container">
+                  <div className={styles.loadingContainer}>
                     <span>Buscando chamados...</span>
                   </div>
                 </td>
@@ -309,7 +309,7 @@ export default function ClientDashboard() {
             ) : isEmpty ? (
               <tr>
                 <td colSpan={6}>
-                  <div className="empty-container">
+                  <div className={styles.emptyContainer}>
                     <span>Nenhum chamado encontrado...</span>
                     <Link to="/new-client">Criar novo chamado</Link>
                   </div>
@@ -323,7 +323,7 @@ export default function ClientDashboard() {
                     <td data-label="Assunto">{item.assunto}</td>
                     <td data-label="Status">
                       <span 
-                        className="badge" 
+                        className={styles.badge} 
                         style={{ 
                           backgroundColor: 
                             item.status === 'Em aberto' ? '#5cb85c' : 
@@ -337,7 +337,7 @@ export default function ClientDashboard() {
                     <td data-label="Técnico">{item.assignedUser}</td>
                     <td data-label="#">
                       <button 
-                        className="action"
+                        className={styles.action}
                         onClick={() => togglePostModal(item)}
                         style={{ backgroundColor: '#3583f6' }}
                       >
@@ -345,7 +345,7 @@ export default function ClientDashboard() {
                       </button>
                       
                       <button 
-                        className="action"
+                        className={styles.action}
                         onClick={() => confirmDelete(item)}
                         style={{ backgroundColor: '#FF4136' }}
                       >

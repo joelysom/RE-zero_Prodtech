@@ -2,7 +2,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { FiUser } from "react-icons/fi";
 import { toast } from "react-toastify";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderTecnico";
 import Title from "../../components/Title";
 import { db } from "../../services/firebaseConnection";
 import styles from './signinClient.module.css';

@@ -1,5 +1,5 @@
 import { FiSettings, FiUpload } from "react-icons/fi";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderTecnico";
 import Title from "../../components/Title";
 import avatar from '../../assets/avatar.png';
 import { useContext, useState } from "react";

@@ -1,0 +1,73 @@
+.evolution-container {
+  text-align: center;
+  padding: 40px;
+  background-color: #fff;
+}
+
+.evolution-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #222;
+}
+
+.evolution-title span {
+  display: block;
+  margin-top: 10px;
+  color: #000;
+}
+
+.evolution-cards {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.evolution-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  text-align: left;
+  position: relative;
+}
+
+.evolution-logo {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 10px;
+  margin-left: 50px;
+}
+
+.evolution-year {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #222;
+  position: absolute;
+  left: 10px;
+  margin-left: 10px;
+}
+
+.evolution-text {
+  font-size: 1rem;
+  color: #555;
+  margin-top: 40px;
+}
+
+.evolu {
+  font-size: 50px;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .evolution-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .evolution-card {
+    width: 90%;
+  }
+}

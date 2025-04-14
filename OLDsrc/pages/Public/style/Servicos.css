@@ -1,0 +1,56 @@
+.servicos-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: url("../../../assets/Servicos//image//fundo.png") no-repeat center
+    center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 0px;
+  color: white;
+  padding-bottom: 50px;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 20px;
+  border-radius: 0;
+  text-align: left;
+  max-width: 500px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.btn {
+  background-color: #fbbf24;
+  color: #000;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 15px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.info-box {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: #1f1f2e;
+  padding: 30px;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}

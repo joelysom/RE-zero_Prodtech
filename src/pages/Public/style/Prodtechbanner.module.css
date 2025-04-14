@@ -1,0 +1,58 @@
+.prodtechbanner {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 0px;
+  color: white;
+  padding-bottom: 50px;
+  animation: changeBackground 20s infinite;
+}
+
+.prodtechbannerContent {
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  margin-left: 2%;
+  padding: 10px;
+  border-radius: 0;
+}
+
+.prodtitle {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  max-width: 80%;
+}
+
+.prodsubtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+  max-width: 80%;
+}
+
+@keyframes changeBackground {
+  0% {
+    background-image: url("../../../assets/Home/image/fundo_home.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  33% {
+    background-image: url("../../../assets/Contatos/img/Tela-de-fundo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  66% {
+    background-image: url("../../../assets/AProdTech/image/Protótipo - A Prodtech 1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  100% {
+    background-image: url("../../../assets/Home/image/fundo_home.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}

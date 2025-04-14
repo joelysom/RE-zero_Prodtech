@@ -1,0 +1,95 @@
+.services {
+  padding: 30px;
+  text-align: center;
+}
+
+.services h2 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.services p {
+  font-size: 1.5rem;
+  color: blue;
+  margin-bottom: 10px;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.service-card h3 {
+  color: black;
+}
+
+.service-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 300px;
+  min-width: 200px;
+  margin-top: 15px;
+}
+
+.service-card img,
+.service-card svg {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.btn-small {
+  background: purple;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 15px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.btn-small:hover {
+  background: darkviolet;
+}
+
+@media (max-width: 900px) {
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .service-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .services p {
+    font-size: 1.2rem;
+  }
+
+  .service-card img,
+  .service-card svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .btn-small {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+}

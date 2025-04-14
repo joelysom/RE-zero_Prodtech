@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderTecnico";
 import Title from "../../components/Title";
 import { FiDelete, FiMessageSquare, FiPlus, FiSearch, FiFilter } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import "./dashboard.css";
+import styles from "./dashboard.module.css";
 import { collection, deleteDoc, doc, getDocs, limit, orderBy, query, startAfter, where, onSnapshot } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 import { format } from "date-fns/esm";
@@ -243,8 +243,8 @@ export default function Dashboard() {
           <FiMessageSquare size={25} />
         </Title>
 
-        <div className="top-bar">
-          <div className="search-filter">
+        <div className={styles.topBar}>
+          <div className={styles.searchFilter}>
             {/* Barra de pesquisa */}
             <input
               type="text"
@@ -252,11 +252,11 @@ export default function Dashboard() {
               value={filters.search}
               onChange={handleSearchChange}
               onKeyDown={handleSearchKeyDown}
-              className="search-input"
+              className={styles.searchInput}
             />
 
             {/* Ícone de filtro */}
-            <button onClick={toggleFilterModal} className="btn-filter">
+            <button onClick={toggleFilterModal} className={styles.btnFilter}>
               <FiFilter size={25} />
             </button>
           </div>
@@ -270,48 +270,48 @@ export default function Dashboard() {
           <div className="container dashboard">
             <span>Nenhum chamado registrado...</span>
 
-            <Link to="/new" className="new">
+            <Link to="/new" className={styles.new}>
               <FiPlus size={25} color="#fff" />
               Novo chamado
             </Link>
           </div>
         ) : (
           <>
-            <Link to="/new" className="new">
+            <Link to="/new" className={styles.new}>
               <FiPlus size={25} color="#fff" />
               Novo chamado
             </Link>
 
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Cliente</th>
-                  <th scope="col">Assunto</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Cadastrado em</th>
-                  <th scope="col">Atribuído a</th>
-                  <th scope="col">#</th>
+            <table className={styles.table}>
+              <thead className={styles.tableHead}>
+                <tr className={styles.tableRow}>
+                  <th className={styles.tableHeader} scope="col">Cliente</th>
+                  <th className={styles.tableHeader} scope="col">Assunto</th>
+                  <th className={styles.tableHeader} scope="col">Status</th>
+                  <th className={styles.tableHeader} scope="col">Cadastrado em</th>
+                  <th className={styles.tableHeader} scope="col">Atribuído a</th>
+                  <th className={styles.tableHeader} scope="col">#</th>
                 </tr>
               </thead>
 
               <tbody>
                 {chamados.map((item, index) => (
-                  <tr key={item.id}>
-                    <td data-label="Cliente">{item.cliente}</td>
-                    <td data-label="Assunto">{item.assunto}</td>
-                    <td data-label="Status">
-                      <span className="badge" style={{ backgroundColor: item.status === "Em aberto" ? "#5CB85C" : "#ccc" }}>
+                  <tr key={item.id} className={styles.tableRow}>
+                    <td className={styles.tableCell} data-label="Cliente">{item.cliente}</td>
+                    <td className={styles.tableCell} data-label="Assunto">{item.assunto}</td>
+                    <td className={styles.tableCell} data-label="Status">
+                      <span className={styles.badge} style={{ backgroundColor: item.status === "Em aberto" ? "#5CB85C" : "#ccc" }}>
                         {item.status}
                       </span>
                     </td>
-                    <td data-label="Cadastrado">{item.createdFormat}</td>
-                    <td data-label="Atribuído a">{item.assignedUser}</td>
-                    <td data-label="#">
-                      <button onClick={() => toggleModal(item)} className="action" style={{ backgroundColor: "#3583f6" }}>
-                        <FiSearch size={17} color="#fff" />
+                    <td className={styles.tableCell} data-label="Cadastrado">{item.createdFormat}</td>
+                    <td className={styles.tableCell} data-label="Atribuído a">{item.assignedUser}</td>
+                    <td className={styles.tableCell} data-label="#">
+                      <button onClick={() => toggleModal(item)} className={styles.action} style={{ backgroundColor: "#3583f6" }}>
+                        <FiSearch size={17} color="#fff" className={styles.actionIcon} />
                       </button>
-                      <button onClick={() => handleDelete(item.id)} className="action" style={{ backgroundColor: "#FD441B" }}>
-                        <FiDelete size={17} color="#fff" />
+                      <button onClick={() => handleDelete(item.id)} className={styles.action} style={{ backgroundColor: "#FD441B" }}>
+                        <FiDelete size={17} color="#fff" className={styles.actionIcon} />
                       </button>
                     </td>
                   </tr>
@@ -321,7 +321,7 @@ export default function Dashboard() {
 
             {loadMore && <h3>Buscando mais chamados...</h3>}
             {!isEmpty && !loadMore && (
-              <button onClick={handleMore} className="btn-more">
+              <button onClick={handleMore} className={styles.btnMore}>
                 Buscar mais
               </button>
             )}

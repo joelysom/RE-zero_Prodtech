@@ -1,0 +1,90 @@
+.containerCompromise {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  background-color: #121225;
+  color: white;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.textCompromise {
+  max-width: 35%;
+  text-align: justify;
+}
+
+.compromiseTitle {
+  font-size: 27px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+.textCompromise p {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.formSectionCompromise {
+  background: #f4f4f4;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  width: 350px;
+}
+
+.formSectionCompromise h2 {
+  color: #0d0e15;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.input,
+.textarea {
+  width: 90%;
+  margin: 10px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  background: #dcdcdc;
+  text-align: left;
+  margin-left: 5%;
+}
+
+.textarea {
+  height: 100px;
+  resize: none;
+}
+
+.buttonCompromise {
+  background: #ff9900;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 50%;
+  transition: background 0.3s ease;
+  margin-left: 25%;
+}
+
+.buttonCompromise:hover {
+  background-color: #b18619;
+}

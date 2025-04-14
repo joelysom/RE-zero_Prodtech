@@ -1,0 +1,62 @@
+.donation-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.donation-methods {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 20px 0;
+}
+
+.method-box {
+  background-color: #f7931e;
+  color: white;
+  padding: 40px;
+  flex: 1;
+  border-radius: 5px;
+  text-align: center;
+  max-width: 230px;
+}
+
+.method-box h3 {
+  font-size: 28px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.method-box p {
+  font-size: 14px;
+  margin-top: 10px;
+  color: white;
+}
+
+.donimage,
+svg {
+  width: 100%;
+  height: 40px;
+  max-width: 150px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.or {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.delivery-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.option-box {
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 8px;
+  width: 220px;
+}

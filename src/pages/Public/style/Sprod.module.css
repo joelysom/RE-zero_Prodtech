@@ -1,0 +1,54 @@
+.SprodSection {
+  background-color: #2264a0;
+  color: #fff;
+  padding: 80px 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+
+.SprodContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.SprodTitle {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.SprodSubtitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.SprodText {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.SprodTextStrong {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .SprodContainer {
+    max-width: 90%;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .SprodTitle {
+    font-size: 30px;
+  }
+
+  .SprodText,
+  .SprodTextStrong {
+    font-size: 16px;
+  }
+}

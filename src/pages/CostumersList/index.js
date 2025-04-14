@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 import { FiUser } from "react-icons/fi";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderTecnico";
 import Title from "../../components/Title";
 import "./CostumersList.css";
 

@@ -14,3 +14,10 @@ body {
   background-color:#fff;
   font-family: sans-serif;
 }
+
+svg[stroke="currentColor"],
+svg[fill="currentColor"],
+svg[stroke-width="2"] {
+  width: 1.5em;
+  height: 1.5em;
+}

@@ -1,0 +1,35 @@
+.prodSection {
+  background-color: #2264a0;
+  color: #fff;
+  padding: 100px 20px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.prodContainer {
+  max-width: 600px;
+  margin-left: 340px;
+  text-align: left;
+}
+
+.prodTitle {
+  font-size: 45px;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  margin-bottom: 25px;
+  line-height: 1.4;
+}
+
+.prodText {
+  font-size: 18px;
+  line-height: 1.6;
+  font-family: "Arial", sans-serif;
+  margin-bottom: 15px;
+}
+
+.prodText strong {
+  font-weight: bold;
+}

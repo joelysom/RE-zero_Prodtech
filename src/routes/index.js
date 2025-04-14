@@ -1,5 +1,5 @@
 import SignIn from "../pages/SignIn";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from "react-router-dom";
 import SignUp from "../pages/SignUp";
 import Dashboard from "../pages/Dashboard";
 import ClientDashboard from "../pages/ClientDashboard";
@@ -13,15 +13,37 @@ import Support from "../pages/Support";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth";
 
+// Importando as páginas públicas
+import Home from "../pages/Public/Home";
+import Contato from "../pages/Public/Contato";
+import Prodtech from "../pages/Public/Prodtech";
+import Servicos from "../pages/Public/Servicos";
+
+// Importando componentes de layout
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+// Layout para as páginas públicas
+const PublicLayout = () => {
+  return (
+    <>
+      <Header />
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
+
 function RoutesApp() {
   const { userType } = useContext(AuthContext);
 
   return (
     <Routes>
-      <Route path="/" element={<SignIn />} />
+      {/* Rotas de autenticação sem header/footer */}
+      <Route path="/signin" element={<SignIn />} />
       <Route path="/register" element={<SignUp />} />
       
-      {/* Rota condicional para Dashboard baseada no tipo de usuário */}
+      {/* Rotas privadas */}
       <Route
         path="/dashboard"
         element={
@@ -31,7 +53,6 @@ function RoutesApp() {
         }
       />
       
-      {/* Rotas apenas para técnicos */}
       <Route
         path="/customers"
         element={
@@ -40,6 +61,7 @@ function RoutesApp() {
           </Private>
         }
       />
+      
       <Route
         path="/customersList"
         element={
@@ -51,7 +73,6 @@ function RoutesApp() {
       
       <Route path="/profile" element={<Private><Profile /></Private>} />
       
-      {/* Rota condicional para criação de chamados baseada no tipo de usuário */}
       <Route
         path="/new"
         element={
@@ -61,21 +82,15 @@ function RoutesApp() {
         }
       />
 
-
-      {/* Rota para edição de chamados (apenas para técnicos) */}
       <Route
         path="/support"
         element={
           <Private>
-            {/* Componente que exibe algo em /support */}
             <Support />
           </Private>
         }
       />
-
-
       
-      {/* Rota para edição de chamados (apenas para técnicos) */}
       <Route
         path="/new/:id"
         element={
@@ -84,8 +99,16 @@ function RoutesApp() {
           </Private>
         }
       />
-    </Routes>
 
+      {/* Rotas públicas com Header e Footer */}
+      <Route element={<PublicLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/servicos" element={<Servicos />} />
+        <Route path="/prodtech" element={<Prodtech />} />
+        <Route path="/contato" element={<Contato />} />
+      </Route>
+    </Routes>
   );
 }
 

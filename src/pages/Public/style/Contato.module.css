@@ -1,0 +1,420 @@
+/* Contato.module.css */
+
+.contatoContainer {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  background: url("../../../assets/Contatos//img//Tela-de-fundo.png") no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 50px 50px;
+  color: white;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0);
+  padding: 30px;
+  border-radius: 8px;
+  text-align: left;
+  max-width: 600px;
+  backdrop-filter: blur(2px);
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 20px;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.infoBox {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1f1f2e;
+  padding: 20px;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Conteúdo da página de contato */
+
+.contatoContent {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+  gap: 50px;
+  justify-content: space-between;
+}
+
+.contatoInfo {
+  flex: 1;
+  min-width: 300px;
+}
+
+.contatoForm {
+  flex: 1.5;
+  min-width: 400px;
+}
+
+.contatoInfo h2,
+.contatoForm h2,
+.mapContainer h2,
+.faqSection h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1f1f2e;
+  position: relative;
+}
+
+.contatoInfo h2::after,
+.contatoForm h2::after,
+.mapContainer h2::after,
+.faqSection h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 50px;
+  height: 4px;
+  background-color: #fbbf24;
+}
+
+.infoItem {
+  display: flex;
+  margin-bottom: 30px;
+  align-items: flex-start;
+}
+
+.iconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(251, 191, 36, 0.1);
+  border-radius: 50%;
+  margin-right: 15px;
+  color: #fbbf24;
+  font-size: 18px;
+}
+
+.infoText {
+  flex: 1;
+}
+
+.infoItem h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #1f1f2e;
+}
+
+.infoItem p {
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+
+.socialMedia h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #1f1f2e;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 15px;
+}
+
+.socialIcons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #1f1f2e;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.socialIcons a:hover {
+  background-color: #fbbf24;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulário */
+
+.form {
+  background-color: #f9fafb;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formRow {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.formRow .formGroup {
+  flex: 1;
+  min-width: 200px;
+}
+
+.label {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #1f1f2e;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  color: #4b5563;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.2);
+}
+
+.inputError,
+.textareaError {
+  border-color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+.errorText {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+.checkboxGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.checkboxGroup input {
+  width: auto;
+  margin-top: 3px;
+}
+
+.checkboxGroup label {
+  margin-bottom: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.submitBtn {
+  background-color: #fbbf24;
+  color: #1f1f2e;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.submitBtn:hover {
+  background-color: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.submitBtn:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.successMessage {
+  background-color: #10b981;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  box-shadow: 0 2px 5px rgba(16, 185, 129, 0.2);
+}
+
+/* Mapa */
+
+.mapContainer {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.map {
+  height: 400px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* FAQ */
+
+.faqSection {
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+}
+
+.faqContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.faqItem {
+  background-color: #f9fafb;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.faqItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.faqItem h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f1f2e;
+  margin-bottom: 10px;
+}
+
+.faqItem p {
+  font-size: 16px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+/* Responsividade */
+
+@media (max-width: 1024px) {
+  .contatoContent {
+    gap: 40px;
+  }
+  
+  .faqContainer {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .contatoContainer {
+    padding-left: 20px;
+    padding-right: 20px;
+    min-height: 60vh;
+  }
+  
+  .title {
+    font-size: 32px;
+  }
+  
+  .subtitle {
+    font-size: 18px;
+  }
+  
+  .contatoContent {
+    flex-direction: column;
+    gap: 40px;
+    margin: 60px auto;
+  }
+  
+  .contatoForm {
+    min-width: 100%;
+  }
+  
+  .formRow {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .mapContainer,
+  .faqSection {
+    margin: 60px auto;
+  }
+  
+  .map {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 28px;
+  }
+  
+  .subtitle {
+    font-size: 16px;
+  }
+  
+  .btn {
+    font-size: 16px;
+    padding: 12px 24px;
+  }
+  
+  .infoItem,
+  .socialMedia {
+    margin-bottom: 25px;
+  }
+  
+  .form {
+    padding: 20px;
+  }
+  
+  .faqItem {
+    padding: 20px;
+  }
+}

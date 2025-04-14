@@ -1,0 +1,87 @@
+.eventsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 20px;
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+.eventSection {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.eventText {
+  max-width: 500px;
+  margin-bottom: 180px;
+}
+
+.eventTitulo {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 40px;
+}
+
+.eventCarousel {
+  width: 300px;
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes samaritanosCarousel {
+  0%,
+  100% {
+    background-image: url("../../../assets/AProdTech/Recnplay/recnplay01.jpg");
+  }
+  33% {
+    background-image: url("../../../assets/AProdTech/Escolaspublicas/Nobrega02.jpg");
+  }
+  66% {
+    background-image: url("../../../assets/AProdTech/Escolaspublicas/Nobrega03.jpg");
+  }
+}
+
+.samaritanos {
+  animation-name: samaritanosCarousel;
+}
+
+@keyframes renplayCarousel {
+  0%,
+  100% {
+    background-image: url("../../../assets/AProdTech/Recnplay/recnplay01.jpg");
+  }
+  33% {
+    background-image: url("../../../assets/AProdTech/Recnplay/recnplay02.jpg");
+  }
+  66% {
+    background-image: url("../../../assets/AProdTech/Recnplay/recnplay02.jpg");
+  }
+}
+
+.renplay {
+  animation-name: renplayCarousel;
+}
+
+@keyframes escolasPublicasCarousel {
+  0%,
+  100% {
+    background-image: url("../../../assets/AProdTech/Escolaspublicas/Nobrega.jpg");
+  }
+  33% {
+    background-image: url("../../../assets/AProdTech/Escolaspublicas/Nobrega02.jpg");
+  }
+  66% {
+    background-image: url("../../../assets/AProdTech/Escolaspublicas/Nobrega03.jpg");
+  }
+}
+
+.escolasPublicas {
+  animation-name: escolasPublicasCarousel;
+}
