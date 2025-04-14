@@ -5,6 +5,7 @@ import { getAuth } from 'firebase/auth';
 import { db } from '../../services/firebaseConnection';
 import styles from './modal.module.css';
 import Chat from './chat'; // Importamos o componente Chat
+import { toast } from 'react-toastify'; // Importando o toast
 
 export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
   const [users, setUsers] = useState([]);
@@ -129,7 +130,7 @@ export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
 
   function abrirChat() {
     if (!chamadoCompleto.assignedUser || chamadoCompleto.assignedUser === 'Não atribuído') {
-      alert("Este chamado não tem técnico atribuído. Atribua um técnico para iniciar o chat.");
+      toast.info("Este chamado não tem técnico atribuído. Atribua um técnico para iniciar o chat.");
       return;
     }
     setChatOpen(true);
@@ -151,6 +152,7 @@ export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
       onUpdateChamado(chamadoAtualizado);
     }
     
+    toast.success("Chamado atribuído com sucesso!");
     buttomBack();
   };
 
@@ -189,6 +191,7 @@ export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
       onUpdateChamado(chamadoAtualizado);
     }
     
+    toast.success("Chamado atribuído a você com sucesso!");
     setSelectedUser(userName); 
     buttomBack();
   };
@@ -209,6 +212,7 @@ export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
       onUpdateChamado(chamadoAtualizado);
     }
     
+    toast.success(`Status atualizado para ${newStatus}`);
     setCurrentStatus(newStatus);
   };
 
@@ -225,7 +229,7 @@ export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
   
   function toggleEditMode() {
     if (chamadoFinalizado) {
-      alert("Não é possível editar um chamado finalizado.");
+      toast.info("Não é possível editar um chamado finalizado.");
       return;
     }
     setEditMode(!editMode);
@@ -241,7 +245,7 @@ export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
   
   async function salvarEdicao() {
     if (assuntoEdit.trim() === '') {
-      alert("O assunto não pode estar vazio.");
+      toast.error("O assunto não pode estar vazio.");
       return;
     }
     
@@ -278,12 +282,12 @@ export default function Modal({ conteudo, buttomBack, onUpdateChamado }) {
         onUpdateChamado(chamadoAtualizado);
       }
       
-      alert("Chamado atualizado com sucesso!");
+      toast.success("Chamado atualizado com sucesso!");
       setEditMode(false);
       
     } catch (error) {
       console.error("Erro ao atualizar chamado:", error);
-      alert("Erro ao atualizar chamado. Tente novamente.");
+      toast.error("Erro ao atualizar chamado. Tente novamente.");
     } finally {
       setLoading(false);
     }
