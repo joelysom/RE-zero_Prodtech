@@ -27,7 +27,7 @@ const MainPage = () => {
             </p>
             <Link to="/contato">
               <button className={styles.ctaButton}>
-                Fale conosco!
+                Fale conosco!!
               </button>
             </Link>
           </div>
