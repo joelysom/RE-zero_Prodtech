@@ -702,3 +702,428 @@
   .chatMessages::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
   }
+
+  /* ChatStyles.module.css - Existing code remains, adding responsive styles below */
+
+/* Tablet Responsive Styles */
+@media (max-width: 768px) {
+  .chatModal {
+    width: 95%;
+    max-width: none;
+    height: 90vh;
+    max-height: none;
+  }
+  
+  .messageItem {
+    max-width: 85%;
+  }
+  
+  .quickReplies {
+    overflow-x: auto;
+    padding: 10px;
+    justify-content: flex-start;
+  }
+  
+  .quickReplyButton {
+    flex-shrink: 0;
+  }
+  
+  .ticketActions {
+    flex-wrap: wrap;
+  }
+  
+  .actionButton {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .userAvatar {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+  
+  .chatHistory {
+    max-height: 250px;
+  }
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 480px) {
+  .chatModalOverlay {
+    background-color: rgba(0, 0, 0, 0.85);
+  }
+  
+  .chatModal {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border-radius: 0;
+  }
+  
+  .chatHeader {
+    padding: 10px 15px;
+    border-radius: 0;
+  }
+  
+  .messageItem {
+    max-width: 90%;
+  }
+  
+  .messageContent {
+    padding: 8px 12px;
+  }
+  
+  .messageForm {
+    padding: 8px 10px;
+  }
+  
+  .messageInputWrapper {
+    padding: 3px 8px;
+  }
+  
+  .sendButton {
+    width: 36px;
+    height: 36px;
+    margin-left: 8px;
+  }
+  
+  .userAvatar {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    margin-right: 8px;
+  }
+  
+  .headerInfo h4 {
+    font-size: 14px;
+  }
+  
+  .statusIndicator, .typingIndicator {
+    font-size: 11px;
+  }
+  
+  .imagePreview {
+    max-width: 150px;
+    max-height: 150px;
+  }
+  
+  .filePreview {
+    max-width: 160px;
+  }
+  
+  .fileName {
+    font-size: 13px;
+  }
+  
+  .fileSize {
+    font-size: 11px;
+  }
+  
+  .quickReplies {
+    padding: 8px;
+  }
+  
+  .quickReplyButton {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .ticketStatus {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .statusBadge {
+    padding: 2px 6px;
+    font-size: 10px;
+  }
+  
+  .ticketActions {
+    padding: 8px 10px;
+  }
+  
+  .actionButton {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .emojiPickerWrapper {
+    left: 0;
+    width: 100%;
+  }
+  
+  .fileOptions {
+    right: 0;
+    width: 100%;
+    bottom: 65px;
+  }
+  
+  .fileOption {
+    padding: 10px 12px;
+  }
+  
+  /* Adjust date header for smaller screens */
+  .dateHeader::after {
+    padding: 3px 10px;
+    font-size: 11px;
+  }
+  
+  /* Better scroll handling for file options and emoji picker */
+  .emojiPickerWrapper, .fileOptions {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+  
+  /* Landscape orientation adjustments */
+  @media (max-height: 450px) {
+    .chatModal {
+      height: 100%;
+    }
+    
+    .chatMessages {
+      flex: 1;
+    }
+    
+    .chatHeader {
+      padding: 6px 10px;
+    }
+    
+    .messageForm {
+      padding: 5px 8px;
+    }
+    
+    .userAvatar {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
+
+/* Small mobile screens */
+@media (max-width: 320px) {
+  .headerInfo h4 {
+    font-size: 13px;
+  }
+  
+  .statusIndicator, .typingIndicator {
+    font-size: 10px;
+  }
+  
+  .userAvatar {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+    margin-right: 6px;
+  }
+  
+  .messageContent {
+    padding: 7px 10px;
+  }
+  
+  .messageTime {
+    font-size: 10px;
+  }
+  
+  .quickReplyButton {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  
+  .actionButton {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}
+
+/* Improve accessibility for touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .messageInputWrapper {
+    min-height: 42px;
+  }
+  
+  .emojiButton, .attachButton, .sendButton, .fileOption, .quickReplyButton, .actionButton {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .chatMessages {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Add more space between touchable elements */
+  .fileOption {
+    padding: 14px 15px;
+  }
+  
+  .closeChat {
+    padding: 10px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .chatModal {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+  }
+  
+  .chatMessages {
+    background-color: #121212;
+  }
+  
+  .otherMessage .messageContent {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+  }
+  
+  .ownMessage .messageContent {
+    background-color: #0d47a1;
+    color: white;
+  }
+  
+  .techTheme .ownMessage .messageContent {
+    background-color: #1565c0;
+  }
+  
+  .clientTheme .ownMessage .messageContent {
+    background-color: #2e7d32;
+  }
+  
+  .messageForm, .quickReplies, .ticketStatus, .ticketActions {
+    background-color: #1a1a1a;
+    border-color: #333;
+  }
+  
+  .messageInputWrapper {
+    background-color: #2a2a2a;
+    border-color: #444;
+  }
+  
+  .messageInput {
+    color: #e0e0e0;
+  }
+  
+  .emojiButton, .attachButton {
+    color: #aaa;
+  }
+  
+  .dateHeader::after {
+    background-color: #333;
+    color: #e0e0e0;
+  }
+  
+  .quickReplyButton {
+    background-color: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+  }
+  
+  .quickReplyButton:hover {
+    background-color: #333;
+    border-color: #1976d2;
+    color: #90caf9;
+  }
+  
+  .secondaryAction {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border-color: #444;
+  }
+  
+  .secondaryAction:hover {
+    background-color: #333;
+  }
+  
+  .fileOptions, .uploadProgress {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+  }
+  
+  .fileOption:hover {
+    background-color: #333;
+  }
+  
+  .fileName {
+    color: #e0e0e0;
+  }
+  
+  .noMessages {
+    color: #999;
+  }
+  
+  .messageTime {
+    color: #aaa;
+  }
+  
+  /* Adjust scrollbar for dark mode */
+  .chatMessages::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+  
+  .chatMessages::-webkit-scrollbar-thumb {
+    background: #444;
+  }
+  
+  .chatMessages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+/* Additional improvements for better performance on older devices */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print styles for chat records */
+@media print {
+  .chatModalOverlay {
+    position: relative;
+    background: none;
+    display: block;
+  }
+  
+  .chatModal {
+    width: 100%;
+    height: auto;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    max-height: none;
+  }
+  
+  .chatHeader {
+    background-color: #f5f5f5 !important;
+    color: #000 !important;
+  }
+  
+  .messageForm, .ticketActions, .quickReplies {
+    display: none;
+  }
+  
+  .chatMessages {
+    overflow: visible;
+    height: auto;
+  }
+  
+  .emojiPickerWrapper, .fileOptions {
+    display: none;
+  }
+  
+  .ownMessage .messageContent, .otherMessage .messageContent {
+    background-color: #fff !important;
+    color: #000 !important;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .userAvatar {
+    border: 1px solid #ddd;
+    color: #000 !important;
+    background-color: #f5f5f5 !important;
+  }
+}

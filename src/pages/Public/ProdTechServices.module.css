@@ -1,0 +1,551 @@
+/* ProdTechServices.module.css */
+
+/* Banner Styles */
+.prodtechbanner {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 0px;
+    color: white;
+    padding-bottom: 50px;
+    animation: changeBackground 20s infinite;
+  }
+  
+  .prodtechbannerContent {
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+    margin-left: 2%;
+    padding: 10px;
+    border-radius: 0;
+  }
+  
+  .prodtitle {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    max-width: 80%;
+  }
+  
+  .prodsubtitle {
+    font-size: 20px;
+    margin-bottom: 30px;
+    max-width: 80%;
+  }
+  
+  @keyframes changeBackground {
+    0% {
+      background-image: url("../../assets/Home/image/fundo_home.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    33% {
+      background-image: url("../../assets/Contatos/img/Tela-de-fundo.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    66% {
+      background-image: url("../../assets/AProdTech/image/Protótipo - A Prodtech 1.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    100% {
+      background-image: url("../../assets/Home/image/fundo_home.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  }
+  
+  /* Purpose Section Styles */
+  .purposeSection {
+    background-color: #f8f9fa;
+    padding: 5rem 0;
+  }
+  
+  .purposeTitle {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  
+  .purposeSubtitle {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .purposeDescription {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .iconGrid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .iconGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .iconGrid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  .iconItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .iconImage {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+  }
+  
+  .iconTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .iconDescription {
+    font-size: 0.875rem;
+  }
+  
+  /* About ProdTech Section Styles */
+  .aboutSection {
+    background-color: #1e40af;
+    color: white;
+    padding: 5rem 0;
+  }
+  
+  .aboutTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .aboutSubtitle {
+    font-size: 1.25rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem auto;
+  }
+  
+  .aboutGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .aboutGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .aboutHeading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .aboutText {
+    line-height: 1.6;
+  }
+  
+  /* Social Responsibility Section Styles */
+  .responsibilitySection {
+    padding: 5rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .responsibilityTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .responsibilityText {
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .partnersTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .eventsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    padding: 20px;
+    max-width: 60%;
+    margin: 0 auto;
+  }
+  
+  .eventSection {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .eventSection {
+      flex-direction: column;
+    }
+    
+    .eventsContainer {
+      max-width: 100%;
+    }
+  }
+  
+  .eventText {
+    max-width: 500px;
+    margin-bottom: 180px;
+  }
+  
+  .eventLogo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .logoImage {
+    height: 3rem;
+    margin-right: 1rem;
+  }
+  
+  .eventTitulo {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-top: 40px;
+  }
+  
+  .eventDescription {
+    line-height: 1.6;
+  }
+  
+  .eventCarousel {
+    width: 300px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    animation-duration: 12s;
+    animation-iteration-count: infinite;
+  }
+  
+  @keyframes samaritanosCarousel {
+    0%,
+    100% {
+      background-image: url("../../assets/AProdTech/Recnplay/recnplay01.jpg");
+    }
+    33% {
+      background-image: url("../../assets/AProdTech/Escolaspublicas/Nobrega02.jpg");
+    }
+    66% {
+      background-image: url("../../assets/AProdTech/Escolaspublicas/Nobrega03.jpg");
+    }
+  }
+  
+  .samaritanos {
+    animation-name: samaritanosCarousel;
+  }
+  
+  @keyframes renplayCarousel {
+    0%,
+    100% {
+      background-image: url("../../assets/AProdTech/Recnplay/recnplay01.jpg");
+    }
+    33% {
+      background-image: url("../../assets/AProdTech/Recnplay/recnplay02.jpg");
+    }
+    66% {
+      background-image: url("../../assets/AProdTech/Recnplay/recnplay02.jpg");
+    }
+  }
+  
+  .renplay {
+    animation-name: renplayCarousel;
+  }
+  
+  @keyframes escolasPublicasCarousel {
+    0%,
+    100% {
+      background-image: url("../../assets/AProdTech/Escolaspublicas/Nobrega.jpg");
+    }
+    33% {
+      background-image: url("../../assets/AProdTech/Escolaspublicas/Nobrega02.jpg");
+    }
+    66% {
+      background-image: url("../../assets/AProdTech/Escolaspublicas/Nobrega03.jpg");
+    }
+  }
+  
+  .escolasPublicas {
+    animation-name: escolasPublicasCarousel;
+  }
+  
+  /* Sustainable Commitment Section Styles */
+  .commitmentSection {
+    background-color: #1f2937;
+    color: white;
+    padding: 5rem 0;
+  }
+  
+  .commitmentContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .commitmentContainer {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .commitmentTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+  
+  .commitmentText {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  
+  .formContainer {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    color: #1f2937;
+  }
+  
+  .formTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .formInput {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+  }
+  
+  .formTextarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.25rem;
+    height: 6rem;
+  }
+  
+  .formButton {
+    width: 100%;
+    background-color: #f97316;
+    color: white;
+    padding: 0.5rem 0;
+    border: none;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .formButton:hover {
+    background-color: #ea580c;
+  }
+  
+  /* Donation Methods Section Styles */
+  .donationSection {
+    padding: 5rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .donationTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .donationCards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+  
+  @media (min-width: 768px) {
+    .donationCards {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .donationCard {
+    background-color: #f97316;
+    color: white;
+    padding: 1rem;
+    border-radius: 0.25rem;
+  }
+  
+  .donationCardTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .deliveryTitle {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .deliveryOptions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .deliveryOptions {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .deliveryOption {
+    border: 2px solid #d1d5db;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+  }
+  
+  .deliveryNumber {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .deliveryText {
+    line-height: 1.6;
+  }
+  
+  /* Evolution Section Styles */
+  .evolutionSection {
+    background-color: #f8f9fa;
+    padding: 5rem 0;
+  }
+  
+  .evolutionTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .evolutionCards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .evolutionCards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  .evolutionCard {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .evolutionLogo {
+    height: 5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .evolutionName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .evolutionYear {
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+  
+  .evolutionDescription {
+    text-align: center;
+    line-height: 1.6;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .prodtitle {
+      font-size: 32px;
+    }
+    
+    .prodsubtitle {
+      font-size: 16px;
+    }
+    
+    .eventCarousel {
+      width: 250px;
+      height: 250px;
+    }
+    
+    .eventText {
+      margin-bottom: 100px;
+    }
+  }

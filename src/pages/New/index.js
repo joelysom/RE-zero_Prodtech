@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { FiArrowLeft, FiChevronDown, FiPlusCircle } from "react-icons/fi";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Header from "../../components/ClientHeader";
+import Header from "../../components/HeaderTecnico";
 import { AuthContext } from "../../contexts/auth";
 import { db } from "../../services/firebaseConnection";
 import './new.css';
@@ -208,11 +208,6 @@ export default function New() {
       <div className="content">
         <div className="header-container">
           <h1>{id ? 'Editando Chamado' : 'Novo Chamado'}</h1>
-          
-          <Link to="/dashboard" className="back-button">
-            <FiArrowLeft size={24} />
-            Voltar para o dashboard
-          </Link>
         </div>
         
         <div style={{ display: "flex", width: "100%" }}>

@@ -1,15 +1,15 @@
+/* Servicos.module.css */
 .servicosContainer {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 70vh;
   background: url("../../../assets/Servicos/image/fundo.png") no-repeat center center/cover;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding-left: 0px;
+  padding-left: 80px;
   color: white;
-  padding-bottom: 50px;
 }
 
 .overlay {
@@ -17,39 +17,88 @@
   padding: 20px;
   border-radius: 0;
   text-align: left;
-  max-width: 500px;
+  max-width: 600px;
 }
 
 .title {
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 20px;
+  line-height: 1.2;
 }
 
 .subtitle {
-  font-size: 20px;
+  font-size: 16px;
   margin-bottom: 30px;
+  line-height: 1.5;
 }
 
 .btn {
+  display: inline-block;
   background-color: #fbbf24;
   color: #000;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  padding: 15px 30px;
+  padding: 12px 24px;
   border-radius: 8px;
   text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:hover {
+  background-color: #f59e0b;
+  transform: translateY(-2px);
 }
 
 .infoBox {
-  position: absolute;
-  bottom: 0;
   width: 100%;
   background-color: #1f1f2e;
-  padding: 30px;
+  padding: 25px;
   text-align: center;
   color: white;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 700;
   letter-spacing: 1px;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .servicosContainer {
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 60vh;
+  }
+  
+  .title {
+    font-size: 28px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+  }
+  
+  .infoBox {
+    font-size: 22px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .servicosContainer {
+    height: 50vh;
+  }
+  
+  .title {
+    font-size: 24px;
+  }
+  
+  .overlay {
+    max-width: 100%;
+  }
+  
+  .infoBox {
+    font-size: 18px;
+    padding: 15px;
+  }
 }

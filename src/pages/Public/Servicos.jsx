@@ -1,3 +1,4 @@
+// Servicos.jsx
 import styles from "./style/Servicos.module.css";
 import ServicosComponents from "./components/ServicosComponents";
 import TechnologyComponent from "./components/TechnologyComponent";
@@ -19,8 +20,8 @@ function Servicos() {
             Conheça a ProdTech
           </a>
         </div>
-        <div className={styles.infoBox}>CONHEÇA NOSSOS SERVIÇOS</div>
       </div>
+      <div className={styles.infoBox}>CONHEÇA NOSSOS SERVIÇOS</div>
       <ServicosComponents />
       <TechnologyComponent />
     </>

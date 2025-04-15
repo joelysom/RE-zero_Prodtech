@@ -702,3 +702,161 @@
   .chatMessages::-webkit-scrollbar-thumb:hover {
     background: #a8a8a8;
   }
+
+/* Responsive styles for chat modal */
+@media (max-width: 768px) {
+  .chatModal {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  .chatHeader {
+    border-radius: 0;
+    padding: 10px 15px;
+  }
+
+  .userAvatar {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .headerInfo h4 {
+    font-size: 15px;
+  }
+
+  .messageItem {
+    max-width: 85%;
+  }
+
+  .messageForm {
+    padding: 8px 10px;
+  }
+
+  .sendButton {
+    width: 38px;
+    height: 38px;
+  }
+
+  .emojiPickerWrapper {
+    left: 0;
+    right: 0;
+    width: 100%;
+    bottom: 60px;
+  }
+
+  .quickReplies {
+    overflow-x: auto;
+    padding: 8px 10px;
+    justify-content: flex-start;
+  }
+
+  .quickReplyButton {
+    flex-shrink: 0;
+  }
+}
+
+/* For even smaller screens (most phones) */
+@media (max-width: 480px) {
+  .chatModalOverlay {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  .messageItem {
+    max-width: 90%;
+  }
+
+  .filePreview {
+    max-width: 180px;
+  }
+
+  .imagePreview {
+    max-width: 180px;
+  }
+
+  .messageInputWrapper {
+    padding: 4px 8px;
+  }
+
+  .messageInput {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+
+  .emojiButton, .attachButton {
+    padding: 6px;
+  }
+
+  .ticketActions {
+    flex-wrap: wrap;
+  }
+
+  .actionButton {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+}
+
+/* For tablets in portrait mode */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .chatModal {
+    width: 80%;
+    height: 80vh;
+  }
+}
+
+/* For landscape orientation on mobile */
+@media (max-height: 500px) {
+  .chatModal {
+    height: 100vh;
+  }
+
+  .chatMessages {
+    flex: 1;
+  }
+
+  .chatHeader {
+    padding: 8px 15px;
+  }
+
+  .userAvatar {
+    width: 32px;
+    height: 32px;
+  }
+
+  .messageForm {
+    padding: 5px 10px;
+  }
+}
+
+/* Fix for iOS devices to prevent keyboard issues */
+@supports (-webkit-overflow-scrolling: touch) {
+  .chatMessages {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .messageInput {
+    font-size: 16px; /* Prevents iOS zoom on input focus */
+  }
+}
+
+/* Make sure modal is above everything else */
+.chatModalOverlay {
+  z-index: 9999;
+}
+
+/* Add safe area padding for notched phones */
+@supports (padding: max(0px)) {
+  .chatModal {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    padding-top: env(safe-area-inset-top, 0);
+  }
+  
+  .messageForm {
+    padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+  }
+}

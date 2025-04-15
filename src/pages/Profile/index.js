@@ -1,7 +1,7 @@
 import { FiSettings, FiUpload } from "react-icons/fi";
 import Header from "../../components/HeaderTecnico";
 import Title from "../../components/Title";
-import avatar from '../../assets/avatar.png';
+import avatar from '../../assets/avatarOLD.png';
 import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/auth";
 import './profile.css';
@@ -188,7 +188,7 @@ export default function Profile(){
                 <FiUpload color="#FFF" size={25} />
               </span>
               <input type="file" accept="image/*" onChange={handleFile}/> <br/>
-              {avatarUrl === null ? (
+              {!avatarUrl ? (
                 <img src={avatar} alt="Foto de perfil" width={150} height={150} />
               ) : (
                 <img src={avatarUrl} alt="Foto de perfil" width={150} height={150} />

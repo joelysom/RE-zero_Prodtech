@@ -23,7 +23,20 @@ export default function Dashboard() {
   const [details, setDetails] = useState({});
   const [filters, setFilters] = useState({ status: "", user: "", cause: "", search: "" });
   const [showFilterModal, setShowFilterModal] = useState(false);
-  const [unsubscribe, setUnsubscribe] = useState(null); // Estado para armazenar a função para cancelar o listener
+  const [unsubscribe, setUnsubscribe] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Detectar mudanças no tamanho da tela
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // Função de alteração na barra de pesquisa
   const handleSearchChange = (event) => {
@@ -227,7 +240,7 @@ export default function Dashboard() {
             <FiMessageSquare size={25} />
           </Title>
 
-          <div className="container dashboard">
+          <div className={`container dashboard ${styles.loadingContainer}`}>
             <span>Buscando Chamados...</span>
           </div>
         </div>
@@ -235,10 +248,17 @@ export default function Dashboard() {
     );
   }
 
+  // Função para truncar texto longo
+  const truncateText = (text, maxLength = 30) => {
+    if (!text) return '';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  };
+
   return (
     <div>
       <Header />
-      <div className="content">
+      <div className={`content ${styles.dashboardContent}`}>
         <Title name="Chamados">
           <FiMessageSquare size={25} />
         </Title>
@@ -248,7 +268,7 @@ export default function Dashboard() {
             {/* Barra de pesquisa */}
             <input
               type="text"
-              placeholder="Pesquisar por assunto"
+              placeholder={isMobile ? "Pesquisar..." : "Pesquisar por assunto"}
               value={filters.search}
               onChange={handleSearchChange}
               onKeyDown={handleSearchKeyDown}
@@ -257,9 +277,17 @@ export default function Dashboard() {
 
             {/* Ícone de filtro */}
             <button onClick={toggleFilterModal} className={styles.btnFilter}>
-              <FiFilter size={25} />
+              <FiFilter size={isMobile ? 20 : 25} />
             </button>
           </div>
+
+          {/* Botão Novo Chamado para Mobile (aparece acima da tabela) */}
+          {isMobile && (
+            <Link to="/new" className={`${styles.new} ${styles.mobileNew}`}>
+              <FiPlus size={20} color="#fff" />
+              {!isMobile && "Novo chamado"}
+            </Link>
+          )}
         </div>
 
         {showFilterModal && (
@@ -267,7 +295,7 @@ export default function Dashboard() {
         )}
 
         {chamados.length === 0 ? (
-          <div className="container dashboard">
+          <div className={`container dashboard ${styles.emptyContainer}`}>
             <span>Nenhum chamado registrado...</span>
 
             <Link to="/new" className={styles.new}>
@@ -276,56 +304,71 @@ export default function Dashboard() {
             </Link>
           </div>
         ) : (
-          <>
-            <Link to="/new" className={styles.new}>
-              <FiPlus size={25} color="#fff" />
-              Novo chamado
-            </Link>
+          <div className={styles.tableContainer}>
+            {/* Botão Novo Chamado para Desktop (aparece ao lado da tabela) */}
+            {!isMobile && (
+              <Link to="/new" className={styles.new}>
+                <FiPlus size={25} color="#fff" />
+                Novo chamado
+              </Link>
+            )}
 
-            <table className={styles.table}>
-              <thead className={styles.tableHead}>
-                <tr className={styles.tableRow}>
-                  <th className={styles.tableHeader} scope="col">Cliente</th>
-                  <th className={styles.tableHeader} scope="col">Assunto</th>
-                  <th className={styles.tableHeader} scope="col">Status</th>
-                  <th className={styles.tableHeader} scope="col">Cadastrado em</th>
-                  <th className={styles.tableHeader} scope="col">Atribuído a</th>
-                  <th className={styles.tableHeader} scope="col">#</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {chamados.map((item, index) => (
-                  <tr key={item.id} className={styles.tableRow}>
-                    <td className={styles.tableCell} data-label="Cliente">{item.cliente}</td>
-                    <td className={styles.tableCell} data-label="Assunto">{item.assunto}</td>
-                    <td className={styles.tableCell} data-label="Status">
-                      <span className={styles.badge} style={{ backgroundColor: item.status === "Em aberto" ? "#5CB85C" : "#ccc" }}>
-                        {item.status}
-                      </span>
-                    </td>
-                    <td className={styles.tableCell} data-label="Cadastrado">{item.createdFormat}</td>
-                    <td className={styles.tableCell} data-label="Atribuído a">{item.assignedUser}</td>
-                    <td className={styles.tableCell} data-label="#">
-                      <button onClick={() => toggleModal(item)} className={styles.action} style={{ backgroundColor: "#3583f6" }}>
-                        <FiSearch size={17} color="#fff" className={styles.actionIcon} />
-                      </button>
-                      <button onClick={() => handleDelete(item.id)} className={styles.action} style={{ backgroundColor: "#FD441B" }}>
-                        <FiDelete size={17} color="#fff" className={styles.actionIcon} />
-                      </button>
-                    </td>
+            <div className={styles.tableWrapper}>
+              <table className={styles.table}>
+                <thead className={styles.tableHead}>
+                  <tr className={styles.tableRow}>
+                    <th className={`${styles.tableHeader} ${styles.colCliente}`} scope="col">CLIENTE</th>
+                    <th className={`${styles.tableHeader} ${styles.colAssunto}`} scope="col">ASSUNTO</th>
+                    <th className={`${styles.tableHeader} ${styles.colStatus}`} scope="col">STATUS</th>
+                    <th className={`${styles.tableHeader} ${styles.colData}`} scope="col">CADASTRADO EM</th>
+                    <th className={`${styles.tableHeader} ${styles.colAtribuido}`} scope="col">ATRIBUÍDO A</th>
+                    <th className={`${styles.tableHeader} ${styles.colActions}`} scope="col">#</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
 
-            {loadMore && <h3>Buscando mais chamados...</h3>}
+                <tbody>
+                  {chamados.map((item) => (
+                    <tr key={item.id} className={styles.tableRow}>
+                      <td className={styles.tableCell} data-label="Cliente">
+                        {truncateText(item.cliente, 15)}
+                      </td>
+                      <td className={styles.tableCell} data-label="Assunto">
+                        {Array.isArray(item.assunto) 
+                          ? truncateText(item.assunto.join(', '), 40) 
+                          : truncateText(item.assunto, 40)}
+                      </td>
+                      <td className={styles.tableCell} data-label="Status">
+                        <span className={styles.badge} style={{ backgroundColor: item.status === "Em aberto" ? "#5CB85C" : "#ccc" }}>
+                          {item.status}
+                        </span>
+                      </td>
+                      <td className={styles.tableCell} data-label="Cadastrado">{item.createdFormat}</td>
+                      <td className={styles.tableCell} data-label="Atribuído a">
+                        {truncateText(item.assignedUser, 18)}
+                      </td>
+                      <td className={styles.tableCell} data-label="#">
+                        <div className={styles.actionButtons}>
+                          <button onClick={() => toggleModal(item)} className={styles.action} style={{ backgroundColor: "#3583f6" }}>
+                            <FiSearch size={17} color="#fff" className={styles.actionIcon} />
+                          </button>
+                          <button onClick={() => handleDelete(item.id)} className={styles.action} style={{ backgroundColor: "#FD441B" }}>
+                            <FiDelete size={17} color="#fff" className={styles.actionIcon} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {loadMore && <h3 className={styles.loadingText}>Buscando mais chamados...</h3>}
             {!isEmpty && !loadMore && (
               <button onClick={handleMore} className={styles.btnMore}>
                 Buscar mais
               </button>
             )}
-          </>
+          </div>
         )}
       </div>
 

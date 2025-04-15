@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   min-height: 70vh;
-  background: url("../../../assets/Contatos//img//Tela-de-fundo.png") no-repeat center center/cover;
+  background: url("../../../assets/Contatos//img//Tela-de-fundo2.png") no-repeat center center/cover;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -168,7 +168,12 @@
   background-color: #f9fafb;
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.24);
+}
+
+.form:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.253);
 }
 
 .formGroup {

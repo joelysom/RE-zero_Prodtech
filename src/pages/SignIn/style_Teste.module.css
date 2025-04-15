@@ -1,10 +1,42 @@
-/* html, body, #root {
-  height: 100%;
+
+.pageContainer {
+  position: relative;
   width: 100%;
-  background-image: url('./BG.avif');
-  background-size: cover;
-  overflow: hidden;
-} */
+  min-height: 100vh;
+}
+
+/* Estilos para o botão de voltar para home */
+.homeButton {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ff9d12;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.homeButton:hover {
+  background-color: #0055cc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.homeIcon {
+  font-size: 18px;
+}
+
+.homeButtonText {
+  font-size: 14px;
+}
 
 .container {
   background-color: #fff;
@@ -13,9 +45,11 @@
   position: relative;
   overflow: hidden;
   width: 768px;
-  max-width: 95%; /* Ajuste para melhor responsividade */
+  max-width: 95%;
   min-height: 480px;
-  margin: 0 auto;
+  margin: 50px auto; /* Aumentado para posicionar mais abaixo */
+  display: flex; /* Ajuda na centralização */
+  align-items: center; /* Centralização vertical */
 }
 
 .user-icon {
@@ -92,6 +126,25 @@
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  height: 100%;
+  width: 100%; /* Garantir que o formulário ocupe todo o espaço */
+}
+
+.sign-in, .sign-up {
+  left: 0;
+  width: 50%;
+  z-index: 2;
 }
 
 .sign-in {
@@ -234,12 +287,15 @@
   transform: translateX(200%);
 }
 
+/* Garantir que os botões fiquem nas laterais como solicitado */
 .toggle-panel.toggle-left button {
   margin-left: 270px;
+  position: relative; /* Mantém a posição relativa */
 }
 
 .toggle-panel.toggle-right button {
   margin-right: 270px;
+  position: relative; /* Mantém a posição relativa */
 }
 
 .toggle-panel button {
@@ -342,6 +398,18 @@
 
 /* Media queries para diferentes tamanhos de tela */
 @media (max-width: 767px) {
+  .homeButton {
+    padding: 8px 12px;
+  }
+  
+  .homeButtonText {
+    display: none; /* Esconde o texto em telas pequenas */
+  }
+  
+  .homeIcon {
+    font-size: 22px; /* Ícone maior quando texto está oculto */
+  }
+
   .container {
     min-height: 400px;
     max-width: 95%;
@@ -379,6 +447,12 @@
 }
 
 @media (max-width: 480px) {
+  .homeButton {
+    top: 10px;
+    left: 10px;
+    padding: 6px 10px;
+  }
+
   .container {
     border-radius: 15px;
     min-height: 350px;
@@ -415,5 +489,82 @@
   .toggle-panel.toggle-right button {
     margin-left: 0;
     margin-right: 0;
+  }
+}
+
+/* Media queries refinadas */
+@media (max-width: 767px) {
+  .container {
+    min-height: 450px; /* Aumentado para dar mais espaço */
+    max-width: 95%;
+    margin: 30px auto; /* Ajustado para ficar mais abaixo na tela pequena */
+  }
+  
+  .sign-in, .sign-up {
+    width: 100%;
+  }
+  
+  .container.active .sign-in {
+    transform: translateX(-100%);
+    opacity: 0;
+    z-index: 1;
+  }
+  
+  .sign-up {
+    opacity: 0;
+    transform: translateX(100%);
+    z-index: 1;
+  }
+  
+  .container.active .sign-up {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 5;
+  }
+  
+  .container form {
+    padding: 0 25px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Centralização em telas pequenas */
+  .user-icon, h1, input, .remember-forgot, button {
+    align-self: center;
+  }
+  
+  /* Botões adaptados para telas pequenas */
+  .hidden-register-btn {
+    position: relative;
+    bottom: 10px;
+    width: 80%;
+    margin: 10px auto;
+  }
+}
+
+/* Pequenos ajustes para telas muito pequenas */
+@media (max-width: 480px) {
+  .container {
+    border-radius: 15px;
+    min-height: 400px;
+    margin: 20px auto;
+  }
+  
+  .form-container form {
+    padding: 0 15px;
+  }
+  
+  /* Ajustes de tamanho para telas muito pequenas */
+  .user-icon {
+    width: 45px;
+    margin: 10px 0;
+  }
+  
+  /* Garantir que os botões de alternância não se quebrem */
+  .hidden-register-btn {
+    width: 90%;
+    padding: 8px 10px;
+    white-space: nowrap;
+    font-size: 11px;
   }
 }
