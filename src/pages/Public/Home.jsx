@@ -46,54 +46,60 @@ const MainPage = () => {
             <div className={styles.serviceCard}>
               <img src={suporte} alt="Suporte Técnico" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Suporte técnico</h3>
-              <button className={styles.serviceButton}>
+              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
+              <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
-              </button>
+              </Link>
             </div>
 
             {/* Service Card 2 */}
             <div className={styles.serviceCard}>
               <img src={software} alt="Instalação e Configuração de Software" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Instalação e Configuração de Software</h3>
-              <button className={styles.serviceButton}>
+              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
+              <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
-              </button>
+              </Link>
             </div>
 
             {/* Service Card 3 */}
             <div className={styles.serviceCard}>
               <img src={devweb} alt="Desenvolvimento Web" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Desenvolvimento Web</h3>
-              <button className={styles.serviceButton}>
+              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
+              <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
-              </button>
+              </Link>
             </div>
 
             {/* Service Card 4 */}
             <div className={styles.serviceCard}>
               <img src={computadores} alt="Redes de Computadores" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Redes de Computadores</h3>
-              <button className={styles.serviceButton}>
+              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
+              <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
-              </button>
+              </Link>
             </div>
 
             {/* Service Card 5 */}
             <div className={styles.serviceCard}>
               <img src={manutencao} alt="Manutenção e configuração de Máquinas" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Manutenção e configuração de Máquinas</h3>
-              <button className={styles.serviceButton}>
+              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
+              <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
-              </button>
+              </Link>
             </div>
 
             {/* Service Card 6 */}
             <div className={styles.serviceCard}>
               <img src={seguranca} alt="Segurança de Redes" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Segurança de Redes</h3>
-              <button className={styles.serviceButton}>
+              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
+              <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
-              </button>
+              </Link>
             </div>
           </div>
         </div>
