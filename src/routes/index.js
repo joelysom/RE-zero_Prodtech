@@ -16,6 +16,7 @@ import { AuthContext } from "../contexts/auth";
 // Importando as páginas públicas
 import Home from "../pages/Public/Home";
 import Contato from "../pages/Public/Contato";
+import Construcao from "../pages/Public/Working";
 import Prodtech from "../pages/Public/Prodtech";
 import Servicos from "../pages/Public/Servicos";
 
@@ -107,6 +108,7 @@ function RoutesApp() {
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/prodtech" element={<Prodtech />} />
         <Route path="/contato" element={<Contato />} />
+        <Route path="/construcao" element={<Construcao />} />
       </Route>
     </Routes>
   );
