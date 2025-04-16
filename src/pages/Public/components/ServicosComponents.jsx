@@ -57,14 +57,19 @@ export default function ServicosComponents() {
             className={styles.servicoscomponentCardWrapper}
           >
             <div className={styles.servicoscomponentCard}>
-              <img
-                src={servico.icone}
-                alt={servico.titulo}
-                className={styles.servicoscomponentIcon}
-              />
+              <div className={styles.iconContainer}>
+                <img
+                  src={servico.icone}
+                  alt={servico.titulo}
+                  className={styles.servicoscomponentIcon}
+                />
+              </div>
               <h3>{servico.titulo}</h3>
               <p>{servico.descricao}</p>
             </div>
+            {index % 2 === 0 && index < servicos.length - 1 && (
+              <div className={styles.verticalDivider}></div>
+            )}
           </div>
         ))}
       </div>

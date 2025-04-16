@@ -16,7 +16,7 @@ function Servicos() {
             Oferecemos serviços completos para sua empresa, com compromisso com
             a inovação e qualidade no atendimento.
           </p>
-          <a href="#" className={styles.btn}>
+          <a href="/prodtech" className={styles.btn}>
             Conheça a ProdTech
           </a>
         </div>

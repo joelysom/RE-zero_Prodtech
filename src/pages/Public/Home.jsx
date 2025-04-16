@@ -18,20 +18,19 @@ const MainPage = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className={styles.heroSection}>
+      <section className={styles.heroBanner}>
         <div className={styles.container}>
           <div className={styles.heroContent}>
-            <h1 className={styles.heroTitle}>Oferecemos soluções completas e eficientes em TI</h1>
+            <h1 className={styles.heroTitle}>Oferecemos soluções completas e ficientes em TI</h1>
             <p className={styles.heroDescription}>
               Nossa expertise em TI <strong>abrange todas as áreas</strong>, garantindo <strong>soluções completas e eficientes</strong> para atender às suas necessidades.
             </p>
             <Link to="/contato">
               <button className={styles.ctaButton}>
-                Fale conosco!!
+                Fale conosco!
               </button>
             </Link>
           </div>
-
         </div>
       </section>
 
@@ -46,7 +45,6 @@ const MainPage = () => {
             <div className={styles.serviceCard}>
               <img src={suporte} alt="Suporte Técnico" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Suporte técnico</h3>
-              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
               <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
               </Link>
@@ -56,7 +54,6 @@ const MainPage = () => {
             <div className={styles.serviceCard}>
               <img src={software} alt="Instalação e Configuração de Software" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Instalação e Configuração de Software</h3>
-              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
               <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
               </Link>
@@ -66,7 +63,6 @@ const MainPage = () => {
             <div className={styles.serviceCard}>
               <img src={devweb} alt="Desenvolvimento Web" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Desenvolvimento Web</h3>
-              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
               <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
               </Link>
@@ -76,7 +72,6 @@ const MainPage = () => {
             <div className={styles.serviceCard}>
               <img src={computadores} alt="Redes de Computadores" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Redes de Computadores</h3>
-              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
               <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
               </Link>
@@ -86,7 +81,6 @@ const MainPage = () => {
             <div className={styles.serviceCard}>
               <img src={manutencao} alt="Manutenção e configuração de Máquinas" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Manutenção e configuração de Máquinas</h3>
-              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
               <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
               </Link>
@@ -96,7 +90,6 @@ const MainPage = () => {
             <div className={styles.serviceCard}>
               <img src={seguranca} alt="Segurança de Redes" className={styles.serviceIcon} />
               <h3 className={styles.serviceTitle}>Segurança de Redes</h3>
-              <h3 className={styles.serviceTitle}>Suporte técnico</h3>
               <Link to="/construcao" className={styles.serviceButton}>
                 Saiba mais
               </Link>

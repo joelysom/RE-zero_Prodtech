@@ -2,338 +2,352 @@
 
 /* Reset e estilos gerais */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Seção Hero - Banner com carrossel */
+.heroBanner {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: white;
+  padding-bottom: 50px;
+  animation: changeBackground 20s infinite;
+  background-position: center;
+  background-size: cover;
+}
+
+@keyframes changeBackground {
+  0% {
+    background-image: url("../../assets/Home/image/fundo_home.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
-  
-  .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  33% {
+    background-image: url("../../assets/Contatos/img/Tela-de-fundo.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
-  
-  /* Seção Hero */
-  .heroSection {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    background: url("../../assets/Home/image/fundo_home.png") no-repeat center center/cover;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    padding-bottom: 50px;
+  66% {
+    background-image: url("../../assets/AProdTech/image/Protótipo - A Prodtech 1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
-  
-  .heroContent {
-    max-width: 600px;
-    color: white;
-    position: relative;
-    z-index: 2;
-    padding-left: 0px;
+  100% {
+    background-image: url("../../assets/Home/image/fundo_home.png");
+    background-repeat: no-repeat;
+    background-size: cover;
   }
-  
-  .heroTitle {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-  }
-  
-  .heroDescription {
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-  
-  .heroDescription strong {
-    font-weight: 700;
-  }
-  
-  .ctaButton {
-    background-color: #f59e0b;
-    color: white;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 2rem;
-  }
-  
-  .ctaButton:hover {
-    background-color: #d97706;
-  }
-  
-  /* Seção de Serviços */
-  .servicesSection {
-    padding: 5rem 0;
-  }
-  
-  .sectionTitle {
-    text-align: center;
-    margin-bottom: 0.5rem;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1f2937;
-  }
-  
-  .sectionSubtitle {
-    text-align: center;
-    margin-bottom: 3rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1a4b8b;
-  }
-  
+}
+
+.heroContent {
+  max-width: 600px;
+  color: white;
+  position: relative;
+  z-index: 2;
+  padding-left: 2%;
+}
+
+.heroTitle {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  max-width: 80%;
+}
+
+.heroDescription {
+  font-size: 18px;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  max-width: 80%;
+}
+
+.heroDescription strong {
+  font-weight: 700;
+}
+
+.ctaButton {
+  background-color: #f59e0b;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.ctaButton:hover {
+  background-color: #d97706;
+}
+
+/* Seção de Serviços */
+.servicesSection {
+  padding: 5rem 0;
+  background-color: #f9f9f9;
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.sectionSubtitle {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #1a4b8b;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.serviceCard {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.serviceCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.serviceIcon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.serviceTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.25rem 0 1rem;
+  color: #333;
+}
+
+.serviceButton {
+  background-color: #9c348a;
+  color: white;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1.25rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.serviceButton:hover {
+  background-color: #7e2272;
+}
+
+/* Seção de Produtividade */
+.productivitySection {
+  background-color: #2264A0;
+  color: white;
+  padding: 5rem 0;
+}
+
+.productivityTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  max-width: 800px;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.productivityText {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+.productivityText strong {
+  font-weight: 700;
+}
+
+/* Seção de Redes Sociais */
+.socialSection {
+  padding: 5rem 0;
+  background-color: #f9f9f9;
+}
+
+.socialWrapper {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.instagramPreview {
+  width: 100%;
+  max-width: 350px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 0.75rem;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.instagramHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.profilePic {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: #d1d5db;
+}
+
+.profileName {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.postImageContainer {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.postImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.postActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.actionIcon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+}
+
+.likeIcon {
+  color: #ef4444;
+}
+
+.actionSpacer {
+  margin-left: auto;
+}
+
+.socialContent {
+  flex: 1;
+}
+
+.socialTitle {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: #333;
+}
+
+.socialDescription {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 1024px) {
   .servicesGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  @media (max-width: 1024px) {
-    .servicesGrid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-  
-  @media (max-width: 640px) {
-    .servicesGrid {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  .serviceCard {
-    background-color: #f3f4f6;
-    border-radius: 8px;
-    padding: 2rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
-  }
-  
-  .serviceCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .serviceIcon {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
-    margin-bottom: 1rem;
-  }
-  
-  .serviceTitle {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 1.25rem 0 1rem;
-    color: #1f2937;
-  }
-  
-  .serviceButton {
-    background-color: #7e22ce;
-    color: white;
-    font-weight: 600;
-    font-size: 0.875rem;
-    padding: 0.5rem 1.25rem;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: auto;
-  }
-  
-  .serviceButton:hover {
-    background-color: #6b21a8;
-  }
-  
-  /* Seção de Produtividade */
-  .productivitySection {
-    background-color: #2264A0;
-    color: white;
-    padding: 5rem 0;
-  }
-  
-  .productivityTitle {
-    font-size: 2.25rem;
-    font-weight: 700;
-    max-width: 800px;
-    margin-bottom: 2rem;
-    line-height: 1.2;
-  }
-  
-  .productivityText {
-    font-size: 1.1rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-    max-width: 800px;
-  }
-  
-  .productivityText strong {
-    font-weight: 700;
-  }
-  
-  /* Seção de Redes Sociais */
-  .socialSection {
-    padding: 5rem 0;
+}
+
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 32px;
   }
   
   .socialWrapper {
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 2rem;
-  }
-  
-  @media (max-width: 768px) {
-    .socialWrapper {
-      flex-direction: column;
-    }
   }
   
   .instagramPreview {
-    width: 100%;
-    border: 1px solid #1b1b1b1e;
-    border-radius: 8px;
-    overflow: hidden;
-    padding: 0.75rem;
-  }
-  
-  .instagramHeader {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .profilePic {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    background-color: #d1d5db;
-  }
-  
-  .profileName {
-    font-weight: 600;
-    font-size: 0.9rem;
-  }
-  
-  .postImageContainer {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  
-  .postImage {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
-  
-  .postActions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 0.75rem;
-  }
-  
-  .actionIcon {
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-  
-  .likeIcon {
-    color: #ef4444;
-  }
-  
-  .actionSpacer {
-    margin-left: auto;
+    margin-bottom: 2rem;
   }
   
   .socialContent {
-    flex: 1;
+    text-align: center;
+  }
+  
+  .productivityTitle {
+    font-size: 1.8rem;
   }
   
   .socialTitle {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.2;
+    font-size: 1.8rem;
   }
-  
-  .socialDescription {
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-  
-  /* Ícones de redes sociais */
-  .socialIcons {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .socialIconLink {
-    font-size: 2rem;
-    color: #374151;
-    transition: color 0.3s ease;
-  }
-  
-  .socialIconLink:hover {
-    color: #7e22ce;
-  }
+}
 
-  /* Responsividade para dispositivos menores */
-  @media (max-width: 768px) {
-    .heroSection {
-      padding: 4rem 0;
-    }
-    
-    .heroTitle {
-      font-size: 2rem;
-    }
-    
-    .heroContent {
-      padding-left: 20px;
-    }
-    
-    .productivityTitle {
-      font-size: 1.8rem;
-    }
-    
-    .socialTitle {
-      font-size: 1.8rem;
-    }
+@media (max-width: 640px) {
+  .servicesGrid {
+    grid-template-columns: 1fr;
   }
   
-  @media (max-width: 480px) {
-    .heroSection {
-      padding: 3rem 0;
-    }
-    
-    .heroTitle {
-      font-size: 1.8rem;
-    }
-    
-    .serviceCard {
-      padding: 1.5rem;
-    }
-    
-    .productivityTitle {
-      font-size: 1.5rem;
-    }
-    
-    .socialTitle {
-      font-size: 1.5rem;
-    }
+  .heroTitle {
+    font-size: 28px;
   }
+  
+  .serviceCard {
+    padding: 1.5rem;
+  }
+  
+  .productivityTitle {
+    font-size: 1.5rem;
+  }
+  
+  .socialTitle {
+    font-size: 1.5rem;
+  }
+}

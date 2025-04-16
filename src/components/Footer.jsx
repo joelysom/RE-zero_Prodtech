@@ -13,13 +13,13 @@ function Footer() {
           <img src={logo} alt="Logo" />
         </div>
         <div className={styles.socialMedia}>
-          <a href="#" target="_blank" aria-label="Instagram">
+          <a href="https://www.instagram.com/prodtech_services/?igsh=ODZpMmVnYm1zNHY2" target="_blank" aria-label="Instagram">
             <img src={instagramIcon} alt="Instagram" />
           </a>
-          <a href="#" target="_blank" aria-label="WhatsApp">
+          <a href="https://wa.me/558185393577?text=Estou%20entrando%20em%20contato%20Solicitando%20informa%C3%A7%C3%B5es%20Conforme%20vi%20no%20site%20da%20ProdTech,%20Respecializada%20em%20solu%C3%A7%C3%B5es%20de%20tecnologia.%20Or%C3%A7amento%20ou%20consulta,%20Tudo%20que%20preciso%20%C3%A9%20um%20atendimento%20Agil!" target="_blank" aria-label="WhatsApp">
             <img src={whatsappIcon} alt="WhatsApp" />
           </a>
-          <a href="#" target="_blank" aria-label="TikTok">
+          <a href="https://www.tiktok.com/@protec__?fbclid=PAY2xjawJsliFleHRuA2FlbQIxMAABp-ibp_xy2AInATtqBoSJPo00EeYwVCO1-WVBFQUrEvPlt0KBoHpizVIbISs-_aem_yw6T4MMoOgk9SP-yvLuCLQ" target="_blank" aria-label="TikTok">
             <img src={tiktokIcon} alt="TikTok" />
           </a>
         </div>

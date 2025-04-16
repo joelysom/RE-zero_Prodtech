@@ -146,16 +146,16 @@ function Contato() {
           <div className={styles.socialMedia}>
             <h3>Redes Sociais</h3>
             <div className={styles.socialIcons}>
-              <a href="#" aria-label="Facebook">
+              <a href="/construcao" aria-label="Facebook">
                 <FaFacebookF />
               </a>
-              <a href="#" aria-label="Instagram">
+              <a href="https://www.instagram.com/prodtech_services/?igsh=ODZpMmVnYm1zNHY2" aria-label="Instagram">
                 <FaInstagram />
               </a>
-              <a href="#" aria-label="LinkedIn">
+              <a href="/construcao" aria-label="LinkedIn">
                 <FaLinkedinIn />
               </a>
-              <a href="#" aria-label="Twitter">
+              <a href="/construcao" aria-label="Twitter">
                 <FaTwitter />
               </a>
             </div>

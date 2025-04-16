@@ -37,8 +37,9 @@ const TechnologyComponent = () => {
       <p className={styles.contactText}>
         Entre em contato conosco e descubra como podemos transformar sua infraestrutura tecnológica!
       </p>
-
-      <button className={styles.ctaButton}>Solicitar orçamento agora!</button>
+      <a href="/construcao" className={styles.ctaButton}>
+        Solicitar orçamento agora!
+      </a>
     </div>
   );
 };

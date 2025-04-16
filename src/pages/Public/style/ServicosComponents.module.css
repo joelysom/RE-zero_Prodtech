@@ -1,23 +1,25 @@
-
 /* ServicosComponents.module.css */
 .servicoscomponentWrapper {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 50px 20px;
+  padding: 0;
+  position: relative;
 }
 
 .servicoscomponentGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  gap: 0;
   width: 100%;
+  position: relative;
 }
 
 .servicoscomponentCardWrapper {
   position: relative;
   display: flex;
   justify-content: center;
+  padding: 30px 20px;
 }
 
 .servicoscomponentCard {
@@ -27,12 +29,21 @@
   align-items: center;
   text-align: center;
   padding: 20px;
+  max-width: 460px;
+}
+
+.iconContainer {
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .servicoscomponentIcon {
-  width: 110px;
-  height: 110px;
-  margin-bottom: 15px;
+  width: 100%;
+  height: auto;
   object-fit: contain;
 }
 
@@ -41,30 +52,57 @@
   font-weight: bold;
   margin-bottom: 15px;
   color: #333;
+  text-align: center;
 }
 
 .servicoscomponentCard p {
   color: #555;
   font-size: 14px;
   line-height: 1.6;
-  max-width: 400px;
+  text-align: justify;
   margin: 0 auto;
+}
+
+/* Dividers */
+.verticalDivider {
+  position: absolute;
+  right: 0;
+  top: 10%;
+  height: 80%;
+  width: 1px;
+  background-color: rgba(30, 111, 185, 0.2);
+}
+
+.horizontalDivider {
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background-color: rgba(30, 111, 185, 0.2);
 }
 
 /* Media Queries */
 @media (max-width: 992px) {
   .servicoscomponentGrid {
-    gap: 30px;
+    gap: 0;
+  }
+  
+  .servicoscomponentCardWrapper {
+    padding: 20px 15px;
   }
 }
 
 @media (max-width: 768px) {
   .servicoscomponentGrid {
     grid-template-columns: 1fr;
-    gap: 40px;
   }
   
-  .servicoscomponentIcon {
+  .verticalDivider {
+    display: none;
+  }
+  
+  .iconContainer {
     width: 90px;
     height: 90px;
   }
