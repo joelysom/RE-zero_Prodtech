@@ -115,7 +115,8 @@ function AuthProvider({ children }){
     }
   }
 
-  async function signUp(userData, type) {
+  // Adicionado o parâmetro shouldRedirect com valor padrão true
+  async function signUp(userData, type, shouldRedirect = true) {
     setLoadingAuth(true);
     
     try {
@@ -144,6 +145,7 @@ function AuthProvider({ children }){
         email: userData.email,
         ...(userData.cpf && { cpf: userData.cpf }),
         ...(userData.empresaNome && { empresaNome: userData.empresaNome }),
+        ...(userData.representanteNome && { representanteNome: userData.representanteNome }),
       };
       
       // Store user data in Firestore
@@ -155,13 +157,19 @@ function AuthProvider({ children }){
         ...userDataToStore
       };
       
-      // Update state and storage
-      setUser(data);
-      setUserType(type);
-      storageUser(data, type);
+      // Update state and storage only if we should redirect
+      if (shouldRedirect) {
+        setUser(data);
+        setUserType(type);
+        storageUser(data, type);
+        toast.success('Cadastrado com sucesso');
+        navigate('/dashboard');
+      } else {
+        // Se não redirecionar, apenas mostrar o toast de sucesso
+        toast.success('Cadastrado com sucesso');
+      }
+      
       setLoadingAuth(false);
-      toast.success('Cadastrado com sucesso');
-      navigate('/dashboard');
       
     } catch (err) {
       // Detailed error handling for sign up
@@ -199,7 +207,8 @@ function AuthProvider({ children }){
       localStorage.removeItem('@usertype');
       setUser(null);
       setUserType(null);
-      navigate('/');
+      toast.success('Logout realizado com sucesso!');
+      navigate('/signin');
     } catch (error) {
       console.error('Logout error:', error);
       toast.error('Erro ao fazer logout');
@@ -220,6 +229,7 @@ function AuthProvider({ children }){
         storageUser,
         setUser,
         setUserType,
+        setLoadingAuth,
       }}
     >
       {children}

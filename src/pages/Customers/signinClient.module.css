@@ -1,72 +1,227 @@
-.content {
-  padding: 20px;
-  max-width: 900px;
+/* signinClient.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f5f5f7;
+  margin-left: 250px; /* Space for sidebar */
+}
+
+.header {
+  background-color: #181c2e;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  padding: 2rem;
   margin: 0 auto;
 }
 
-.container {
-  background: #f4f7fb;
-  border-radius: 10px;
-  padding: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+.title {
+  color: #181c2e;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-.formProfile {
+.form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1rem;
 }
 
-.formProfile label {
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 5px;
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.formProfile input[type="text"],
-.formProfile input[type="email"],
-.formProfile input[type="password"] {
-  height: 40px;
-  padding: 0 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 15px;
-  transition: border 0.2s;
+.label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #181c2e;
 }
 
-.formProfile input:focus {
-  border-color: #3273dc;
-  outline: none;
+.radioGroup {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.5rem;
 }
 
-.formProfile input[type="radio"] {
-  margin-right: 5px;
-  accent-color: #3273dc;
-}
-
-.formProfile button {
-  height: 45px;
-  border: none;
-  background-color: #3273dc;
-  color: #fff;
-  font-weight: bold;
-  font-size: 16px;
-  border-radius: 6px;
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 0.9rem;
 }
 
-.formProfile button:hover {
-  background-color: #245bb5;
+.radioLabel input[type="radio"] {
+  accent-color: #fbbf24;
+  cursor: pointer;
 }
 
-@media screen and (max-width: 768px) {
-  .formProfile {
-    gap: 12px;
+.input {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  transition: border-color 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #fbbf24;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+}
+
+.iconInput {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+}
+
+.iconInput input {
+  padding-left: 2.5rem;
+}
+
+.submitButton {
+  background-color: #fbbf24;
+  color: #181c2e;
+  font-weight: 600;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.submitButton:hover {
+  background-color: #f59e0b;
+  transform: translateY(-2px);
+}
+
+.submitButton:disabled {
+  background-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.5rem 0;
+  color: #6b7280;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.divider::before {
+  margin-right: 1rem;
+}
+
+.divider::after {
+  margin-left: 1rem;
+}
+
+.loginLink {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.loginLink a {
+  color: #fbbf24;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.loginLink a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .container {
+    margin-left: 0;
+    padding-top: 70px; /* Account for mobile header */
   }
+}
 
-  .formProfile input,
-  .formProfile button {
-    font-size: 14px;
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.2rem;
+  }
+  
+  .radioGroup {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .input, .submitButton {
+    padding: 0.6rem 0.8rem;
   }
 }

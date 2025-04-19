@@ -1,23 +1,12 @@
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-html, body, #root {
-  height: 100%;
-  width: 100%;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
-  font:14px;
-  background-color:#fff;
-  font-family: sans-serif;
-}
-
-svg[stroke="currentColor"],
-svg[fill="currentColor"],
-svg[stroke-width="2"] {
-  width: 1.5em;
-  height: 1.5em;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
