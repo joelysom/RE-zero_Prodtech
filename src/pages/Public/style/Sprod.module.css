@@ -1,7 +1,8 @@
+/* Sprod.module.css */
 .SprodSection {
   background-color: #2264a0;
   color: #fff;
-  padding: 80px 20px;
+  padding: 60px 20px;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -12,43 +13,123 @@
 .SprodContainer {
   max-width: 800px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 
 .SprodTitle {
   font-size: 48px;
   font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  line-height: 1.2;
 }
 
 .SprodSubtitle {
   font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  line-height: 1.4;
 }
 
 .SprodText {
   font-size: 20px;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .SprodTextStrong {
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
+/* Tablets e dispositivos médios */
+@media (max-width: 1024px) {
+  .SprodSection {
+    padding: 50px 15px;
+  }
+  
   .SprodContainer {
     max-width: 90%;
+  }
+  
+  .SprodTitle {
+    font-size: 42px;
+  }
+  
+  .SprodSubtitle {
+    font-size: 22px;
+  }
+  
+  .SprodText {
+    font-size: 18px;
+  }
+}
+
+/* Dispositivos móveis */
+@media (max-width: 768px) {
+  .SprodSection {
+    padding: 40px 10px;
+    min-height: auto;
+  }
+  
+  .SprodContainer {
+    max-width: 100%;
     margin-left: 10px;
     margin-right: 10px;
   }
-
+  
   .SprodTitle {
-    font-size: 30px;
+    font-size: 32px;
+    margin-bottom: 20px;
   }
-
-  .SprodText,
-  .SprodTextStrong {
+  
+  .SprodSubtitle {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .SprodText {
     font-size: 16px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Dispositivos móveis pequenos */
+@media (max-width: 480px) {
+  .SprodSection {
+    padding: 30px 10px;
+  }
+  
+  .SprodContainer {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  
+  .SprodTitle {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  .SprodSubtitle {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  .SprodText {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+  }
+}
+
+/* Dispositivos muito pequenos */
+@media (max-width: 320px) {
+  .SprodTitle {
+    font-size: 24px;
+  }
+  
+  .SprodSubtitle {
+    font-size: 16px;
+  }
+  
+  .SprodText {
+    font-size: 14px;
   }
 }

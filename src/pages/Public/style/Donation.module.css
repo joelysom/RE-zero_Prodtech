@@ -1,6 +1,14 @@
 .donationContainer {
   text-align: center;
-  padding: 20px;
+  padding: 30px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.donationTitle {
+  font-size: 1.7rem;
+  font-weight: bold;
+  margin-bottom: 25px;
 }
 
 .donationMethods {
@@ -8,33 +16,34 @@
   justify-content: center;
   align-items: center;
   gap: 25px;
-  margin: 20px 0;
+  margin: 30px 0;
+  flex-wrap: wrap;
 }
 
 .methodBox {
   background-color: #f7931e;
   color: white;
-  padding: 40px;
+  padding: 30px 20px;
   flex: 1;
   border-radius: 5px;
   text-align: center;
+  min-width: 200px;
   max-width: 230px;
 }
 
 .methodBox h3 {
-  font-size: 28px;
+  font-size: 1.4rem;
   margin: 0;
   font-weight: bold;
 }
 
 .methodBox p {
-  font-size: 14px;
+  font-size: 0.95rem;
   margin-top: 10px;
   color: white;
 }
 
-.donImage,
-svg {
+.donImage {
   width: 100%;
   height: 40px;
   max-width: 150px;
@@ -43,15 +52,17 @@ svg {
 }
 
 .or {
-  font-size: 20px;
+  font-size: 1.2rem;
   font-weight: bold;
+  padding: 10px;
 }
 
 .deliveryOptions {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 30px;
+  margin-top: 30px;
+  flex-wrap: wrap;
 }
 
 .optionBox {
@@ -59,4 +70,70 @@ svg {
   padding: 20px;
   border-radius: 8px;
   width: 220px;
+  max-width: 100%;
+  flex-grow: 1;
+}
+
+/* Media queries para responsividade */
+@media (max-width: 992px) {
+  .donationMethods {
+    gap: 15px;
+  }
+  
+  .methodBox {
+    padding: 25px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .donationMethods {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .methodBox {
+    max-width: 280px;
+    width: 100%;
+  }
+  
+  .or {
+    margin: 5px 0;
+  }
+  
+  .deliveryOptions {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .optionBox {
+    width: 90%;
+    max-width: 300px;
+  }
+  
+  .donationTitle {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .donationContainer {
+    padding: 20px 15px;
+  }
+  
+  .methodBox h3 {
+    font-size: 1.2rem;
+  }
+  
+  .methodBox p {
+    font-size: 0.9rem;
+  }
+  
+  .donationTitle {
+    font-size: 1.3rem;
+  }
+  
+  .methodBox {
+    padding: 20px 15px;
+  }
 }

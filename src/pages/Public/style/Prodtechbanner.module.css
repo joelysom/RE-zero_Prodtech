@@ -1,3 +1,4 @@
+/* Prodtechbanner.module.css */
 .prodtechbanner {
   position: relative;
   width: 100%;
@@ -9,50 +10,110 @@
   padding-left: 0px;
   color: white;
   padding-bottom: 50px;
-  animation: changeBackground 20s infinite;
+  background-position: center;
+  background-size: cover;
+  transition: background-image 1s ease-in-out;
 }
 
 .prodtechbannerContent {
   width: 100%;
   max-width: 600px;
   text-align: left;
-  margin-left: 2%;
-  padding: 10px;
-  border-radius: 0;
+  margin-left: 5%;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 2;
 }
 
 .prodtitle {
   font-size: 40px;
   font-weight: 700;
   margin-bottom: 20px;
-  max-width: 80%;
+  max-width: 100%;
 }
 
 .prodsubtitle {
   font-size: 20px;
   margin-bottom: 30px;
-  max-width: 80%;
+  max-width: 100%;
+  line-height: 1.6;
 }
 
-@keyframes changeBackground {
-  0% {
-    background-image: url("../../../assets/Home/image/fundo_home.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+/* Controles do carrossel */
+.carouselControls {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+}
+
+.carouselDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.activeDot {
+  background-color: white;
+  transform: scale(1.2);
+}
+
+/* Media queries para responsividade */
+@media (max-width: 1024px) {
+  .prodtechbannerContent {
+    max-width: 500px;
   }
-  33% {
-    background-image: url("../../../assets/Contatos/img/Tela-de-fundo.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+  
+  .prodtitle {
+    font-size: 36px;
   }
-  66% {
-    background-image: url("../../../assets/AProdTech/image/Protótipo - A Prodtech 1.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+  
+  .prodsubtitle {
+    font-size: 18px;
   }
-  100% {
-    background-image: url("../../../assets/Home/image/fundo_home.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+}
+
+@media (max-width: 768px) {
+  .prodtechbannerContent {
+    max-width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  
+  .prodtitle {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .prodtechbanner {
+    padding: 20px 0;
+    justify-content: flex-start;
+    padding-top: 100px;
+  }
+  
+  .prodtechbannerContent {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+    padding: 15px;
+  }
+  
+  .prodtitle {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  .prodsubtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
   }
 }

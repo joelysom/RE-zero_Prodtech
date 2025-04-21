@@ -1,16 +1,28 @@
 .containerCompromise {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
+  align-items: center;
   background-color: #121225;
   color: white;
-  padding: 40px;
+  padding: 40px 20px;
   font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.contentWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 1200px;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .textCompromise {
-  max-width: 35%;
+  flex: 1;
+  min-width: 280px;
+  max-width: 600px;
   text-align: justify;
 }
 
@@ -33,10 +45,10 @@
 
 .formSectionCompromise {
   background: #f4f4f4;
-  align-items: center;
   padding: 20px;
   border-radius: 10px;
   width: 350px;
+  max-width: 100%;
 }
 
 .formSectionCompromise h2 {
@@ -45,13 +57,6 @@
   font-weight: bold;
   text-align: center;
   margin-bottom: 15px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
 }
 
 .input,
@@ -65,6 +70,7 @@
   background: #dcdcdc;
   text-align: left;
   margin-left: 5%;
+  box-sizing: border-box;
 }
 
 .textarea {
@@ -82,9 +88,54 @@
   font-size: 16px;
   width: 50%;
   transition: background 0.3s ease;
-  margin-left: 25%;
+  margin: 10px 0 0 25%;
 }
 
 .buttonCompromise:hover {
   background-color: #b18619;
+}
+
+/* Media queries para responsividade */
+@media screen and (max-width: 992px) {
+  .contentWrapper {
+    gap: 30px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .textCompromise {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  .formSectionCompromise {
+    width: 100%;
+    max-width: 450px;
+  }
+  
+  .contentWrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .containerCompromise {
+    padding: 20px 15px;
+  }
+  
+  .compromiseTitle {
+    font-size: 22px;
+  }
+  
+  .buttonCompromise {
+    width: 70%;
+    margin-left: 15%;
+  }
+  
+  .input,
+  .textarea {
+    width: 95%;
+    margin-left: 2.5%;
+  }
 }

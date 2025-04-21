@@ -5,7 +5,7 @@ import num2 from "../../../assets/AProdTech/icons/2.svg";
 const Donation = () => {
   return (
     <div className={styles.donationContainer}>
-      <h2>COMO VOCÊ PODE DOAR AS PEÇAS</h2>
+      <h2 className={styles.donationTitle}>COMO VOCÊ PODE DOAR AS PEÇAS</h2>
       <div className={styles.donationMethods}>
         <div className={styles.methodBox}>
           <h3>Através do Formulário</h3>
@@ -28,8 +28,8 @@ const Donation = () => {
           </p>
         </div>
       </div>
-
-      <h2>EXISTE 2 MANEIRAS DE VOCÊ ENTREGAR SUAS PEÇAS</h2>
+      
+      <h2 className={styles.donationTitle}>EXISTE 2 MANEIRAS DE VOCÊ ENTREGAR SUAS PEÇAS</h2>
       <div className={styles.deliveryOptions}>
         <div className={styles.optionBox}>
           <img className={styles.donImage} src={num1} alt="1" />

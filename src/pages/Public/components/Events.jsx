@@ -20,7 +20,7 @@ const Events = () => {
       <div className={styles.eventSection}>
         <div className={`${styles.eventCarousel} ${styles.renplay}`}></div>
         <div className={styles.eventText}>
-          <h2 className={styles.eventTitulo}>Re’n’Play</h2>
+          <h2 className={styles.eventTitulo}>Re'n'Play</h2>
           <p>
             Oferecemos uma oficina sobre manutenção de máquinas, abordando
             possíveis problemas que podem ocorrer e como resolvê-los. Também
