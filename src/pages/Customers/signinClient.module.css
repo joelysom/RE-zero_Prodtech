@@ -1,6 +1,13 @@
 /* signinClient.module.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -9,6 +16,8 @@
   padding: 2rem;
   background-color: #f5f5f7;
   margin-left: 250px; /* Space for sidebar */
+  transition: margin 0.3s ease;
+  width: calc(100% - 250px); /* Ajusta a largura para considerar o sidebar */
 }
 
 .header {
@@ -32,9 +41,10 @@
   border-radius: 0.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
+  max-width: 100%; /* Alterado para ocupar o espaço disponível */
   padding: 2rem;
   margin: 0 auto;
+  transition: all 0.3s ease;
 }
 
 .title {
@@ -53,12 +63,15 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-width: 800px; /* Limita a largura do formulário para melhor legibilidade */
+  margin: 0 auto; /* Centraliza o formulário dentro do card */
 }
 
 .inputGroup {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .label {
@@ -71,6 +84,7 @@
   display: flex;
   gap: 1.5rem;
   margin-top: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .radioLabel {
@@ -92,6 +106,7 @@
   border-radius: 0.5rem;
   font-size: 0.9rem;
   transition: border-color 0.3s ease;
+  width: 100%;
 }
 
 .input:focus {
@@ -102,6 +117,7 @@
 
 .iconInput {
   position: relative;
+  width: 100%;
 }
 
 .icon {
@@ -114,6 +130,7 @@
 
 .iconInput input {
   padding-left: 2.5rem;
+  width: 100%;
 }
 
 .submitButton {
@@ -130,6 +147,10 @@
   justify-content: center;
   gap: 0.5rem;
   margin-top: 1rem;
+  width: 100%;
+  max-width: 300px; /* Limita a largura do botão */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .submitButton:hover {
@@ -189,39 +210,122 @@
   text-decoration: underline;
 }
 
-/* Responsive styles */
-@media (max-width: 1024px) {
+/* Media Queries for Responsive Design */
+/* Large screens (laptops/desktops) */
+@media (max-width: 1200px) {
   .container {
-    margin-left: 0;
-    padding-top: 70px; /* Account for mobile header */
+    margin-left: 220px;
+    width: calc(100% - 220px);
   }
 }
 
+/* Medium screens (tablets, small laptops) */
+@media (max-width: 1024px) {
+  .container {
+    margin-left: 0;
+    width: 100%;
+    padding-top: 80px; /* Account for mobile header */
+  }
+  
+  .card {
+    max-width: 95%;
+  }
+}
+
+/* Small screens (tablets) */
 @media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+    padding-top: 80px;
+  }
+  
   .card {
     padding: 1.5rem;
+    max-width: 95%;
   }
   
   .title {
+    font-size: 1.3rem;
+  }
+  
+  .radioGroup {
+    gap: 1rem;
+  }
+  
+  .header h1 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Extra small screens (mobile phones) */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+    padding-top: 70px;
+  }
+  
+  .card {
+    padding: 1rem;
+    border-radius: 0.4rem;
+  }
+  
+  .header {
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .header h1 {
     font-size: 1.2rem;
+  }
+  
+  .title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .input, .submitButton {
+    padding: 0.6rem 0.8rem;
   }
   
   .radioGroup {
     flex-direction: column;
     gap: 0.75rem;
   }
+  
+  .radioLabel {
+    font-size: 0.85rem;
+  }
+  
+  .label {
+    font-size: 0.85rem;
+  }
+  
+  .form {
+    gap: 0.8rem;
+  }
 }
 
-@media (max-width: 480px) {
+/* Very small screens */
+@media (max-width: 320px) {
   .container {
-    padding: 1rem;
+    padding: 0.8rem;
+    padding-top: 65px;
   }
   
   .card {
-    padding: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .header h1, .title {
+    font-size: 1rem;
   }
   
   .input, .submitButton {
-    padding: 0.6rem 0.8rem;
+    padding: 0.5rem 0.7rem;
+    font-size: 0.85rem;
+  }
+  
+  .icon {
+    font-size: 0.9rem;
   }
 }

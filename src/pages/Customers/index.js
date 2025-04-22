@@ -258,7 +258,7 @@ function ClientSignUp() {
       <div className={styles.container}>
         <div className={styles.card}>
           <div className={styles.header}>
-            <h1>Portal do Cliente</h1>
+            <h1>Cadastrar Cliente</h1>
           </div>
 
           <h2 className={styles.title}>
@@ -403,9 +403,6 @@ function ClientSignUp() {
               {isSubmitting ? 'Processando...' : 'Cadastrar'}
             </button>
             
-            <div className={styles.loginLink}>
-              Já possui uma conta? <a href="/signin">Fazer login</a>
-            </div>
           </form>
         </div>
       </div>

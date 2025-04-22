@@ -48,7 +48,7 @@ const Sidebar = () => {
               onClick={() => window.innerWidth < 768 && setIsOpen(false)}
             >
               <FiUser className={styles.icon} size={20} /> 
-              <span className={styles.navText}>Clientes</span>
+              <span className={styles.navText}>Cadastrar Cliente</span>
             </NavLink>
           </li>
           <li>
