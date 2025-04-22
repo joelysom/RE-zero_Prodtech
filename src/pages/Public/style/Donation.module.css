@@ -69,8 +69,8 @@
   border: 2px solid black;
   padding: 20px;
   border-radius: 8px;
-  width: 220px;
-  max-width: 100%;
+  width: 100px;
+  max-width: 25%;
   flex-grow: 1;
 }
 

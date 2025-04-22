@@ -40,12 +40,12 @@
   left: 0;
   width: 100%;
   background-color: #1f1f2e;
-  padding: 20px;
+  padding: 30px; /* Aumentei de 20px para 30px */
   text-align: center;
   color: white;
-  font-size: 24px;
+  font-size: 32px; /* Aumentei de 24px para 32px */
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px; /* Aumentei de 1px para 1.5px */
 }
 
 /* Conteúdo da página de contato */
