@@ -291,6 +291,8 @@
   text-decoration: underline;
 }
 
+
+
 @media screen and (max-width: 900px) {
   .content {
     margin-left: 0;

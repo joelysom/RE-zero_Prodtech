@@ -1,12 +1,11 @@
 import { addDoc, collection } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../contexts/auth";
 import { db } from "../../services/firebaseConnection";
 import styles from "./SupportPage.module.css";
-// Import your sidebar component here
-import ClientHeader from "../../components/ClientHeader"; // Adjust path as needed
+import ClientHeader from "../../components/ClientHeader";
 
 export default function SupportPage() {
   const { user } = useContext(AuthContext);
@@ -17,6 +16,17 @@ export default function SupportPage() {
   const [email, setEmail] = useState(user?.email || "");
   const [contato, setContato] = useState("");
   const [problema, setProblema] = useState("");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  
+  // Add resize listener for dynamic UI adjustments
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,14 +62,14 @@ export default function SupportPage() {
   
   return (
     <div className={styles.appContainer}>
-      {/* Add the sidebar component here */}
+      {/* ClientHeader will be visible on all screens */}
       <ClientHeader />
       
       <div className={styles.supportContainer}>
         {/* Header/Logo Area */}
         <div className={styles.supportHeader}>
           <div className="logo-container">
-            <h1>ProdTech Services</h1>
+            <h1>{isMobile ? "ProdTech" : "ProdTech Services"}</h1>
           </div>
           
           <div className={styles.userInfo}>
@@ -86,45 +96,53 @@ export default function SupportPage() {
           <div className={styles.supportFormContainer}>
             <form onSubmit={handleSubmit}>
               <div className={styles.formField}>
-                <label>Nome:</label>
+                <label htmlFor="nome">Nome:</label>
                 <input
+                  id="nome"
                   type="text"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                   required
                   className={styles.formInput}
+                  placeholder="Seu nome completo"
                 />
               </div>
               
               <div className={styles.formField}>
-                <label>E-mail:</label>
+                <label htmlFor="email">E-mail:</label>
                 <input
+                  id="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className={styles.formInput}
+                  placeholder="seu.email@exemplo.com"
                 />
               </div>
               
               <div className={styles.formField}>
-                <label>Número de contato:</label>
+                <label htmlFor="contato">Número de contato:</label>
                 <input
+                  id="contato"
                   type="tel"
                   value={contato}
                   onChange={(e) => setContato(e.target.value)}
                   className={styles.formInput}
+                  placeholder="(XX) XXXXX-XXXX"
                 />
               </div>
               
               <div className={styles.formField}>
-                <label>Descrição do problema:</label>
+                <label htmlFor="problema">Descrição do problema:</label>
                 <textarea
+                  id="problema"
                   value={problema}
                   onChange={(e) => setProblema(e.target.value)}
-                  rows={5}
+                  rows={isMobile ? 4 : 5}
                   required
                   className={styles.formTextarea}
+                  placeholder="Descreva detalhadamente o problema que está enfrentando..."
                 ></textarea>
               </div>
               
@@ -139,7 +157,7 @@ export default function SupportPage() {
           </div>
         </div>
         
-        {/* Footer */}
+        {/* Footer - Empty in your original code, but left for structure */}
         <div className={styles.supportFooter}>
         </div>
       </div>

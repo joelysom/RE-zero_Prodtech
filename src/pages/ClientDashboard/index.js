@@ -8,7 +8,7 @@ import {
   FiX,
   FiTrash
 } from 'react-icons/fi';
-import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import { collection, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 
@@ -36,70 +36,68 @@ export default function ClientDashboard() {
   const [chamadoToDelete, setChamadoToDelete] = useState(null);
 
   useEffect(() => {
+    let unsubscribe = null;
+    
     if(user) {
-      loadChamados();
+      setLoading(true);
+      
+      const chamadosRef = collection(db, 'chamados');
+      
+      // Configurando listener em tempo real
+      unsubscribe = onSnapshot(chamadosRef, (snapshot) => {
+        if (snapshot.empty) {
+          setIsEmpty(true);
+          setChamados([]);
+          setFilteredChamados([]);
+          setLoading(false);
+          return;
+        }
+        
+        const listaChamados = [];
+        
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          
+          if (data.clienteId === user.uid || data.userId === user.uid) {
+            listaChamados.push({
+              id: doc.id,
+              assunto: data.assunto || '',
+              cliente: data.cliente || '',
+              clienteId: data.clienteId || '',
+              created: data.created,
+              createdFormat: format(data.created.toDate(), 'dd/MM/yyyy'),
+              status: data.status || '',
+              complemento: data.complemento || '',
+              tipo: data.tipo || '',
+              categoria: data.categoria || '',
+              assignedUser: data.assignedUser || 'Não atribuído',
+            });
+          }
+        });
+        
+        listaChamados.sort((a, b) => b.created - a.created);
+        
+        setChamados(listaChamados);
+        setIsEmpty(listaChamados.length === 0);
+        setLoading(false);
+        
+        console.log('Chamados atualizados em tempo real:', listaChamados.length);
+      }, (error) => {
+        console.error("Erro no listener de chamados:", error);
+        toast.error("Erro ao monitorar chamados!");
+        setLoading(false);
+      });
     }
+    
+    // Cleanup function para remover o listener quando o componente for desmontado
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, [user]);
 
   useEffect(() => {
     applyFilters();
   }, [chamados, statusFilter, searchTerm]);
-
-  async function loadChamados() {
-    setLoading(true);
-    
-    try {
-      const chamadosRef = collection(db, 'chamados');
-      const querySnapshot = await getDocs(chamadosRef);
-      
-      if (querySnapshot.empty) {
-        setIsEmpty(true);
-        setChamados([]);
-        setFilteredChamados([]);
-        return;
-      }
-      
-      const listaChamados = [];
-      
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        
-        if (data.clienteId === user.uid || data.userId === user.uid) {
-          listaChamados.push({
-            id: doc.id,
-            assunto: data.assunto || '',
-            cliente: data.cliente || '',
-            clienteId: data.clienteId || '',
-            created: data.created,
-            createdFormat: format(data.created.toDate(), 'dd/MM/yyyy'),
-            status: data.status || '',
-            complemento: data.complemento || '',
-            tipo: data.tipo || '',
-            categoria: data.categoria || '',
-            assignedUser: data.assignedUser || 'Não atribuído',
-          });
-        }
-      });
-      
-      listaChamados.sort((a, b) => b.created - a.created);
-      
-      setChamados(listaChamados);
-      setFilteredChamados(listaChamados);
-      setIsEmpty(listaChamados.length === 0);
-      
-      console.log('Chamados carregados:', listaChamados.length);
-    } catch (error) {
-      console.error("Erro ao carregar chamados:", error);
-      toast.error("Erro ao carregar chamados!");
-    } finally {
-      setLoading(false);
-    }
-  }
-  
-  function togglePostModal(item) {
-    setShowPostModal(!showPostModal);
-    setDetail(item);
-  }
 
   function applyFilters() {
     if (!chamados.length) {
@@ -124,13 +122,10 @@ export default function ClientDashboard() {
     
     setFilteredChamados(results);
   }
-
-  function onUpdateChamado(updatedChamado) {
-    const updatedList = chamados.map(chamado => 
-      chamado.id === updatedChamado.id ? updatedChamado : chamado
-    );
-    
-    setChamados(updatedList);
+  
+  function togglePostModal(item) {
+    setShowPostModal(!showPostModal);
+    setDetail(item);
   }
 
   function confirmDelete(chamado) {
@@ -145,15 +140,14 @@ export default function ClientDashboard() {
       const docRef = doc(db, 'chamados', chamadoToDelete.id);
       await deleteDoc(docRef);
       
-      // Atualizar a lista após deletar
-      const updatedChamados = chamados.filter(item => item.id !== chamadoToDelete.id);
-      setChamados(updatedChamados);
-      
       // Fechar o modal de confirmação
       setShowDeleteConfirm(false);
       setChamadoToDelete(null);
       
       toast.success("Chamado deletado com sucesso!");
+      
+      // Não precisamos mais atualizar manualmente a lista aqui
+      // já que o listener onSnapshot vai detectar essa mudança automaticamente
     } catch (error) {
       console.error("Erro ao deletar chamado:", error);
       toast.error("Erro ao deletar chamado!");
@@ -198,7 +192,7 @@ export default function ClientDashboard() {
         <div className={styles.headerContainer}>
           <h1>Meus Chamados</h1>
           
-          <Link to="/new-client" className={styles.newLink}>
+          <Link to="/new" className={styles.newLink}>
             <FiPlus size={25} />
             Novo Chamado
           </Link>
@@ -311,7 +305,7 @@ export default function ClientDashboard() {
                 <td colSpan={6}>
                   <div className={styles.emptyContainer}>
                     <span>Nenhum chamado encontrado...</span>
-                    <Link to="/new-client">Criar novo chamado</Link>
+                    <Link to="/new">Criar novo chamado</Link>
                   </div>
                 </td>
               </tr>
@@ -363,7 +357,10 @@ export default function ClientDashboard() {
           <ClientModal 
             conteudo={detail}
             buttomBack={() => setShowPostModal(false)}
-            onUpdateChamado={onUpdateChamado}
+            onUpdateChamado={(updatedChamado) => {
+              // Não precisamos mais atualizar manualmente aqui
+              togglePostModal(null);
+            }}
           />
         )}
         

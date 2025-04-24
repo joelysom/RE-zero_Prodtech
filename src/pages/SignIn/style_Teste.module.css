@@ -1,8 +1,11 @@
-
 .pageContainer {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh; /* Alterado de min-height para height */
+  display: flex; /* Adicionado para centralização */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  overflow: hidden; /* Impede a rolagem */
 }
 
 /* Estilos para o botão de voltar para home */
@@ -22,6 +25,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   transition: all 0.3s ease;
+  margin: 0; /* Garantir que não haja margens */
 }
 
 .homeButton:hover {
@@ -47,7 +51,7 @@
   width: 768px;
   max-width: 95%;
   min-height: 480px;
-  margin: 50px auto; /* Aumentado para posicionar mais abaixo */
+  margin: 0 auto; /* Alterado de 50px auto para 0 auto */
   display: flex; /* Ajuda na centralização */
   align-items: center; /* Centralização vertical */
 }
@@ -413,7 +417,7 @@
   .container {
     min-height: 400px;
     max-width: 95%;
-    margin: 10px auto;
+    margin: 0 auto; /* Removida a margem vertical */
   }
   
   .sign-in, .sign-up {
@@ -456,6 +460,7 @@
   .container {
     border-radius: 15px;
     min-height: 350px;
+    margin: 0 auto; /* Removida a margem vertical */
   }
   
   .container button {
@@ -497,7 +502,7 @@
   .container {
     min-height: 450px; /* Aumentado para dar mais espaço */
     max-width: 95%;
-    margin: 30px auto; /* Ajustado para ficar mais abaixo na tela pequena */
+    margin: 0 auto; /* Removida a margem vertical */
   }
   
   .sign-in, .sign-up {
@@ -547,7 +552,7 @@
   .container {
     border-radius: 15px;
     min-height: 400px;
-    margin: 20px auto;
+    margin: 0 auto; /* Removida a margem vertical */
   }
   
   .form-container form {

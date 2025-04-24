@@ -27,24 +27,11 @@ function Login() {
     // Adiciona event listener para redimensionamento
     window.addEventListener('resize', checkScreenSize);
     
-    // Centraliza verticalmente no carregamento
-    const centerContent = () => {
-      const container = document.getElementById('container');
-      if (container) {
-        const windowHeight = window.innerHeight;
-        const containerHeight = container.offsetHeight;
-        const topMargin = Math.max(50, (windowHeight - containerHeight) / 2);
-        container.style.marginTop = `${topMargin}px`;
-      }
-    };
-    
-    centerContent();
-    window.addEventListener('resize', centerContent);
+    // Removido o código que manipulava as margens do container
     
     // Cleanup dos event listeners
     return () => {
       window.removeEventListener('resize', checkScreenSize);
-      window.removeEventListener('resize', centerContent);
     };
   }, []);
 

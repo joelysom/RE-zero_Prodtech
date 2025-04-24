@@ -25,6 +25,9 @@
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .userInfo {
@@ -52,6 +55,7 @@
   font-size: 32px;
   color: #12121e;
   margin-bottom: 24px;
+  word-wrap: break-word;
 }
 
 .supportDescription {
@@ -72,8 +76,9 @@
   background-color: #12121e;
   border-radius: 10px;
   padding: 30px;
-  margin-bottom: 150px;
+  margin-bottom: 50px;
   color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .formField {
@@ -94,10 +99,16 @@
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
   font-size: 16px;
+  box-sizing: border-box;
+}
+
+.formInput:focus, .formTextarea:focus {
+  outline: 2px solid rgba(255, 152, 0, 0.5);
 }
 
 .formTextarea {
   resize: vertical;
+  min-height: 120px;
 }
 
 .sendButton {
@@ -145,8 +156,35 @@
   color: #ff9800;
 }
 
-/* Responsive Design */
-/* Tablet */
+/* Responsive Design - Enhanced for better cross-device compatibility */
+/* Large screens */
+@media (min-width: 1921px) {
+  .supportContent {
+    max-width: 1800px;
+    margin: 0 auto;
+  }
+  
+  .supportFormContainer {
+    max-width: 800px;
+  }
+}
+
+/* Standard desktop */
+@media (max-width: 1400px) {
+  .supportContent {
+    gap: 30px;
+  }
+  
+  .supportInfo h2 {
+    font-size: 28px;
+  }
+  
+  .supportDescription {
+    font-size: 16px;
+  }
+}
+
+/* Smaller desktop and large tablets */
 @media (max-width: 1024px) {
   .supportContainer {
     margin-left: 200px; /* Reduced margin for tablets */
@@ -154,15 +192,19 @@
   
   .supportContent {
     padding: 30px;
-    gap: 30px;
+    gap: 25px;
+  }
+  
+  .supportFormContainer {
+    padding: 25px;
   }
   
   .supportInfo h2 {
-    font-size: 28px;
+    font-size: 26px;
   }
 }
 
-/* Small tablets and large phones */
+/* Tablets and large phones */
 @media (max-width: 768px) {
   .appContainer {
     flex-direction: column;
@@ -184,21 +226,20 @@
     margin-bottom: 20px;
   }
   
+  .supportFormContainer {
+    margin-bottom: 40px;
+  }
+  
   .supportHeader {
     padding: 12px 20px;
   }
-  
-  .supportFormContainer {
-    padding: 20px;
-    margin-bottom: 50px;
-  }
 }
 
-/* Mobile phones */
-@media (max-width: 480px) {
-  .supportContent {
-    padding: 15px;
-    gap: 20px;
+/* Medium phones */
+@media (max-width: 640px) {
+  .supportHeader {
+    flex-wrap: wrap;
+    gap: 10px;
   }
   
   .supportInfo h2 {
@@ -207,12 +248,17 @@
   }
   
   .supportDescription {
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 15px;
   }
   
   .supportInstructions {
     font-size: 14px;
+  }
+  
+  .supportContent {
+    padding: 15px;
+    gap: 20px;
   }
   
   .formField {
@@ -221,7 +267,11 @@
   
   .formInput, .formTextarea {
     padding: 10px;
-    font-size: 14px;
+    font-size: 15px;
+  }
+  
+  .formField label {
+    font-size: 15px;
   }
   
   .sendButton {
@@ -229,33 +279,125 @@
     padding: 10px;
   }
   
-  .supportHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-  }
-  
-  .userInfo {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  
   .supportFooter {
     padding: 15px 20px;
   }
 }
 
-/* For extremely small screens */
-@media (max-width: 320px) {
+/* Small phones */
+@media (max-width: 480px) {
+  .supportHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 15px;
+  }
+  
+  .userInfo {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 5px;
+  }
+  
   .supportContent {
-    padding: 10px;
+    padding: 12px;
+    gap: 15px;
   }
   
   .supportFormContainer {
     padding: 15px;
+    margin-bottom: 30px;
   }
   
   .supportInfo h2 {
     font-size: 22px;
+    margin-bottom: 12px;
+  }
+  
+  .supportDescription {
+    font-size: 14px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+  
+  .supportInstructions {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  
+  .formField {
+    margin-bottom: 12px;
+  }
+  
+  .formField label {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  
+  .formInput, .formTextarea {
+    padding: 8px;
+    font-size: 14px;
+  }
+  
+  .formTextarea {
+    min-height: 100px;
+  }
+  
+  .sendButton {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+  .supportHeader {
+    padding: 8px 12px;
+  }
+  
+  .supportContent {
+    padding: 10px;
+    gap: 12px;
+  }
+  
+  .supportFormContainer {
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .supportInfo h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .supportDescription {
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  
+  .supportInstructions {
+    font-size: 12px;
+  }
+  
+  .formField {
+    margin-bottom: 10px;
+  }
+  
+  .formField label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  
+  .formInput, .formTextarea {
+    padding: 8px;
+    font-size: 13px;
+  }
+  
+  .formTextarea {
+    min-height: 80px;
+  }
+  
+  .sendButton {
+    font-size: 14px;
+    padding: 8px;
   }
 }
