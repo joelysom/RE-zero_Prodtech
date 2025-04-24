@@ -1,8 +1,7 @@
-// Em ChatBase.js - Modificar a definição de otherUserId para evitar undefined
-
+// Em ChatBase.js, adicione estado para gerenciar o tema
 import { useState, useEffect, useRef } from 'react';
-import { FiX, FiPaperclip, FiSend, FiSmile, FiImage, FiFile, FiCheck } from 'react-icons/fi';
-import { FaCheckDouble } from "react-icons/fa"; // Usando a versão fa em vez de fa6
+import { FiX, FiPaperclip, FiSend, FiSmile, FiImage, FiFile, FiCheck, FiSettings } from 'react-icons/fi';
+import { FaCheckDouble, FaPalette } from "react-icons/fa";
 import { collection, addDoc, query, where, onSnapshot, orderBy, serverTimestamp, updateDoc, doc, getDocs } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { db, storage } from '../../services/firebaseConnection';
@@ -24,7 +23,10 @@ export default function ChatBase({
   const [isTyping, setIsTyping] = useState(false);
   const [recentlySent, setRecentlySent] = useState(false);
   const [showFileOptions, setShowFileOptions] = useState(false);
-  const [otherUserId, setOtherUserId] = useState(''); // Estado para armazenar otherUserId
+  const [otherUserId, setOtherUserId] = useState('');
+  const [currentTheme, setCurrentTheme] = useState('defaultTheme'); // Tema padrão
+  const [showThemeSelector, setShowThemeSelector] = useState(false);
+  
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
@@ -33,6 +35,30 @@ export default function ChatBase({
   const chatMessagesRef = useRef(null);
   const userId = currentUser?.uid || '';
   const otherUserName = userType === 'tecnico' ? chamado.cliente : (chamado.assignedUser || 'Técnico');
+  
+  // Lista de temas disponíveis
+  const themes = [
+    { id: 'defaultTheme', name: 'Padrão' },
+    { id: 'darkModernTheme', name: 'Preto Moderno' },
+    { id: 'lightModernTheme', name: 'Branco Moderno' },
+    { id: 'blueTheme', name: 'Azul' },
+    { id: 'purpleTheme', name: 'Roxo' },
+    { id: 'greenTheme', name: 'Verde' },
+    { id: 'orangeTheme', name: 'Laranja' }
+  ];
+  
+  // Carregar tema salvo do localStorage quando o componente monta
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('chatTheme');
+    if (savedTheme) {
+      setCurrentTheme(savedTheme);
+    }
+  }, []);
+  
+  // Salvar tema no localStorage quando mudar
+  useEffect(() => {
+    localStorage.setItem('chatTheme', currentTheme);
+  }, [currentTheme]);
   
   // Determinar o ID do outro usuário quando o componente carregar
   useEffect(() => {
@@ -404,9 +430,15 @@ export default function ChatBase({
       return `${messageDate.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' })} ${messageDate.toLocaleTimeString('pt-BR', options)}`;
     }
   }
+  
+  // Função para alterar o tema
+  function changeTheme(themeId) {
+    setCurrentTheme(themeId);
+    setShowThemeSelector(false);
+  }
 
   return (
-    <div className={chatStyles.chatModalOverlay}>
+    <div className={`${chatStyles.chatModalOverlay} ${chatStyles[currentTheme]}`}>
       <div className={chatStyles.chatModal}>
         <div className={chatStyles.chatHeader}>
           <div className={chatStyles.userInfo}>
@@ -425,6 +457,36 @@ export default function ChatBase({
             </div>
           </div>
           <div className={chatStyles.headerActions}>
+            {/* Botão de temas */}
+            <button 
+              onClick={() => setShowThemeSelector(!showThemeSelector)} 
+              className={chatStyles.themeButton} 
+              title="Alterar tema"
+            >
+              <FaPalette size={18} />
+            </button>
+            
+            {/* Seletor de temas */}
+            {showThemeSelector && (
+              <div className={chatStyles.themeSelector}>
+                <div className={chatStyles.themeSelectorHeader}>
+                  Escolha um tema
+                </div>
+                <div className={chatStyles.themeOptions}>
+                  {themes.map(theme => (
+                    <div 
+                      key={theme.id}
+                      className={`${chatStyles.themeOption} ${currentTheme === theme.id ? chatStyles.activeTheme : ''}`}
+                      onClick={() => changeTheme(theme.id)}
+                    >
+                      <div className={`${chatStyles.themePreview} ${chatStyles[`${theme.id}Preview`]}`}></div>
+                      <span>{theme.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
             <button 
               onClick={onClose} 
               className={chatStyles.closeChat} 

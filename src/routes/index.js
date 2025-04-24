@@ -13,6 +13,8 @@ import Support from "../pages/Support";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/auth";
 import ScrollToTop from "./ScrollToTop"; // Importando o componente ScrollToTop
+import SupportView from "../pages/SupportView";
+import MailBox from "../pages/MailBox";
 
 // Importando as páginas públicas
 import Home from "../pages/Public/Home";
@@ -71,6 +73,26 @@ function RoutesApp() {
           element={
             <Private>
               {userType === "tecnico" ? <CustomersList /> : <Navigate to="/dashboard" />}
+            </Private>
+          }
+        />
+
+                {/* Rota para ver solicitações de suporte (técnicos) */}
+                <Route 
+          path="/support-view" 
+          element={
+            <Private>
+              {userType === "tecnico" ? <SupportView /> : <Navigate to="/dashboard" />}
+            </Private>
+          }
+        />
+
+        {/* Rota para caixa de entrada de respostas (clientes) */}
+        <Route 
+          path="/mailbox" 
+          element={
+            <Private>
+              {userType === "cliente" ? <MailBox /> : <Navigate to="/dashboard" />}
             </Private>
           }
         />

@@ -37,7 +37,7 @@ const TechnologyComponent = () => {
       <p className={styles.contactText}>
         Entre em contato conosco e descubra como podemos transformar sua infraestrutura tecnológica!
       </p>
-      <a href="/construcao" className={styles.ctaButton}>
+      <a href="https://wa.me/558194706458?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20os%20serviços%20da%20ProdTech.%20Vi%20que%20vocês%20conectam%20Profissionais%20de%20Tecnologia%20a%20empresas%20e%20oferecem%20soluções%20em%20TI.%20Poderiam%20me%20passar%20mais%20detalhes%20sobre%20os%20serviços%20disponíveis?" className={styles.ctaButton}>
         Solicitar orçamento agora!
       </a>
     </div>

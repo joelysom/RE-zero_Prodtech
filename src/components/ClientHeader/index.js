@@ -1,7 +1,6 @@
-// ClientSidebar.jsx
 import { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FiHome, FiLogOut, FiPlus, FiMenu } from "react-icons/fi";
+import { FiHome, FiLogOut, FiPlus, FiMenu, FiMail } from "react-icons/fi";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { AuthContext } from "../../contexts/auth";
 import "./header.css";
@@ -45,6 +44,11 @@ const ClientSidebar = () => {
           <li>
             <NavLink to="/support" className="nav-item" onClick={() => window.innerWidth < 768 && setIsOpen(false)}>
               <MdOutlineSupportAgent className="icon" size={20} /> <span className="nav-text">Support</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/mailbox" className="nav-item" onClick={() => window.innerWidth < 768 && setIsOpen(false)}>
+              <FiMail className="icon" size={20} /> <span className="nav-text">Caixa de Entrada</span>
             </NavLink>
           </li>
         </ul>
