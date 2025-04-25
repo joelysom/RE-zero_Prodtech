@@ -1,0 +1,383 @@
+.new {
+  background-color: #6fa30f;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  border: 0;
+  padding: 0.6em 1em;
+  border-radius: 6px;
+  justify-content: center;
+  font-weight: 600;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.new svg {
+  margin-right: 8px;
+}
+
+.new:hover {
+  background-color: #5cbf0d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  table-layout: auto;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tableCaption {
+  font-size: 1.2em;
+  margin: 0.5em 0 0.75em;
+  font-weight: 600;
+  color: #333;
+  padding: 10px 15px;
+  text-align: left;
+  background: #f7f7f7;
+  border-radius: 8px 8px 0 0;
+}
+
+.tableRow {
+  background-color: #ffffff;
+  border-bottom: 1px solid #eaeaea;
+  transition: background 0.2s ease;
+}
+
+.tableRow:hover {
+  background-color: #f5f9ff;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableCell, .tableHeader {
+  padding: 0.9em 1em;
+  text-align: left;
+  font-size: 0.95em;
+}
+
+.tableHeader {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  font-weight: 600;
+  background: #181C2E;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.tableHeader:hover {
+  background: #232743;
+}
+
+.sortIcon {
+  margin-left: 6px;
+  position: relative;
+  top: 1px;
+}
+
+.action {
+  border: 0;
+  padding: 6px 12px;
+  border-radius: 4px;
+  margin-right: 6px;
+  display: inline-block;
+  font-size: 0.85em;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.view {
+  background-color: #3583f6;
+  color: #fff;
+}
+
+.view:hover {
+  background-color: #2a6cd4;
+}
+
+.edit {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.edit:hover {
+  background-color: #e68900;
+}
+
+.tableCellSvg {
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.badge {
+  padding: 6px 10px;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 0.85em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+}
+
+.autonomous {
+  background-color: #3583f6;
+}
+
+.company {
+  background-color: #ff9800;
+}
+
+.btnMore {
+  background-color: #181C2E;
+  color: #fff;
+  padding: 0.7em 1.5em;
+  border-radius: 6px;
+  margin-top: 1.5em;
+  cursor: pointer;
+  border: 0;
+  font-size: 1em;
+  transition: all 0.3s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+}
+
+.btnMore:hover {
+  background-color: #232743;
+  transform: translateY(-2px);
+}
+
+.btnMore:disabled {
+  background-color: #888;
+  cursor: not-allowed;
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5em;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.searchFilter {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+}
+
+.searchInput {
+  padding: 10px 40px 10px 12px;
+  font-size: 0.95em;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  width: 280px;
+  transition: all 0.3s;
+}
+
+.searchInput:focus {
+  border-color: #3583f6;
+  box-shadow: 0 0 0 2px rgba(53, 131, 246, 0.2);
+  outline: none;
+}
+
+.btnSearch {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+}
+
+.btnSearch:hover {
+  color: #3583f6;
+}
+
+.filterSelect {
+  padding: 10px 12px;
+  font-size: 0.95em;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.btnRefresh, .btnExport {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #333;
+  transition: all 0.2s;
+  font-size: 0.95em;
+  text-decoration: none;
+}
+
+.btnRefresh:hover, .btnExport:hover {
+  background-color: #e9e9e9;
+}
+
+.btnExport svg {
+  margin-right: 6px;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border-left-color: #3583f6;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.emptyContainer {
+  text-align: center;
+  padding: 40px 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px dashed #ddd;
+}
+
+.emptyContainer h3 {
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.emptyContainer p {
+  color: #888;
+}
+
+.typeBadge {
+  text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+  .table {
+    border: 0;
+    box-shadow: none;
+  }
+
+  .tableWrapper {
+    box-shadow: none;
+  }
+
+  .tableCaption {
+    font-size: 1.2em;
+  }
+
+  .tableHead {
+    display: none;
+  }
+
+  .tableRow {
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 1em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .tableCell {
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    font-size: 0.9em;
+    padding: 0.8em 1em;
+  }
+
+  .tableCell:last-child {
+    border-bottom: none;
+  }
+
+  .tableCell:before {
+    content: attr(data-label);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    color: #666;
+  }
+
+  .badge {
+    margin-left: auto;
+  }
+
+  .typeBadge {
+    background-color: #f5f9ff;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchFilter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchInput, .filterSelect {
+    width: 100%;
+  }
+
+  .searchBox {
+    width: 100%;
+  }
+
+  .new {
+    align-self: flex-end;
+  }
+}

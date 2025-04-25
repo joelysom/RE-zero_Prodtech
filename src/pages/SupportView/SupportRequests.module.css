@@ -44,13 +44,17 @@
     font-size: 14px;
   }
   
+  .tableContainer {
+    overflow-x: auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
   .table {
     width: 100%;
     border-collapse: collapse;
-    background-color: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-width: 650px;
   }
   
   .table th,
@@ -70,8 +74,22 @@
     background-color: #f5f8ff;
   }
   
+  .clientColumn {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
   .subjectColumn {
     max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .dateColumn {
+    white-space: nowrap;
   }
   
   .status {
@@ -81,6 +99,7 @@
     font-size: 12px;
     font-weight: 500;
     text-align: center;
+    white-space: nowrap;
   }
   
   .statusOpen {
@@ -107,6 +126,7 @@
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.2s;
+    white-space: nowrap;
   }
   
   .actionButton:hover {
@@ -200,8 +220,120 @@
     color: #555;
   }
   
+  /* Estilo para seção de respostas anteriores */
+  .responsesSection {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border-top: 1px solid #eee;
+    padding-top: 24px;
+  }
+  
+  .responsesSection h3 {
+    margin-bottom: 16px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .loadingResponses,
+  .noResponses {
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .responsesList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .responseItem {
+    padding: 16px;
+    background-color: #f5f8ff;
+    border-radius: 8px;
+    border-left: 4px solid #1976d2;
+  }
+  
+  .ownResponse {
+    background-color: #e8f5e9;
+    border-left: 4px solid #2e7d32;
+  }
+  
+  .responseHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  
+  .techInfo {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .techInfo p {
+    margin: 0;
+  }
+  
+  .techEmail {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .responseDate {
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .editedBadge {
+    font-style: italic;
+    margin-left: 4px;
+  }
+  
+  .responseContent {
+    margin-bottom: 12px;
+  }
+  
+  .responseActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  
+  .editResponseButton,
+  .deleteResponseButton {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .editResponseButton {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  .editResponseButton:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .deleteResponseButton {
+    background-color: #ffebee;
+    color: #d32f2f;
+  }
+  
+  .deleteResponseButton:hover {
+    background-color: #ffcdd2;
+  }
+  
+  /* Seção de resposta */
   .responseSection {
     margin-top: 24px;
+    border-top: 1px solid #eee;
+    padding-top: 24px;
   }
   
   .responseSection h3 {
@@ -266,14 +398,71 @@
     margin-left: 8px;
   }
   
+  /* Modal de exclusão */
+  .deleteModal {
+    max-width: 500px;
+  }
+  
+  .deleteConfirmation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+  }
+  
+  .warningIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+  
+  .deleteWarning {
+    color: #d32f2f;
+    font-weight: 500;
+    margin-top: 8px;
+  }
+  
+  .modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #eee;
+  }
+  
+  .confirmDeleteButton {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+  }
+  
+  .confirmDeleteButton:hover {
+    background-color: #d32f2f;
+  }
+  
+  .confirmDeleteButton:disabled,
+  .cancelButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
   /* Media queries para responsividade */
   @media screen and (max-width: 992px) {
     .contentWrapper {
       margin-left: 220px; /* Match sidebar width at this breakpoint */
     }
+    
+    .requestInfo {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
   }
   
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 768px) {
     .contentWrapper {
       margin-left: 0;
       padding-top: 60px; /* Add space for the toggle menu button */
@@ -285,11 +474,6 @@
       gap: 12px;
     }
     
-    .table th:nth-child(3),
-    .table td:nth-child(3) {
-      display: none;
-    }
-    
     .requestInfo {
       grid-template-columns: 1fr;
     }
@@ -298,16 +482,40 @@
       width: 95%;
       max-height: 95vh;
     }
-  }
-  
-  @media screen and (max-width: 480px) {
-    .table th:nth-child(4),
-    .table td:nth-child(4) {
-      display: none;
-    }
     
     .responseHeader {
       flex-direction: column;
       gap: 8px;
+    }
+    
+    .responseActions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .content {
+      padding: 16px;
+    }
+    
+    .modalContent {
+      padding: 16px;
+    }
+    
+    .responseItem {
+      padding: 12px;
+    }
+    
+    .modalHeader, 
+    .modalFooter {
+      padding: 12px 16px;
+    }
+    
+    .sendButton, 
+    .cancelButton, 
+    .confirmDeleteButton {
+      padding: 8px 12px;
+      font-size: 13px;
     }
   }

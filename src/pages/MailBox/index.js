@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { collection, query, where, getDocs, doc, getDoc, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc, orderBy, deleteDoc } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 import { AuthContext } from "../../contexts/auth";
 import { toast } from "react-toastify";
@@ -11,9 +11,12 @@ export default function SupportInbox() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [requestToDelete, setRequestToDelete] = useState(null);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [responses, setResponses] = useState([]);
   const [loadingResponses, setLoadingResponses] = useState(false);
+  const [deletingRequest, setDeletingRequest] = useState(false);
 
   useEffect(() => {
     if (user?.uid) {
@@ -96,6 +99,50 @@ export default function SupportInbox() {
     setModalVisible(false);
   }
 
+  function handleOpenDeleteModal(e, item) {
+    e.stopPropagation(); // Previne que o evento afete outros elementos
+    setRequestToDelete(item);
+    setDeleteModalVisible(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setRequestToDelete(null);
+    setDeleteModalVisible(false);
+  }
+
+  async function handleDeleteRequest() {
+    if (!requestToDelete) return;
+
+    setDeletingRequest(true);
+    try {
+      // Primeiro deletar todas as respostas (subcoleção)
+      const responsesRef = collection(db, "suporte", requestToDelete.id, "respostas");
+      const responsesSnapshot = await getDocs(responsesRef);
+      
+      const deletePromises = [];
+      responsesSnapshot.forEach((responseDoc) => {
+        deletePromises.push(deleteDoc(doc(db, "suporte", requestToDelete.id, "respostas", responseDoc.id)));
+      });
+      
+      await Promise.all(deletePromises);
+      
+      // Agora deletar o documento principal
+      await deleteDoc(doc(db, "suporte", requestToDelete.id));
+      
+      toast.success("Solicitação excluída com sucesso!");
+      
+      // Atualizar a lista de solicitações
+      setRequests(requests.filter(request => request.id !== requestToDelete.id));
+      
+      handleCloseDeleteModal();
+    } catch (error) {
+      console.error("Erro ao excluir solicitação:", error);
+      toast.error("Erro ao excluir solicitação. Tente novamente.");
+    } finally {
+      setDeletingRequest(false);
+    }
+  }
+
   function getStatusClass(status) {
     switch (status) {
       case "Em aberto":
@@ -121,6 +168,7 @@ export default function SupportInbox() {
               className={styles.newRequestButton}
               onClick={() => window.location.href = '/support'}
             >
+              <span className={styles.buttonIcon}>+</span>
               Nova Solicitação
             </button>
           </header>
@@ -148,8 +196,8 @@ export default function SupportInbox() {
                       <tr>
                         <th>Assunto</th>
                         <th>Status</th>
-                        <th>Data</th>
-                        <th>Ação</th>
+                        <th className={styles.dateColumn}>Data</th>
+                        <th className={styles.actionsColumn}>Ações</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -165,14 +213,23 @@ export default function SupportInbox() {
                               {item.status}
                             </span>
                           </td>
-                          <td>{item.createdFormatted}</td>
-                          <td>
-                            <button
-                              className={styles.actionButton}
-                              onClick={() => handleOpenModal(item)}
-                            >
-                              {item.status === "Respondido" ? "Ver Resposta" : "Detalhes"}
-                            </button>
+                          <td className={styles.dateColumn}>{item.createdFormatted}</td>
+                          <td className={styles.actionsColumn}>
+                            <div className={styles.actionButtons}>
+                              <button
+                                className={styles.actionButton}
+                                onClick={() => handleOpenModal(item)}
+                              >
+                                {item.status === "Respondido" ? "Ver Resposta" : "Detalhes"}
+                              </button>
+                              <button
+                                className={styles.deleteButton}
+                                onClick={(e) => handleOpenDeleteModal(e, item)}
+                                title="Excluir solicitação"
+                              >
+                                <span className={styles.deleteIcon}>✕</span>
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       ))}
@@ -254,10 +311,62 @@ export default function SupportInbox() {
               
               <footer className={styles.modalFooter}>
                 <button
+                  className={styles.deleteRequestButton}
+                  onClick={(e) => {
+                    handleCloseModal();
+                    handleOpenDeleteModal(e, selectedRequest);
+                  }}
+                >
+                  Excluir Solicitação
+                </button>
+                <button
                   className={styles.closeModalButton}
                   onClick={handleCloseModal}
                 >
                   Fechar
+                </button>
+              </footer>
+            </div>
+          </div>
+        )}
+
+        {/* Modal de confirmação para excluir solicitação */}
+        {deleteModalVisible && requestToDelete && (
+          <div className={styles.modalOverlay}>
+            <div className={`${styles.modal} ${styles.deleteModal}`}>
+              <header className={styles.modalHeader}>
+                <h2>Confirmar Exclusão</h2>
+                <button
+                  className={styles.closeButton}
+                  onClick={handleCloseDeleteModal}
+                  disabled={deletingRequest}
+                >
+                  &times;
+                </button>
+              </header>
+              
+              <div className={styles.modalContent}>
+                <div className={styles.deleteConfirmation}>
+                  <div className={styles.warningIcon}>⚠️</div>
+                  <p>Tem certeza que deseja excluir esta solicitação de suporte?</p>
+                  <p className={styles.deleteWarning}>Esta ação é irreversível e todas as respostas também serão excluídas.</p>
+                </div>
+              </div>
+              
+              <footer className={styles.modalFooter}>
+                <button
+                  className={styles.cancelButton}
+                  onClick={handleCloseDeleteModal}
+                  disabled={deletingRequest}
+                >
+                  Cancelar
+                </button>
+                <button
+                  className={styles.confirmDeleteButton}
+                  onClick={handleDeleteRequest}
+                  disabled={deletingRequest}
+                >
+                  {deletingRequest ? "Excluindo..." : "Confirmar Exclusão"}
                 </button>
               </footer>
             </div>
